@@ -73,7 +73,7 @@ const Navbar = () => {
         }`}
       >
         <div className="max-w-8xl mx-auto h-12 flex items-center justify-between px-4">
-          <div className="flex items-center gap-6 text-sm">
+          <div className="flex items-center gap-6 text-lg">
             <div className="flex items-center gap-3">
               <span className="hidden sm:inline">📞</span>
               <a href="tel:+919876543210" className="hover:underline">+91 9876543210</a>
@@ -85,8 +85,8 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-sm">
-            <div className="hidden sm:flex items-center gap-4">
+          <div className="flex items-center gap-4 text-lg">
+            <div className="hidden sm:flex items-center gap-8">
               <Link to="/" className="hover:underline">Home</Link>
               <Link to="/about" className="hover:underline">About</Link>
               <Link to="/blog" className="hover:underline">Blog</Link>
@@ -101,6 +101,7 @@ const Navbar = () => {
       {/* Main Navbar */}
       <nav
         ref={navRef}
+        onMouseLeave={() => setOpenDropdown(null)}
         className={`relative bg-[#E5F0E5] shadow-md w-full z-50 transition-all duration-300 ${
           showTopBar ? 'sticky top-12' : 'fixed top-0'
         }`}
@@ -108,15 +109,18 @@ const Navbar = () => {
         <div className="max-w-8xl mx-auto flex items-center justify-between px-4 py-4">
 
          <div>
-          <img src={assets.logo} alt="logo" className="h-12" />
+          <img src={assets.logo} alt="logo" className="h-14" />
          </div>
 
           <div className="hidden md:block max-w-[65vw]">
-            <ul className="flex gap-6 font-medium overflow-x-auto px-2 no-scrollbar">
+            <ul className="flex gap-6 font-medium overflow-x-auto px-2 no-scrollbar text-xl">
               {mainItems.map(item => (
-                <li key={item.id} className="relative flex-shrink-0">
-                  <button onClick={() => toggleDropdown(item.id)} className="px-3 py-2 hover:text-emerald-600 whitespace-nowrap">
-                    {item.label}
+                <li key={item.id} onMouseEnter={() => setOpenDropdown(item.id)} className="relative flex-shrink-0">
+                  <button onClick={() => toggleDropdown(item.id)} className="px-3 py-2 hover:text-emerald-600 whitespace-nowrap flex items-center gap-2">
+                    <span>{item.label}</span>
+                    <svg className={`h-4 w-4 transition-transform duration-200 ${openDropdown === item.id ? 'rotate-180' : 'rotate-0'}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                   </button>
                 </li>
               ))}
@@ -142,7 +146,7 @@ const Navbar = () => {
                       <p className="text-sm text-gray-600 mt-2">{info.desc}</p>
                     </div>
                     <div className="col-span-2">
-                      <h4 className="font-medium mb-2">Quick Links</h4>
+                     
                       <ul className="space-y-2">
                         {info.options.map(opt => (
                           <li key={opt} className="px-3 py-2 rounded hover:bg-gray-100">{opt}</li>
