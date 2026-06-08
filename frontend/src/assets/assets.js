@@ -1,4 +1,4 @@
-import logo from './logo.webp'
+import logo from './mayank_logo.png'
 
 export const assets={
     logo
