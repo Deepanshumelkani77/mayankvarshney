@@ -1,54 +1,82 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { assets } from '../assets/assets'
+import React, { useEffect, useState } from "react";
+import { assets } from "../assets/assets";
 
 const Navbar = () => {
+  const [showTopBar, setShowTopBar] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setShowTopBar(false);
+      } else {
+        setShowTopBar(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <nav className="bg-[#053131] text-white shadow-lg">
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <img src={assets.logo} alt="Logo" className="h-10 w-auto mr-3" />
+    <>
+      {/* Top Navbar */}
+      <div
+        className={`bg-[#053131] text-white transition-all duration-300 overflow-hidden ${
+          showTopBar ? "h-12 opacity-100" : "h-0 opacity-0"
+        }`}
+      >
+        <div className="max-w-8xl mx-auto h-12 flex items-center justify-between px-4">
+          <div className="flex gap-5">
+          <p>📞 +91 9876543210</p>
+          <p>✉️ info@mayankca.com</p>
+          </div>
+
+          <div className="flex gap-10">
+          <div className="flex gap-5">
+            <a href="/">Home</a>
+            <a href="/about">About us</a>
+            <a href="/blog">Blog</a>
+            <a href="/contact">Contact us</a>
+          </div>
             
-          </div>
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-6">
-              <Link to="/" className="text-white hover:text-emerald-300 px-3 py-2 rounded-md text-xl font-medium transition-colors duration-300 border-b-2 border-transparent hover:border-emerald-300">
-                Home
-              </Link>
-              <Link to="/about" className="text-gray-300 hover:text-emerald-300 px-3 py-2 rounded-md text-xl font-medium transition-colors duration-300 border-b-2 border-transparent hover:border-emerald-300">
-                About Us
-              </Link>
-              <Link to="/services" className="text-gray-300 hover:text-emerald-300 px-3 py-2 rounded-md text-xl font-medium transition-colors duration-300 border-b-2 border-transparent hover:border-emerald-300">
-                Services
-              </Link>
-              <Link to="/blog" className="text-gray-300 hover:text-emerald-300 px-3 py-2 rounded-md text-xl font-medium transition-colors duration-300 border-b-2 border-transparent hover:border-emerald-300">
-                Blog
-              </Link>
-              <Link to="/career" className="text-gray-300 hover:text-emerald-300 px-3 py-2 rounded-md text-xl font-medium transition-colors duration-300 border-b-2 border-transparent hover:border-emerald-300">
-                Career
-              </Link>
-              <Link to="/contact" className="text-gray-300 hover:text-emerald-300 px-3 py-2 rounded-md text-xl font-medium transition-colors duration-300 border-b-2 border-transparent hover:border-emerald-300">
-                Contact Us
-              </Link>
-            </div>
-          </div>
-          <div className="hidden md:block">
-            <Link to="/signup" className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300 shadow-md hover:shadow-lg">
-              Sign Up
-            </Link>
-          </div>
-          <div className="md:hidden">
-            <button className="text-white hover:text-emerald-300 focus:outline-none">
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+            <div>Signup</div>
+
           </div>
         </div>
       </div>
-    </nav>
-  )
-}
 
-export default Navbar
+      {/* Main Navbar */}
+      <nav
+        className={`bg-[#E5F0E5] shadow-md w-full z-50 transition-all duration-300 ${
+          showTopBar ? "sticky top-12" : "fixed top-0"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
+         
+         <div>
+          <img src={assets.logo} alt="logo"></img>
+         </div>
+
+          <ul className="hidden md:flex gap-8 font-medium">
+            <li>Accounting</li>
+            <li>Income Tax</li>
+            <li>GoodsandServiceTax_GST</li>
+            <li>RegistrarofCompanies_ROC</li>
+            <li>Labour_Department</li>
+          </ul>
+
+<div>
+  <button>Book Appointment</button>
+</div>
+
+
+        </div>
+      </nav>
+    </>
+  );
+};
+
+export default Navbar;

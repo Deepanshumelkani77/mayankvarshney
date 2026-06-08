@@ -1,5 +1,8 @@
-import logo from './mayank_logo.png'
+import logo from './mv_logoo.png'
+import header from './header.png'
+
 
 export const assets={
-    logo
+    logo,
+    header
 }
