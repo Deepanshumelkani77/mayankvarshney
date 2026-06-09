@@ -22,7 +22,7 @@ const mainItems = [
 
 ]
 
-const Navbar = () => {
+const N = () => {
   const [showTopBar, setShowTopBar] = useState(true);
 
   useEffect(() => {
@@ -46,8 +46,6 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const dropdownRef = useRef(null)
   const [hoveredItem, setHoveredItem] = useState(null)
-  const [hoveredColumn, setHoveredColumn] = useState(null)
-  const hoverTimeoutRef = useRef(null)
 
   useEffect(() => {
     function handleOutside(e) {
@@ -76,24 +74,6 @@ const Navbar = () => {
 
   function toggleDropdown(id) {
     setOpenDropdown(prev => (prev === id ? null : id))
-  }
-
-  const handleItemHover = (item, column) => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
-    }
-    setHoveredItem(item)
-    setHoveredColumn(column)
-  }
-
-  const handleItemLeave = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
-    }
-    hoverTimeoutRef.current = setTimeout(() => {
-      setHoveredItem(null)
-      setHoveredColumn(null)
-    }, 100)
   }
 
   return (
@@ -205,22 +185,18 @@ const Navbar = () => {
                 // If groups provided, render each group as a column with its own heading
                 if (info.groups && info.groups.length) {
                   return (
-                    <div ref={dropdownRef} className="relative p-6 max-h-[92vh] overflow-y-auto">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                    <div ref={dropdownRef} className="flex p-6 max-h-[92vh] overflow-y-auto">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 flex-1">
                           {info.groups.map((g, gi) => (
-                          <div 
-                            key={gi} 
-                            onMouseEnter={() => setHoveredColumn(gi)}
-                            onMouseLeave={() => handleItemLeave()}
-                          >
+                          <div key={gi}>
                             <h4 className=" font-semibold mb-2 text-lg">{g.title}</h4>
                             <ul className="space-y-2 flex flex-col ">
                               {g.items.map(opt => (
                                 <li key={opt} className="relative">
                                   <div 
                                     className=" py-2 rounded hover:bg-gray-100 cursor-pointer "
-                                    onMouseEnter={() => handleItemHover(opt, gi)}
-                                    onMouseLeave={() => handleItemLeave()}
+                                    onMouseEnter={() => setHoveredItem(opt)}
+                                    onMouseLeave={() => setHoveredItem(null)}
                                   >
                                     {opt}
                                   </div>
@@ -229,34 +205,12 @@ const Navbar = () => {
                             </ul>
                           </div>
                         ))}
-                        {/* Empty 4th column for preview panel space */}
-                        <div className="hidden md:block"></div>
                       </div>
-                      {/* Preview panel - overlay positioned dynamically */}
-                      <div className={`absolute bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 shadow-2xl transition-all duration-500 ease-out z-10 ${hoveredItem ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2 pointer-events-none'} ${hoveredColumn === 0 || hoveredColumn === 1 ? 'left-1/2 top-6 w-1/2' : hoveredColumn === 2 ? 'left-0 top-6 w-1/2' : 'left-1/2 top-6 w-1/2'}`}>
-                        <h4 className="font-semibold text-emerald-800 mb-3 text-xl">{hoveredItem || ''}</h4>
-                        <p className="text-sm text-gray-600 mb-4">Professional service with expert guidance. We provide comprehensive support for this service with detailed documentation and expert consultation.</p>
-                        <div className="space-y-3">
-                          <div className="flex items-center gap-2 text-sm text-gray-700">
-                            <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Expert consultation</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-700">
-                            <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Timely delivery</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-700">
-                            <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>24/7 support</span>
-                          </div>
-                        </div>
-                        <button className="mt-4 w-full bg-emerald-600 text-white py-3 rounded-md text-sm hover:bg-emerald-700 transition-colors font-semibold">
+                      {/* Preview panel */}
+                      <div className={`w-64 ml-6 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-4 border border-emerald-200 transition-all duration-300 ease-in-out ${hoveredItem ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'}`}>
+                        <h4 className="font-semibold text-emerald-800 mb-2">{hoveredItem || ''}</h4>
+                        <p className="text-sm text-gray-600">Professional service with expert guidance. Click to learn more about this service.</p>
+                        <button className="mt-3 w-full bg-emerald-600 text-white py-2 rounded-md text-sm hover:bg-emerald-700 transition-colors">
                           Learn More
                         </button>
                       </div>
@@ -267,57 +221,32 @@ const Navbar = () => {
                 const per = Math.ceil((info.options || []).length / 3) || 1
                 const cols = [0,1,2].map(i => (info.options || []).slice(i*per, (i+1)*per))
                 return (
-                  <div ref={dropdownRef} className="relative p-6 max-h-[92vh] overflow-y-auto">
-                    <h3 className="text-lg font-semibold text-center mb-4">{info.label}</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                      {cols.map((col, ci) => (
-                        <ul 
-                          key={ci} 
-                          className="space-y-2 flex flex-col items-center"
-                          onMouseEnter={() => setHoveredColumn(ci)}
-                          onMouseLeave={() => handleItemLeave()}
-                        >
-                          {col.map(opt => (
-                            <li key={opt} className="relative">
-                              <div 
-                                className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer text-center"
-                                onMouseEnter={() => handleItemHover(opt, ci)}
-                                onMouseLeave={() => handleItemLeave()}
-                              >
-                                {opt}
-                              </div>
-                            </li>
-                          ))}
-                        </ul>
-                      ))}
-                      {/* Empty 4th column for preview panel space */}
-                      <div className="hidden md:block"></div>
-                    </div>
-                    {/* Preview panel - overlay positioned dynamically */}
-                    <div className={`absolute bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 shadow-2xl transition-all duration-500 ease-out z-10 ${hoveredItem ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2 pointer-events-none'} ${hoveredColumn === 0 || hoveredColumn === 1 ? 'left-1/2 top-16 w-1/2' : hoveredColumn === 2 ? 'left-0 top-16 w-1/2' : 'left-1/2 top-16 w-1/2'}`}>
-                      <h4 className="font-semibold text-emerald-800 mb-3 text-xl">{hoveredItem || ''}</h4>
-                      <p className="text-sm text-gray-600 mb-4">Professional service with expert guidance. We provide comprehensive support for this service with detailed documentation and expert consultation.</p>
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-2 text-sm text-gray-700">
-                          <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          <span>Expert consultation</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-700">
-                          <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          <span>Timely delivery</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-700">
-                          <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          <span>24/7 support</span>
-                        </div>
+                  <div ref={dropdownRef} className="flex p-6 max-h-[92vh] overflow-y-auto">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-center mb-4">{info.label}</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                        {cols.map((col, ci) => (
+                          <ul key={ci} className="space-y-2 flex flex-col items-center">
+                            {col.map(opt => (
+                              <li key={opt} className="relative">
+                                <div 
+                                  className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer text-center"
+                                  onMouseEnter={() => setHoveredItem(opt)}
+                                  onMouseLeave={() => setHoveredItem(null)}
+                                >
+                                  {opt}
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        ))}
                       </div>
-                      <button className="mt-4 w-full bg-emerald-600 text-white py-3 rounded-md text-sm hover:bg-emerald-700 transition-colors font-semibold">
+                    </div>
+                    {/* Preview panel */}
+                    <div className={`w-64 ml-6 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-4 border border-emerald-200 transition-all duration-300 ease-in-out ${hoveredItem ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'}`}>
+                      <h4 className="font-semibold text-emerald-800 mb-2">{hoveredItem || ''}</h4>
+                      <p className="text-sm text-gray-600">Professional service with expert guidance. Click to learn more about this service.</p>
+                      <button className="mt-3 w-full bg-emerald-600 text-white py-2 rounded-md text-sm hover:bg-emerald-700 transition-colors">
                         Learn More
                       </button>
                     </div>
@@ -332,4 +261,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default N;
