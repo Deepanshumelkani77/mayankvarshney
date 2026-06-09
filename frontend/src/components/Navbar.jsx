@@ -8,7 +8,11 @@ const mainItems = [
     { title: 'Offsite', items: ["Day to Day Offsite Accounting","Weekly Offsite Accounting","Monthly Offsite Accounting","Quarterly Offsite Accounting","Yearly Offsite Accounting","Payroll Services"] },
     { title: 'Asset Management', items: ["Fixed Assets Tagging","Fixed Asset Valuation","Inventory Valuation"] }
   ] },
-  { id: 'ITR / Tax', label: 'ITR / Tax', desc: 'Income tax returns and compliance.', options: ['Registration', 'Return Filing', 'Tax Audit'] },
+  { id: 'ITR / Tax', label: 'ITR / Tax', desc: 'Income tax returns and compliance.', groups:[
+    { title: 'IncomeTax_ITR', items: ['ITR 1','ITR 2','ITR 3','ITR 4','ITR 5','ITR 6','ITR 7','PAN Reissue Application','New PAN Application','ITR Revision','Tax Planning','Reply to Notices by IT Deptt.'  ] },
+    { title: 'IncomeTax_Assessments', items:['Assessment U/S 143','Assessment U/S 147']},
+    {title:'IncomeTax_TDS',items:['TDS on Salary return Filing (24Q)','Correction/Revision in Salary TDS Return  filings (24Q)','TDS other than Salary return Filing (26Q)','Correction/Revision in other than Salary TDS filings (26Q)','TDS on Sale of Property by Resident (26QB)','Correction/Revision on Sale of Property TDS filings by Resident (26QB)','TDS on Rent of Property (26QC)','Correction/Revision on TDS on rent of Property (26QC)','Obtaining Lower rate of TDS on Sale of Property by Non Resident ','Correction/Revision on TDS on Sale of Property by Non Resident ','TAN Application']}
+  ] },
   
   { id: 'GST', label: 'GST', desc: 'GST registration, returns, and compliance.', options: ['Registration', 'Return Filing', 'GST Audit'] },
   { id: 'MCA', label: 'MCA', desc: 'Company filings, annual returns and compliance.', options: ['Annual Filing', 'Director Changes'] },
@@ -47,7 +51,9 @@ const Navbar = () => {
   const dropdownRef = useRef(null)
   const [hoveredItem, setHoveredItem] = useState(null)
   const [hoveredColumn, setHoveredColumn] = useState(null)
+  const [hoveredGroup, setHoveredGroup] = useState(null)
   const hoverTimeoutRef = useRef(null)
+  const [itrOffset, setItrOffset] = useState(0)
 
   useEffect(() => {
     function handleOutside(e) {
@@ -70,20 +76,37 @@ const Navbar = () => {
 
   // dropdown scroll handler placeholder (no hover previews)
   useEffect(() => {
-    // keep for future use if needed
-    return () => {}
+    // clear hoveredGroup when dropdown changes/closes
+    setHoveredGroup(null)
+    return () => { setHoveredGroup(null) }
   }, [openDropdown])
 
   function toggleDropdown(id) {
     setOpenDropdown(prev => (prev === id ? null : id))
   }
 
-  const handleItemHover = (item, column) => {
+  useEffect(() => {
+    const measure = () => {
+      if (openDropdown === 'ITR / Tax') {
+        const el = document.querySelector('[data-item="ITR / Tax"]')
+        if (el) {
+          const rect = el.getBoundingClientRect()
+          setItrOffset(Math.round(rect.left))
+        }
+      }
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [openDropdown])
+
+  const handleItemHover = (item, column, group = null) => {
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current)
     }
     setHoveredItem(item)
     setHoveredColumn(column)
+    setHoveredGroup(group)
   }
 
   const handleItemLeave = () => {
@@ -93,6 +116,7 @@ const Navbar = () => {
     hoverTimeoutRef.current = setTimeout(() => {
       setHoveredItem(null)
       setHoveredColumn(null)
+      setHoveredGroup(null)
     }, 100)
   }
 
@@ -148,7 +172,7 @@ const Navbar = () => {
             <ul className="flex gap-1 font-medium flex-wrap px-2 text-lg">
               {mainItems.map(item => (
                 <li key={item.id} onMouseEnter={() => setOpenDropdown(item.id)} className="relative">
-                  <button onClick={() => toggleDropdown(item.id)} className="px-3 py-2 hover:text-emerald-600 flex items-center gap-2">
+                  <button data-item={item.id} onClick={() => toggleDropdown(item.id)} className="px-3 py-2 hover:text-emerald-600 flex items-center gap-2">
                     <span>{item.label}</span>
                     <svg className={`h-4 w-4 transition-transform duration-200 ${openDropdown === item.id ? 'rotate-180' : 'rotate-0'}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -197,17 +221,58 @@ const Navbar = () => {
         </div>
 
         {/* Dropdown panel (single shared panel, content changes per openDropdown) */}
-        <div className={`absolute left-0 right-0 top-20 z-40 mt-0 flex justify-center pointer-events-none`}>
-          <div className={`w-[90vw] max-w-6xl bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-4 scale-95'}`}>
+        <div className={`absolute left-0 right-0 top-20 z-40 mt-0 flex ${openDropdown === 'ITR / Tax' ? 'justify-start pl-4' : 'justify-center'} pointer-events-none`}>
+          <div style={openDropdown === 'ITR / Tax' ? { marginLeft: `${itrOffset}px` } : {}} className={`${openDropdown === 'ITR / Tax' ? 'w-auto max-w-3xl' : 'w-[90vw] max-w-6xl'} bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-4 scale-95'}`}>
             {openDropdown ? (
               (() => {
                 const info = mainItems.find(i => i.id === openDropdown)
                 // If groups provided, render each group as a column with its own heading
                 if (info.groups && info.groups.length) {
+                  // Special layout for ITR / Tax: vertical group list on left, details on right
+                  if (info.id === 'ITR / Tax') {
+                    return (
+                      <div ref={dropdownRef} className="relative p-3">
+                        <div className="flex items-start gap-3" onMouseLeave={() => setHoveredGroup(null)}>
+                          {/* compact left list */}
+                          <div className="w-60 bg-white p-1 rounded-md border-none ">
+                            {info.groups.map((g) => (
+                              <div key={g.title} className="mb-1">
+                                <button
+                                  onMouseEnter={() => setHoveredGroup(g.title)}
+                                  className={`w-full text-left px-3 py-2 rounded-md transition-colors  ${hoveredGroup === g.title ? 'bg-emerald-50 text-emerald-700' : 'hover:bg-gray-50'}`}
+                                >
+                                  {g.title}
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* details panel - appears to the right when hovering an option */}
+                          <div className="relative">
+                            {hoveredGroup && (() => {
+                              const grp = info.groups.find(g => g.title === hoveredGroup)
+                              return (
+                                <div onMouseEnter={() => {/* keep hoveredGroup while inside panel */}} onMouseLeave={() => setHoveredGroup(null)} className="w-[720px] bg-white rounded-md p-2 border-none">
+                                  <h4 className="font-semibold px-2  text-emerald-800 mb-2">{grp.title}</h4>
+                                  <p className="text-sm px-2  text-gray-600 mb-3">{info.desc}</p>
+                                  <ul className="space-y-2   ">
+                                    {grp.items.map(it => (
+                                      <li key={it} className="px-2 py-1 rounded hover:bg-gray-50">{it}</li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )
+                            })()}
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
+                  // generic groups layout for other items
                   return (
                     <div ref={dropdownRef} className="relative p-6 max-h-[92vh] overflow-y-auto">
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                          {info.groups.map((g, gi) => (
+                        {info.groups.map((g, gi) => (
                           <div 
                             key={gi} 
                             onMouseEnter={() => setHoveredColumn(gi)}
