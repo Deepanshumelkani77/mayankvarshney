@@ -54,11 +54,11 @@ const Header = () => {
               <input
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                className="flex-1 px-4 py-3 text-gray-800 focus:outline-none"
+                className="flex-1 px-6 py-4 text-gray-800 focus:outline-none"
                 placeholder="Search services, e.g., GST, Accounting..."
                 aria-label="Search services"
               />
-              <button className="bg-emerald-600 text-white px-4 py-3 hover:bg-emerald-700">Search</button>
+              <button className="bg-emerald-600 text-white px-4 py-4 hover:bg-emerald-700">Search</button>
             </div>
           </div>
         </div>

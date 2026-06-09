@@ -3,29 +3,19 @@ import { Link } from 'react-router-dom'
 import { assets } from "../assets/assets";
 
 const mainItems = [
-  { id: 'Accounting', label: 'Accounting', desc: 'Bookkeeping, financial statements, payroll and reconciliations.', options: ['Bookkeeping', 'Financial Statements', 'Payroll'] },
-  { id: 'IncomeTax', label: 'Income Tax', desc: 'Tax return filing, tax planning and notices.', options: ['Filing', 'Tax Planning', 'Notice Responses'] },
-  { id: 'GoodsandServiceTax_GST', label: 'GST', desc: 'GST registration, returns, and compliance.', options: ['Registration', 'Return Filing', 'GST Audit'] },
-  { id: 'RegistrarofCompanies_ROC', label: 'ROC', desc: 'Company filings, annual returns and compliance.', options: ['Annual Filing', 'Director Changes'] },
-  { id: 'Labour_Department', label: 'Labour Department', desc: 'Labour law compliance and registrations.', options: ['Compliance', 'Registrations'] },
-  { id: 'MicroSmallMediumEnterprises_MSME', label: 'MSME', desc: 'MSME registration and schemes advisory.', options: [] },
-  { id: 'DGFT', label: 'DGFT', desc: 'Export licences and foreign trade compliance.', options: [] },
-  { id: 'NationalCompanyLawTribunal_NCLT', label: 'NCLT', desc: 'Corporate dispute resolution and procedures.', options: [] },
-  { id: 'Food_Safety_and_Drug_Administration_Drug', label: 'Drug Administration', desc: 'Drug administration registrations and compliance.', options: [] },
-  { id: 'Food_Safety_Standards_Authority_of_India_Food', label: 'FSSAI', desc: 'Food Safety licensing and compliance.', options: [] },
-  { id: 'Fire_Department', label: 'Fire Department', desc: 'Fire safety NOCs and inspections.', options: [] },
-  { id: 'Pollution_Control_Board', label: 'Pollution Control Board', desc: 'Environmental clearances and compliance.', options: [] },
-  { id: 'ProvidentFund_PF', label: 'Provident Fund (PF)', desc: 'PF registration and statutory compliance.', options: [] },
-  { id: 'EmployeeStateInsurance_ESI', label: 'ESI', desc: 'ESI registration and claims assistance.', options: [] },
-  { id: 'Legal_Metrology', label: 'Legal Metrology', desc: 'Weights & measures compliance and approvals.', options: [] },
-  { id: 'Revenue_Department', label: 'Revenue Department', desc: 'Revenue compliance and departmental representations.', options: [] },
-  { id: 'Industrial_Plot_Allotment', label: 'Industrial Plot Allotment', desc: 'Assistance with industrial land allotments.', options: [] },
-  { id: 'Registrations', label: 'Registrations', desc: 'Company, LLP, trademark and NGO registrations.', options: [] },
-  { id: 'Bank_Funding', label: 'Bank Funding', desc: 'Loan facilitation, documentation and liaising.', options: [] },
-  { id: 'Audit', label: 'Audit', desc: 'Statutory and internal audit services.', options: [] },
-  { id: 'Start_Up', label: 'Start Up', desc: 'Startup registrations, funding and compliance.', options: [] },
-  { id: 'Civil_Matters', label: 'Civil Matters', desc: 'Civil litigation and dispute resolution.', options: [] },
-  { id: 'Criminal_Matters', label: 'Criminal Matters', desc: 'Criminal defense and procedural assistance.', options: [] },
+  { id: 'Accounting', label: 'Accounting', desc: 'Bookkeeping, financial statements, payroll and reconciliations.', options: ["Day to Day Onsite Accounting","Weekly Onsite Accounting","Monthly Onsite Accounting","Yearly Onsite Accounting","Quarterly Onsite Accounting","Day to Day Offsite Accounting","Weekly Offsite Accounting","Monthly Offsite Accounting","Quarterly Offsite Accounting","Yearly Offsite Accounting","Payroll Services","Fixed Assets Tagging","Fixed Asset Valuation","Inventory Valuation"] },
+  { id: 'ITR / Tax', label: 'ITR / Tax', desc: 'Income tax returns and compliance.', options: ['Registration', 'Return Filing', 'Tax Audit'] },
+  
+  { id: 'GST', label: 'GST', desc: 'GST registration, returns, and compliance.', options: ['Registration', 'Return Filing', 'GST Audit'] },
+  { id: 'MCA', label: 'MCA', desc: 'Company filings, annual returns and compliance.', options: ['Annual Filing', 'Director Changes'] },
+   { id: 'DGFT', label: 'DGFT', desc: 'DGFT registration, returns, and compliance.', options: ['Registration', 'Return Filing', 'DGFT Audit'] },
+  { id: 'Legal Drafting', label: 'Legal Drafting', desc: 'Legal document preparation and review.', options: ['Contract Drafting', 'Agreement Review'] },
+  { id: 'Registration', label: 'Registration', desc: 'Business registration and compliance.', options: ['Company Registration', 'Trademark Registration'] },
+  { id: 'Compliance', label: 'Compliance', desc: 'Regulatory compliance and reporting.', options: ['Annual Compliance', 'Quarterly Reporting'] },
+ { id: 'Investment', label: 'Investment', desc: 'Investment advisory and planning.', options: ['Financial Planning', 'Investment Analysis'] },
+
+
+
 ]
 
 const Navbar = () => {
@@ -106,17 +96,17 @@ const Navbar = () => {
           showTopBar ? 'sticky top-12' : 'fixed top-0'
         }`}
       >
-        <div className="max-w-8xl mx-auto flex items-center justify-between px-4 py-4">
+        <div className="max-w-8xl mx-auto flex items-center justify-around px-4 py-4">
 
          <div>
           <img src={assets.logo} alt="logo" className="h-14" />
          </div>
 
-          <div className="hidden md:block max-w-[65vw]">
-            <ul className="flex gap-6 font-medium overflow-x-auto px-2 no-scrollbar text-xl">
+          <div className="hidden md:block w-full">
+            <ul className="flex gap-1 font-medium flex-wrap px-2 text-lg px-15">
               {mainItems.map(item => (
-                <li key={item.id} onMouseEnter={() => setOpenDropdown(item.id)} className="relative flex-shrink-0">
-                  <button onClick={() => toggleDropdown(item.id)} className="px-3 py-2 hover:text-emerald-600 whitespace-nowrap flex items-center gap-2">
+                <li key={item.id} onMouseEnter={() => setOpenDropdown(item.id)} className="relative">
+                  <button onClick={() => toggleDropdown(item.id)} className="px-3 py-2 hover:text-emerald-600 flex items-center gap-2">
                     <span>{item.label}</span>
                     <svg className={`h-4 w-4 transition-transform duration-200 ${openDropdown === item.id ? 'rotate-180' : 'rotate-0'}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -134,8 +124,8 @@ const Navbar = () => {
         </div>
 
         {/* Dropdown panel (single shared panel, content changes per openDropdown) */}
-        <div className={`absolute left-0 right-0 top-full z-40 mt-2 flex justify-center pointer-events-none`}>
-          <div className={`w-[90vw] max-w-5xl bg-white text-black rounded-lg shadow-lg overflow-hidden transform transition-all duration-250 ${openDropdown ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-3 scale-95'}`}>
+        <div className={`absolute left-0 right-0 top-20 z-40 mt-0 flex justify-center pointer-events-none`}>
+          <div className={`w-[90vw] max-w-5xl bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-4 scale-95'}`}>
             {openDropdown ? (
               (() => {
                 const info = mainItems.find(i => i.id === openDropdown)
@@ -147,7 +137,7 @@ const Navbar = () => {
                     </div>
                     <div className="col-span-2">
                      
-                      <ul className="space-y-2">
+                      <ul className="grid grid-cols-2 gap-2">
                         {info.options.map(opt => (
                           <li key={opt} className="px-3 py-2 rounded hover:bg-gray-100">{opt}</li>
                         ))}
