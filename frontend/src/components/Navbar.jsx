@@ -4,20 +4,42 @@ import { assets } from "../assets/assets";
 
 const mainItems = [
   { id: 'Accounting', label: 'Accounting', desc: 'Bookkeeping, financial statements, payroll and reconciliations.', groups: [
-    { title: 'Onsite', items: ["Day to Day Onsite Accounting","Weekly Onsite Accounting","Monthly Onsite Accounting","Quarterly Onsite Accounting","Yearly Onsite Accounting",,"Payroll Services"] },
+    { title: 'Onsite', items: ["Day to Day Onsite Accounting","Weekly Onsite Accounting","Monthly Onsite Accounting","Quarterly Onsite Accounting","Yearly Onsite Accounting","Payroll Services"] },
     { title: 'Offsite', items: ["Day to Day Offsite Accounting","Weekly Offsite Accounting","Monthly Offsite Accounting","Quarterly Offsite Accounting","Yearly Offsite Accounting","Payroll Services"] },
     { title: 'Asset Management', items: ["Fixed Assets Tagging","Fixed Asset Valuation","Inventory Valuation"] }
   ] },
-  { id: 'ITR / Tax', label: 'ITR / Tax', desc: 'Income tax returns and compliance.', groups:[
+  { id: 'ITR / TDS', label: 'ITR / TDS', desc: 'Income tax returns and compliance.', groups:[
     { title: 'IncomeTax_ITR', items: ['ITR 1','ITR 2','ITR 3','ITR 4','ITR 5','ITR 6','ITR 7','PAN Reissue Application','New PAN Application','ITR Revision','Tax Planning','Reply to Notices by IT Deptt.'  ] },
     { title: 'IncomeTax_Assessments', items:['Assessment U/S 143','Assessment U/S 147']},
     {title:'IncomeTax_TDS',items:['TDS on Salary return Filing (24Q)','Correction/Revision in Salary TDS Return  filings (24Q)','TDS other than Salary return Filing (26Q)','Correction/Revision in other than Salary TDS filings (26Q)','TDS on Sale of Property by Resident (26QB)','Correction/Revision on Sale of Property TDS filings by Resident (26QB)','TDS on Rent of Property (26QC)','Correction/Revision on TDS on rent of Property (26QC)','Obtaining Lower rate of TDS on Sale of Property by Non Resident ','Correction/Revision on TDS on Sale of Property by Non Resident ','TAN Application']}
   ] },
   
-  { id: 'GST', label: 'GST', desc: 'GST registration, returns, and compliance.', options: ['Registration', 'Return Filing', 'GST Audit'] },
-  { id: 'MCA', label: 'MCA', desc: 'Company filings, annual returns and compliance.', options: ['Annual Filing', 'Director Changes'] },
-   { id: 'DGFT', label: 'DGFT', desc: 'DGFT registration, returns, and compliance.', options: ['Registration', 'Return Filing', 'DGFT Audit'] },
-  { id: 'Legal Drafting', label: 'Legal Drafting', desc: 'Legal document preparation and review.', options: ['Contract Drafting', 'Agreement Review'] },
+  { id: 'GST', label: 'GST', desc: 'GST registration, returns, and compliance.', groups:[
+    {title:'GST Registration',items:['GSTIN Registrations']},
+    {title:'Return Filing',items:['GST Monthly Return','GST Quarterly Return','GST Annual Return']},
+    {title:'Assessment ',items:['GST Assessment','GSTIN Cancellation','GST LUT Application Filing','Reply to Notices']}
+  ] },
+  { id: 'MCA', label: 'MCA', desc: 'Company filings, annual returns and compliance.', groups:[
+    {title:'Incorporation',items:['Private Limited Company Incorporaton','Public Limited Company Incorporation','Section 8 Company Incorporation','Nidhi Company Incorporation','Producer Company Incorporation','Limited Liability Partnership (LLP) Incorporation','Commencement Certificate',]},
+    {title:'Change Filings',items:['Change of Registered Address','Appointment of Director','Resignation of Director','Increase in Authorised Capital','Transfer of Shares','Amendment in Memorandum of Association','Amendment in Articles of Association','Change of Company Name']},
+    {title:'Annual Returns',items:['Annual Return Filing (AOC 4, MGT 7)','Directors Report','DIN Application','DIN Cancellation','Directors KYC']},
+    {title:'Closure',items:['Winding Up of a Private Limited Company','Winding Up of a Public Limited Company','Winding Up of a Section 8 Company','Winding Up of a Nidhi Company ','Winding Up of a Producer Company','Winding Up of a Limited Liability Partnership (LLP)']}
+  ]},
+  { id: 'DGFT', label: 'DGFT', desc: 'DGFT registration, returns, and compliance.', groups:[
+   {title:'Registration',items:['Import Export Code']},
+   {title:'Assessment',items:['Assessment']},
+   {title:'Refund',items:['Refund','SAD Refund']}
+  ]},
+ { id: 'Legal Drafting', label: 'Legal Drafting', desc: 'Legal document preparation and review.', groups:[
+    {title:'PROPERTY MATTERS',items:['Property Registration','Property Title Verification','Gift Deed','Sale Deed','Rent Agreement','Lease Deed','Relinquishment Deed']},
+    { title: 'WILL & POWER OF ATTORNEY (POA)', subgroups: [
+            { title: 'POWER OF ATTORNEY (POA)', items: ['General Power of Attorney (GPA)','Special Power Of Attorney (SPOA)'] },
+      { title: 'WILL', items: ['Will Drafting','Will Registration','Will Probate'] },
+
+    ] },
+    {title:'AGREEMENTS DRAFTING',items:['Memorandum Of Understanding','Franchise Agreement','Joint Venture Agreement','Founders Agreement','Shareholders Agreement','Share Purchase Agreement','Consultancy Agreement','Freelancer Agreement','Agency Agreement','Non Disclosure Agreement']},
+    {title:'OTHERS',items:['Account Opening Resolution','Website Terms And Conditions','Website Privacy Policy','Website Disclaimer Policy','Appointment Letter','Resignation Letter','Offer Letter']}
+  ] },
   { id: 'Registration', label: 'Registration', desc: 'Business registration and compliance.', options: ['Company Registration', 'Trademark Registration'] },
   { id: 'Compliance', label: 'Compliance', desc: 'Regulatory compliance and reporting.', options: ['Annual Compliance', 'Quarterly Reporting'] },
  { id: 'Investment', label: 'Investment', desc: 'Investment advisory and planning.', options: ['Financial Planning', 'Investment Analysis'] },
@@ -87,8 +109,8 @@ const Navbar = () => {
 
   useEffect(() => {
     const measure = () => {
-      if (openDropdown === 'ITR / Tax') {
-        const el = document.querySelector('[data-item="ITR / Tax"]')
+      if (openDropdown === 'ITR / TDS') {
+        const el = document.querySelector('[data-item="ITR / TDS"]')
         if (el) {
           const rect = el.getBoundingClientRect()
           setItrOffset(Math.round(rect.left))
@@ -221,15 +243,15 @@ const Navbar = () => {
         </div>
 
         {/* Dropdown panel (single shared panel, content changes per openDropdown) */}
-        <div className={`absolute left-0 right-0 top-20 z-40 mt-0 flex ${openDropdown === 'ITR / Tax' ? 'justify-start pl-4' : 'justify-center'} pointer-events-none`}>
-          <div style={openDropdown === 'ITR / Tax' ? { marginLeft: `${itrOffset}px` } : {}} className={`${openDropdown === 'ITR / Tax' ? 'w-auto max-w-3xl' : 'w-[90vw] max-w-6xl'} bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-4 scale-95'}`}>
+        <div className={`absolute left-0 right-0 top-20 z-40 mt-0 flex ${openDropdown === 'ITR / TDS' ? 'justify-start pl-4' : 'justify-center'} pointer-events-none`}>
+          <div style={openDropdown === 'ITR / TDS' ? { marginLeft: `${itrOffset}px` } : {}} className={`${openDropdown === 'ITR / TDS' ? 'w-auto max-w-3xl' : 'w-[90vw] max-w-6xl'} bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-4 scale-95'}`}>
             {openDropdown ? (
               (() => {
                 const info = mainItems.find(i => i.id === openDropdown)
                 // If groups provided, render each group as a column with its own heading
                 if (info.groups && info.groups.length) {
-                  // Special layout for ITR / Tax: vertical group list on left, details on right
-                  if (info.id === 'ITR / Tax') {
+                  // Special layout for ITR / TDS: vertical group list on left, details on right
+                  if (info.id === 'ITR / TDS') {
                     return (
                       <div ref={dropdownRef} className="relative p-3">
                         <div className="flex items-start gap-3" onMouseLeave={() => setHoveredGroup(null)}>
@@ -253,7 +275,7 @@ const Navbar = () => {
                               const grp = info.groups.find(g => g.title === hoveredGroup)
                               return (
                                 <div onMouseEnter={() => {/* keep hoveredGroup while inside panel */}} onMouseLeave={() => setHoveredGroup(null)} className="w-[720px] bg-white rounded-md p-2 border-none">
-                                  <h4 className="font-semibold px-2  text-emerald-800 mb-2">{grp.title}</h4>
+                                  <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2">{grp.title}</h4>
                                   <p className="text-sm px-2  text-gray-600 mb-3">{info.desc}</p>
                                   <ul className="space-y-2   ">
                                     {grp.items.map(it => (
@@ -270,7 +292,7 @@ const Navbar = () => {
                   }
                   // generic groups layout for other items
                   return (
-                    <div ref={dropdownRef} className="relative p-6 max-h-[92vh] overflow-y-auto">
+                    <div ref={dropdownRef} className="relative p-6 h-[50vh] max-h-[70vh] overflow-y-auto">
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                         {info.groups.map((g, gi) => (
                           <div 
@@ -278,20 +300,43 @@ const Navbar = () => {
                             onMouseEnter={() => setHoveredColumn(gi)}
                             onMouseLeave={() => handleItemLeave()}
                           >
-                            <h4 className=" font-semibold mb-2 text-lg">{g.title}</h4>
-                            <ul className="space-y-2 flex flex-col ">
-                              {g.items.map(opt => (
-                                <li key={opt} className="relative">
-                                  <div 
-                                    className=" py-2 rounded hover:bg-gray-100 cursor-pointer "
-                                    onMouseEnter={() => handleItemHover(opt, gi)}
-                                    onMouseLeave={() => handleItemLeave()}
-                                  >
-                                    {opt}
-                                  </div>
-                                </li>
-                              ))}
-                            </ul>
+                            {g.subgroups ? (
+                              g.subgroups.map((sg, sgi) => (
+                                <div key={sgi} className="mb-4">
+                                  <h4 className="font-semibold mb-2 text-lg text-[#2F6A9E]">{sg.title}</h4>
+                                  <ul className="space-y-2 flex flex-col">
+                                    {sg.items.map(opt => (
+                                      <li key={opt} className="relative">
+                                        <div
+                                          className="py-2 rounded hover:bg-gray-100 cursor-pointer"
+                                          onMouseEnter={() => handleItemHover(opt, gi, sg)}
+                                          onMouseLeave={() => handleItemLeave()}
+                                        >
+                                          {opt}
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              ))
+                            ) : (
+                              <>
+                                <h4 className="font-semibold mb-2 text-lg text-[#2F6A9E]">{g.title}</h4>
+                                <ul className="space-y-2 flex flex-col ">
+                                  {g.items.map(opt => (
+                                    <li key={opt} className="relative">
+                                      <div 
+                                        className=" py-2 rounded hover:bg-gray-100 cursor-pointer "
+                                        onMouseEnter={() => handleItemHover(opt, gi)}
+                                        onMouseLeave={() => handleItemLeave()}
+                                      >
+                                        {opt}
+                                      </div>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </>
+                            )}
                           </div>
                         ))}
                         {/* Empty 4th column for preview panel space */}
@@ -299,7 +344,7 @@ const Navbar = () => {
                       </div>
                       {/* Preview panel - overlay positioned dynamically */}
                       <div className={`absolute bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 shadow-2xl transition-all duration-500 ease-out z-10 ${hoveredItem ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2 pointer-events-none'} ${hoveredColumn === 0 || hoveredColumn === 1 ? 'left-1/2 top-6 w-1/2' : hoveredColumn === 2 ? 'left-0 top-6 w-1/2' : 'left-1/2 top-6 w-1/2'}`}>
-                        <h4 className="font-semibold text-emerald-800 mb-3 text-xl">{hoveredItem || ''}</h4>
+                        <h4 className="font-semibold text-[#2F6A9E] mb-3 text-xl">{hoveredItem || ''}</h4>
                         <p className="text-sm text-gray-600 mb-4">Professional service with expert guidance. We provide comprehensive support for this service with detailed documentation and expert consultation.</p>
                         <div className="space-y-3">
                           <div className="flex items-center gap-2 text-sm text-gray-700">
@@ -332,7 +377,7 @@ const Navbar = () => {
                 const per = Math.ceil((info.options || []).length / 3) || 1
                 const cols = [0,1,2].map(i => (info.options || []).slice(i*per, (i+1)*per))
                 return (
-                  <div ref={dropdownRef} className="relative p-6 max-h-[92vh] overflow-y-auto">
+                  <div ref={dropdownRef} className="relative p-6 max-h-[50vh] overflow-y-auto">
                     <h3 className="text-lg font-semibold text-center mb-4">{info.label}</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                       {cols.map((col, ci) => (
@@ -360,7 +405,7 @@ const Navbar = () => {
                     </div>
                     {/* Preview panel - overlay positioned dynamically */}
                     <div className={`absolute bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 shadow-2xl transition-all duration-500 ease-out z-10 ${hoveredItem ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2 pointer-events-none'} ${hoveredColumn === 0 || hoveredColumn === 1 ? 'left-1/2 top-16 w-1/2' : hoveredColumn === 2 ? 'left-0 top-16 w-1/2' : 'left-1/2 top-16 w-1/2'}`}>
-                      <h4 className="font-semibold text-emerald-800 mb-3 text-xl">{hoveredItem || ''}</h4>
+                      <h4 className="font-semibold text-[#2F6A9E] mb-3 text-xl">{hoveredItem || ''}</h4>
                       <p className="text-sm text-gray-600 mb-4">Professional service with expert guidance. We provide comprehensive support for this service with detailed documentation and expert consultation.</p>
                       <div className="space-y-3">
                         <div className="flex items-center gap-2 text-sm text-gray-700">

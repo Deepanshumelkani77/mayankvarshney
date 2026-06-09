@@ -4,7 +4,7 @@ import { assets } from "../assets/assets";
 
 const mainItems = [
   { id: 'Accounting', label: 'Accounting', desc: 'Bookkeeping, financial statements, payroll and reconciliations.', groups: [
-    { title: 'Onsite', items: ["Day to Day Onsite Accounting","Weekly Onsite Accounting","Monthly Onsite Accounting","Quarterly Onsite Accounting","Yearly Onsite Accounting",,"Payroll Services"] },
+    { title: 'Onsite', items: ["Day to Day Onsite Accounting","Weekly Onsite Accounting","Monthly Onsite Accounting","Quarterly Onsite Accounting","Yearly Onsite Accounting","Payroll Services"] },
     { title: 'Offsite', items: ["Day to Day Offsite Accounting","Weekly Offsite Accounting","Monthly Offsite Accounting","Quarterly Offsite Accounting","Yearly Offsite Accounting","Payroll Services"] },
     { title: 'Asset Management', items: ["Fixed Assets Tagging","Fixed Asset Valuation","Inventory Valuation"] }
   ] },
@@ -16,8 +16,21 @@ const mainItems = [
   
   { id: 'GST', label: 'GST', desc: 'GST registration, returns, and compliance.', options: ['Registration', 'Return Filing', 'GST Audit'] },
   { id: 'MCA', label: 'MCA', desc: 'Company filings, annual returns and compliance.', options: ['Annual Filing', 'Director Changes'] },
-   { id: 'DGFT', label: 'DGFT', desc: 'DGFT registration, returns, and compliance.', options: ['Registration', 'Return Filing', 'DGFT Audit'] },
-  { id: 'Legal Drafting', label: 'Legal Drafting', desc: 'Legal document preparation and review.', options: ['Contract Drafting', 'Agreement Review'] },
+   { id: 'DGFT', label: 'DGFT', desc: 'DGFT registration, returns, and compliance.', groups:[
+    {title:'Registration',items:['Import Export Code']},
+    {title:'Assessment',items:['Assessment']},
+    {title:'Refund',items:['Refund','SAD Refund']}
+   ]},
+  { id: 'Legal Drafting', label: 'Legal Drafting', desc: 'Legal document preparation and review.', groups:[
+    {title:'PROPERTY MATTERS',items:['Property Registration','Property Title Verification','Gift Deed','Sale Deed','Rent Agreement','Lease Deed','Relinquishment Deed']},
+    { title: 'WILL & POWER OF ATTORNEY (POA)', subgroups: [
+           { title: 'POWER OF ATTORNEY (POA)', items: ['General Power of Attorney (GPA)','Special Power Of Attorney (SPOA)'] },
+      { title: 'WILL', items: ['Will Drafting','Will Registration','Will Probate'] },
+ 
+    ]},
+    {title:'AGREEMENTS DRAFTING',items:['Memorandum Of Understanding','Franchise Agreement','Joint Venture Agreement','Founders Agreement','Shareholders Agreement','Share Purchase Agreement','Consultancy Agreement','Freelancer Agreement','Agency Agreement','Non Disclosure Agreement']},
+    {title:'OTHERS',items:['Account Opening Resolution','Website Terms And Conditions','Website Privacy Policy','Website Disclaimer Policy','Appointment Letter','Resignation Letter','Offer Letter']    }
+  ]},
   { id: 'Registration', label: 'Registration', desc: 'Business registration and compliance.', options: ['Company Registration', 'Trademark Registration'] },
   { id: 'Compliance', label: 'Compliance', desc: 'Regulatory compliance and reporting.', options: ['Annual Compliance', 'Quarterly Reporting'] },
  { id: 'Investment', label: 'Investment', desc: 'Investment advisory and planning.', options: ['Financial Planning', 'Investment Analysis'] },
@@ -205,7 +218,7 @@ const N = () => {
 
         {/* Dropdown panel (single shared panel, content changes per openDropdown) */}
         <div className={`absolute left-0 right-0 top-20 z-40 mt-0 flex justify-center pointer-events-none`}>
-          <div className={`w-[90vw] max-w-6xl bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-4 scale-95'}`}>
+          <div className={`w-[90vw] max-w-6xl  bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-4 scale-95'}`}>
             {openDropdown ? (
               (() => {
                 const info = mainItems.find(i => i.id === openDropdown)
@@ -222,7 +235,7 @@ const N = () => {
                               onMouseEnter={() => { setHoveredColumn(gi); setHoveredGroup(g); }}
                               onMouseLeave={() => handleItemLeave()}
                             >
-                              <h4 className="font-semibold mb-2 text-lg cursor-pointer hover:text-emerald-600">{g.title}</h4>
+                              <h4 className="font-semibold mb-2 text-lg text-[#2F6A9E] cursor-pointer hover:text-emerald-600">{g.title}</h4>
                               <ul className="space-y-2 flex flex-col">
                                 {hoveredGroup === g ? g.items.map(opt => (
                                   <li key={opt} className="relative">
@@ -243,7 +256,7 @@ const N = () => {
                         </div>
                         {/* Preview panel - overlay positioned dynamically */}
                         <div className={`absolute bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 shadow-2xl transition-all duration-500 ease-out z-10 ${hoveredItem ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2 pointer-events-none'} ${hoveredColumn === 0 || hoveredColumn === 1 ? 'left-1/2 top-6 w-1/2' : hoveredColumn === 2 ? 'left-0 top-6 w-1/2' : 'left-1/2 top-6 w-1/2'}`}>
-                        <h4 className="font-semibold text-emerald-800 mb-3 text-xl">{hoveredItem || ''}</h4>
+                        <h4 className="font-semibold text-[#2F6A9E] mb-3 text-xl">{hoveredItem || ''}</h4>
                         <p className="text-sm text-gray-600 mb-4">Professional service with expert guidance. We provide comprehensive support for this service with detailed documentation and expert consultation.</p>
                         <div className="space-y-3">
                           <div className="flex items-center gap-2 text-sm text-gray-700">
@@ -277,33 +290,56 @@ const N = () => {
                     <div ref={dropdownRef} className="relative p-6 max-h-[92vh] overflow-y-auto">
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                           {info.groups.map((g, gi) => (
-                          <div 
-                            key={gi} 
-                            onMouseEnter={() => setHoveredColumn(gi)}
-                            onMouseLeave={() => handleItemLeave()}
-                          >
-                            <h4 className=" font-semibold mb-2 text-lg">{g.title}</h4>
-                            <ul className="space-y-2 flex flex-col ">
-                              {g.items.map(opt => (
-                                <li key={opt} className="relative">
-                                  <div 
-                                    className=" py-2 rounded hover:bg-gray-100 cursor-pointer "
-                                    onMouseEnter={() => handleItemHover(opt, gi)}
-                                    onMouseLeave={() => handleItemLeave()}
-                                  >
-                                    {opt}
+                            <div 
+                              key={gi} 
+                              onMouseEnter={() => setHoveredColumn(gi)}
+                              onMouseLeave={() => handleItemLeave()}
+                            >
+                              {g.subgroups ? (
+                                g.subgroups.map((sg, sgi) => (
+                                  <div key={sgi} className="mb-4">
+                                    <h4 className="font-semibold mb-2 text-lg text-[#2F6A9E]">{sg.title}</h4>
+                                    <ul className="space-y-2 flex flex-col">
+                                      {sg.items.map(opt => (
+                                        <li key={opt} className="relative">
+                                          <div
+                                            className="py-2 rounded hover:bg-gray-100 cursor-pointer"
+                                            onMouseEnter={() => handleItemHover(opt, gi, sg)}
+                                            onMouseLeave={() => handleItemLeave()}
+                                          >
+                                            {opt}
+                                          </div>
+                                        </li>
+                                      ))}
+                                    </ul>
                                   </div>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
+                                ))
+                              ) : (
+                                <>
+                                  <h4 className="font-semibold mb-2 text-lg text-[#2F6A9E]">{g.title}</h4>
+                                  <ul className="space-y-2 flex flex-col ">
+                                    {g.items.map(opt => (
+                                      <li key={opt} className="relative">
+                                        <div 
+                                          className=" py-2 rounded hover:bg-gray-100 cursor-pointer "
+                                          onMouseEnter={() => handleItemHover(opt, gi)}
+                                          onMouseLeave={() => handleItemLeave()}
+                                        >
+                                          {opt}
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </>
+                              )}
+                            </div>
+                          ))}
                         {/* Empty 4th column for preview panel space */}
                         <div className="hidden md:block"></div>
                       </div>
                       {/* Preview panel - overlay positioned dynamically */}
                       <div className={`absolute bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 shadow-2xl transition-all duration-500 ease-out z-10 ${hoveredItem ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2 pointer-events-none'} ${hoveredColumn === 0 || hoveredColumn === 1 ? 'left-1/2 top-6 w-1/2' : hoveredColumn === 2 ? 'left-0 top-6 w-1/2' : 'left-1/2 top-6 w-1/2'}`}>
-                        <h4 className="font-semibold text-emerald-800 mb-3 text-xl">{hoveredItem || ''}</h4>
+                        <h4 className="font-semibold text-[#2F6A9E] mb-3 text-xl">{hoveredItem || ''}</h4>
                         <p className="text-sm text-gray-600 mb-4">Professional service with expert guidance. We provide comprehensive support for this service with detailed documentation and expert consultation.</p>
                         <div className="space-y-3">
                           <div className="flex items-center gap-2 text-sm text-gray-700">
@@ -364,7 +400,7 @@ const N = () => {
                     </div>
                     {/* Preview panel - overlay positioned dynamically */}
                     <div className={`absolute bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 shadow-2xl transition-all duration-500 ease-out z-10 ${hoveredItem ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2 pointer-events-none'} ${hoveredColumn === 0 || hoveredColumn === 1 ? 'left-1/2 top-16 w-1/2' : hoveredColumn === 2 ? 'left-0 top-16 w-1/2' : 'left-1/2 top-16 w-1/2'}`}>
-                      <h4 className="font-semibold text-emerald-800 mb-3 text-xl">{hoveredItem || ''}</h4>
+                      <h4 className="font-semibold text-[#2F6A9E] mb-3 text-xl">{hoveredItem || ''}</h4>
                       <p className="text-sm text-gray-600 mb-4">Professional service with expert guidance. We provide comprehensive support for this service with detailed documentation and expert consultation.</p>
                       <div className="space-y-3">
                         <div className="flex items-center gap-2 text-sm text-gray-700">
