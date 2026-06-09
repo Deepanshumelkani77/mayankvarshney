@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
- 
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -8,7 +8,7 @@ const Contact = () => {
     subject: '',
     message: ''
   })
- 
+
   const handleSubmit = (e) => {
     e.preventDefault()
     // Handle form submission here
@@ -16,24 +16,24 @@ const Contact = () => {
     alert('Thank you for your message! We will get back to you soon.')
     setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
   }
- 
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
   }
- 
+
   return (
-    <div className="min-h-screen bg-[#E5F0E5]">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Hero Section */}
-      <div className="bg-[#053131] text-white py-16">
+      <div className="bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
           <p className="text-xl text-blue-100">Get in touch with Mayank Varshney & Co.</p>
         </div>
       </div>
- 
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
@@ -44,7 +44,7 @@ const Contact = () => {
                 Have questions about our services? We're here to help. Reach out to us through any of the following channels.
               </p>
             </div>
- 
+
             {/* Company Info */}
             <div className="bg-white rounded-xl shadow-lg p-6">
               <div className="flex items-start space-x-4">
@@ -59,7 +59,7 @@ const Contact = () => {
                 </div>
               </div>
             </div>
- 
+
             {/* Address */}
             <div className="bg-white rounded-xl shadow-lg p-6">
               <div className="flex items-start space-x-4">
@@ -81,7 +81,7 @@ const Contact = () => {
                 </div>
               </div>
             </div>
- 
+
             {/* Email */}
             <div className="bg-white rounded-xl shadow-lg p-6">
               <div className="flex items-start space-x-4">
@@ -98,7 +98,7 @@ const Contact = () => {
                 </div>
               </div>
             </div>
- 
+
             {/* Phone */}
             <div className="bg-white rounded-xl shadow-lg p-6">
               <div className="flex items-start space-x-4">
@@ -115,7 +115,7 @@ const Contact = () => {
                 </div>
               </div>
             </div>
- 
+
             {/* Map */}
             <div className="bg-white rounded-xl shadow-lg overflow-hidden">
               <div className="p-6">
@@ -135,7 +135,7 @@ const Contact = () => {
               </div>
             </div>
           </div>
- 
+
           {/* Contact Form */}
           <div className="bg-white rounded-xl shadow-lg p-8">
             <h2 className="text-3xl font-bold text-gray-800 mb-6">Send us a Message</h2>
@@ -155,7 +155,7 @@ const Contact = () => {
                   placeholder="Enter your full name"
                 />
               </div>
- 
+
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                   Email Address *
@@ -171,7 +171,7 @@ const Contact = () => {
                   placeholder="Enter your email address"
                 />
               </div>
- 
+
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                   Phone Number
@@ -186,7 +186,7 @@ const Contact = () => {
                   placeholder="Enter your phone number"
                 />
               </div>
- 
+
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
                   Subject *
@@ -213,7 +213,7 @@ const Contact = () => {
                   <option value="Other">Other</option>
                 </select>
               </div>
- 
+
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                   Message *
@@ -229,10 +229,10 @@ const Contact = () => {
                   placeholder="Write your message here..."
                 ></textarea>
               </div>
- 
+
               <button
                 type="submit"
-                className="w-full bg-[#009966] text-white py-4 px-6 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors duration-300 shadow-md hover:shadow-lg"
+                className="w-full bg-[#2F6A9E] text-white py-4 px-6 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors duration-300 shadow-md hover:shadow-lg"
               >
                 Send Message
               </button>
@@ -243,5 +243,5 @@ const Contact = () => {
     </div>
   )
 }
- 
+
 export default Contact
