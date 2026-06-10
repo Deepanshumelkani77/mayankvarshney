@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { AppContext } from '../context/AppContext'
 import { assets } from "../assets/assets";
 
 const mainItems = [
@@ -50,6 +52,7 @@ const mainItems = [
 
 const Navbar = () => {
   const [showTopBar, setShowTopBar] = useState(true);
+  const { openSignup } = useContext(AppContext)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,8 +81,6 @@ const Navbar = () => {
   const hoverTimeoutRef = useRef(null)
   const [itrOffset, setItrOffset] = useState(0)
   const [spacerHeight, setSpacerHeight] = useState(0)
-  const [authOpen, setAuthOpen] = useState(false)
-  const [authMode, setAuthMode] = useState('signup') // 'signup' or 'login'
 
   useEffect(() => {
     function handleOutside(e) {
@@ -181,7 +182,7 @@ const Navbar = () => {
               <Link to="/contact" className="hover:underline">Contact</Link>
             </div>
 
-            <button onClick={() => { setAuthMode('login'); setAuthOpen(true); }} className="ml-2 inline-flex items-center bg-emerald-600 text-white px-3 py-1.5 rounded-md text-sm hover:bg-emerald-700">Sign Up</button>
+            <button onClick={() => openSignup('signup')} className="ml-2 inline-flex items-center bg-emerald-600 text-white px-3 py-1.5 rounded-md text-sm hover:bg-emerald-700">Sign Up</button>
           </div>
         </div>
       </div>
@@ -450,44 +451,6 @@ const Navbar = () => {
       </nav>
       {/* spacer to offset fixed navbars so page content starts below them */}
       <div style={{ height: spacerHeight }} aria-hidden="true" />
-
-      {/* Auth Modal */}
-      {authOpen ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setAuthOpen(false)} />
-          <div className="relative bg-white rounded-xl shadow-xl w-[95%] max-w-2xl mx-4 p-6 z-10">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-gray-800">{authMode === 'signup' ? 'Create an Account' : 'Welcome Back'}</h3>
-              <button onClick={() => setAuthOpen(false)} className="text-gray-500 hover:text-gray-800">✕</button>
-            </div>
-
-            {authMode === 'signup' ? (
-              <div>
-                <form className="space-y-3">
-                  <input className="w-full px-3 py-2 border rounded-md" placeholder="Full name" />
-                  <input className="w-full px-3 py-2 border rounded-md" placeholder="Email address" />
-                  <input type="password" className="w-full px-3 py-2 border rounded-md" placeholder="Password" />
-                  <button className="w-full bg-emerald-600 text-white py-2 rounded-md">Sign up</button>
-                </form>
-                <div className="text-sm text-center mt-3">
-                  <button onClick={() => setAuthMode('login')} className="text-[#2F6A9E] underline">Already have an account? Login</button>
-                </div>
-              </div>
-            ) : (
-              <div>
-                <form className="space-y-3">
-                  <input className="w-full px-3 py-2 border rounded-md" placeholder="Email address" />
-                  <input type="password" className="w-full px-3 py-2 border rounded-md" placeholder="Password" />
-                  <button className="w-full bg-emerald-600 text-white py-2 rounded-md">Login</button>
-                </form>
-                <div className="text-sm text-center mt-3">
-                  <button onClick={() => setAuthMode('signup')} className="text-[#2F6A9E] underline">Don't have an account? Sign up</button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      ) : null}
     </>
   );
 };
