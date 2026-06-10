@@ -68,6 +68,7 @@ const Navbar = () => {
   }, []);
 
   const navRef = useRef(null)
+  const topbarRef = useRef(null)
   const [openDropdown, setOpenDropdown] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const dropdownRef = useRef(null)
@@ -76,6 +77,7 @@ const Navbar = () => {
   const [hoveredGroup, setHoveredGroup] = useState(null)
   const hoverTimeoutRef = useRef(null)
   const [itrOffset, setItrOffset] = useState(0)
+  const [spacerHeight, setSpacerHeight] = useState(0)
 
   useEffect(() => {
     function handleOutside(e) {
@@ -109,6 +111,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const measure = () => {
+      // ITR offset measurement
       if (openDropdown === 'ITR / TDS') {
         const el = document.querySelector('[data-item="ITR / TDS"]')
         if (el) {
@@ -116,6 +119,10 @@ const Navbar = () => {
           setItrOffset(Math.round(rect.left))
         }
       }
+      // spacer height (topbar + main nav)
+      const topH = topbarRef.current ? Math.round(topbarRef.current.getBoundingClientRect().height) : 0
+      const navH = navRef.current ? Math.round(navRef.current.getBoundingClientRect().height) : 0
+      setSpacerHeight(topH + navH)
     }
     measure()
     window.addEventListener('resize', measure)
@@ -144,11 +151,12 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Top Navbar */}
+      {/* Top Navbar (fixed) */}
       <div
-        className={`bg-[#053131] text-white transition-all duration-300 overflow-hidden ${
-          showTopBar ? 'h-12 opacity-100' : 'h-0 opacity-0'
-        }`}
+        ref={topbarRef}
+        className={`fixed top-0 left-0 right-0 bg-[#053131] text-white transition-all duration-300 ${
+          showTopBar ? 'h-12 opacity-100 pointer-events-auto' : 'h-0 opacity-0 pointer-events-none'
+        } z-50`}
       >
         <div className="max-w-8xl mx-auto h-12 flex items-center justify-between px-4">
           <div className="flex items-center gap-6 text-lg">
@@ -176,13 +184,13 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Main Navbar */}
+      {/* Main Navbar (fixed below topbar) */}
       <nav
         ref={navRef}
         onMouseLeave={() => setOpenDropdown(null)}
-        className={`relative bg-[#E5F0E5] shadow-md w-full z-50 transition-all duration-300 ${
-          showTopBar ? 'sticky top-12' : 'fixed top-0'
-        }`}
+        className={`fixed left-0 right-0 bg-[#E5F0E5] shadow-md w-full transition-all duration-300 ${
+          showTopBar ? 'top-12' : 'top-0'
+        } z-40`}
       >
         <div className="max-w-8xl mx-auto flex items-center justify-between px-4 py-4">
 
@@ -438,6 +446,8 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+      {/* spacer to offset fixed navbars so page content starts below them */}
+      <div style={{ height: spacerHeight }} aria-hidden="true" />
     </>
   );
 };

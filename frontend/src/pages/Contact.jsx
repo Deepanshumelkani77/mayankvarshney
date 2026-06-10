@@ -25,7 +25,7 @@ const Contact = () => {
   }
  
   return (
-    <div className="min-h-screen bg-[#E5F0E5]">
+    <div className=" bg-[#E5F0E5]">
       {/* Hero Section */}
       <div className="bg-[#053131] text-white py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,13 +34,12 @@ const Contact = () => {
         </div>
       </div>
  
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8" style={{ height: 'calc(100vh - 6rem)' }}>
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8" >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full">
           {/* Left: Contact Information */}
           <div className="space-y-6 p-4 overflow-auto">
             <div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">Get in Touch</h2>
-              <p className="text-gray-600 mb-6">Have questions about our services? We're here to help. Reach out to us through any of the following channels.</p>
+ 
             </div>
 
             <div className="bg-white rounded-xl shadow-lg p-4">
@@ -102,9 +101,9 @@ const Contact = () => {
           </div>
 
           {/* Middle: Contact Form */}
-          <div className="bg-white rounded-xl shadow-lg p-6 overflow-auto">
+          <div className="bg-white rounded-xl shadow-lg p-6 overflow-auto mb-3">
             <h2 className="text-3xl font-bold text-gray-800 mb-6">Send us a Message</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
                 <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition" placeholder="Enter your full name" />
@@ -115,10 +114,6 @@ const Contact = () => {
                 <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition" placeholder="Enter your email address" />
               </div>
 
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition" placeholder="Enter your phone number" />
-              </div>
 
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">Subject *</label>
@@ -140,7 +135,7 @@ const Contact = () => {
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Message *</label>
-                <textarea id="message" name="message" required rows={6} value={formData.message} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition resize-none" placeholder="Write your message here..."></textarea>
+                <textarea id="message" name="message" required rows={3} value={formData.message} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition resize-none" placeholder="Write your message here..."></textarea>
               </div>
 
               <button type="submit" className="w-full bg-[#009966] text-white py-4 px-6 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors duration-300 shadow-md hover:shadow-lg">Send Message</button>
@@ -148,7 +143,7 @@ const Contact = () => {
           </div>
 
           {/* Right: Map */}
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden p-4">
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden p-4 mb-3">
             <div className="p-2">
               <h3 className="font-semibold text-gray-800 mb-4">Our Location</h3>
             </div>
@@ -158,6 +153,9 @@ const Contact = () => {
           </div>
         </div>
       </div>
+
+
+
     </div>
   )
 }
