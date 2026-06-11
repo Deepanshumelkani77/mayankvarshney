@@ -48,17 +48,17 @@ const Header = () => {
 
         {/* Search bar centered */}
         <div className="flex justify-center">
-          <div className="w-full max-w-2xl">
+          <div className="w-full max-w-3xl">
             <label className="sr-only">Search services</label>
-            <div className="flex items-center bg-white rounded-md shadow-sm overflow-hidden">
+            <div className="flex items-center bg-white rounded-xl shadow-sm overflow-hidden">
               <input
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                className="flex-1 px-6 py-4 text-gray-800 focus:outline-none"
+                className="flex-1 px-8 py-4 text-gray-800 focus:outline-none"
                 placeholder="Search services, e.g., GST, Accounting..."
                 aria-label="Search services"
               />
-              <button className="bg-emerald-600 text-white px-4 py-4 hover:bg-emerald-700">Search</button>
+              <button className="bg-emerald-600 text-white px-8 py-4 hover:bg-emerald-700">Search</button>
             </div>
           </div>
         </div>

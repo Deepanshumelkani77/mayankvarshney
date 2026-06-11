@@ -42,24 +42,7 @@ const About = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white rounded-xl shadow-lg p-4 text-center">
-                <div className="text-2xl font-bold text-[#2F6A9E] mb-1">500+</div>
-                <div className="text-xs text-gray-600">Happy Clients</div>
-              </div>
-              <div className="bg-white rounded-xl shadow-lg p-4 text-center">
-                <div className="text-2xl font-bold text-[#2F6A9E] mb-1">10+</div>
-                <div className="text-xs text-gray-600">Years Experience</div>
-              </div>
-              <div className="bg-white rounded-xl shadow-lg p-4 text-center">
-                <div className="text-2xl font-bold text-[#2F6A9E] mb-1">50+</div>
-                <div className="text-xs text-gray-600">Services</div>
-              </div>
-              <div className="bg-white rounded-xl shadow-lg p-4 text-center">
-                <div className="text-2xl font-bold text-[#2F6A9E] mb-1">99%</div>
-                <div className="text-xs text-gray-600">Success Rate</div>
-              </div>
-            </div>
+          
           </div>
 
           {/* Right Side - Image with Effects */}

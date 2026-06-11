@@ -222,7 +222,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <button className="hidden md:inline bg-emerald-600 text-white px-4 py-2 rounded-md">Book Appointment</button>
+            <Link to="/appointment" className="hidden md:inline bg-emerald-600 text-white px-4 py-2 rounded-md">Book Appointment</Link>
 
             <button onClick={() => setMobileOpen(prev => !prev)} className="md:hidden p-2 rounded-md bg-white/10">
               <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
