@@ -42,7 +42,12 @@ const mainItems = [
     {title:'AGREEMENTS DRAFTING',items:['Memorandum Of Understanding','Franchise Agreement','Joint Venture Agreement','Founders Agreement','Shareholders Agreement','Share Purchase Agreement','Consultancy Agreement','Freelancer Agreement','Agency Agreement','Non Disclosure Agreement']},
     {title:'OTHERS',items:['Account Opening Resolution','Website Terms And Conditions','Website Privacy Policy','Website Disclaimer Policy','Appointment Letter','Resignation Letter','Offer Letter']}
   ] },
-  { id: 'Registration', label: 'Registration', desc: 'Business registration and compliance.', options: ['Company Registration', 'Trademark Registration'] },
+  { id: 'Registration', label: 'Registration', desc: 'Business registration and compliance.', groups:[
+    {title:'Business Registrations',items:['GSTIN Registrations','MSME Registration','FSSAI Registration','PF Registration','ESI Registration','TAN Registration','IEC Registration','APEDA Registration','Shop & Establishment Registration','Society Registration','Club Registration','Trust Registration','Partnership Registration','BIS Registration']},
+    {title:'Property related Registrations',items:['RERA Registration','Property Registration','Gift Deed Registration','Sale Deed Registration','Gift Deed Registration','Sale Deed Registration','Lease Deed Registration','Relinquishment Deed Registration','Will Probate','General Power of Attorney (GPA) Registration']},
+    {title:'Other Registrations',items:['Agreement Registration','Bar Code Registration','Digital Signature Certificate']},
+   
+  ] },
   { id: 'Compliance', label: 'Compliance', desc: 'Regulatory compliance and reporting.', options: ['Annual Compliance', 'Quarterly Reporting'] },
  { id: 'Investment', label: 'Investment', desc: 'Investment advisory and planning.', options: ['Financial Planning', 'Investment Analysis'] },
 

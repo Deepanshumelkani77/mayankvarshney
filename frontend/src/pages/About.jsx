@@ -1,175 +1,125 @@
 import React from 'react'
+import { assets } from '../assets/assets'
 
 const About = () => {
   return (
-    <div className="bg-[#E5F0E5] min-h-screen">
+    <div className="bg-[#E5F0E5]">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-[#053131] to-[#0a4a4a] text-white py-5">
+      <div className="bg-[#053131] text-white py-4">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">About Mayank Varshney & Co.</h1>
-            
-          </div>
+          <p className="text-xl text-blue-100">Learn more about Mayank Varshney & Co.</p>
         </div>
       </div>
 
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Our Story Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">Our Story</h2>
-            <p className="text-gray-600 mb-4 leading-relaxed">
-              Founded with a vision to simplify complex financial and legal processes, Mayank Varshney & Co. has grown into a trusted name in the industry. Our journey began with a simple mission: to provide professional, reliable, and affordable services to businesses of all sizes.
-            </p>
-            <p className="text-gray-600 mb-4 leading-relaxed">
-              Over the years, we have helped hundreds of clients navigate the complexities of taxation, compliance, and business regulations. Our team of experienced professionals brings together expertise from various domains to offer comprehensive solutions under one roof.
-            </p>
-            <p className="text-gray-600 leading-relaxed">
-              Today, we continue to uphold our commitment to excellence, integrity, and client satisfaction. We believe in building long-term relationships with our clients by delivering consistent quality and personalized service.
-            </p>
-          </div>
-          <div className="bg-white rounded-2xl shadow-xl p-6">
-            <div className="aspect-square bg-gradient-to-br from-[#2F6A9E]/10 to-[#1a4a75]/10 rounded-xl flex items-center justify-center">
-              <div className="text-center">
-                <svg className="w-20 h-20 mx-auto text-[#2F6A9E] mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-                <p className="text-gray-500 text-sm">Office Image Placeholder</p>
-                <p className="text-gray-400 text-xs mt-1">Recommended size: 600x600px</p>
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full">
+          {/* Left Side - Content */}
+          <div className="space-y-6 p-4 overflow-auto">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">About Mayank Varshney & Co.</h2>
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                Founded with a vision to simplify complex financial and legal processes, Mayank Varshney & Co. has grown into a trusted name in the industry. Our journey began with a simple mission: to provide professional, reliable, and affordable services to businesses of all sizes.
+              </p>
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                Over the years, we have helped hundreds of clients navigate the complexities of taxation, compliance, and business regulations. Our team of experienced professionals brings together expertise from various domains to offer comprehensive solutions under one roof.
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Today, we continue to uphold our commitment to excellence, integrity, and client satisfaction. We believe in building long-term relationships with our clients by delivering consistent quality and personalized service.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-lg p-4">
+              <h3 className="font-semibold text-gray-800 mb-3">Our Mission</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                To empower businesses and individuals with expert financial guidance and legal support, ensuring compliance while maximizing growth opportunities.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-lg p-4">
+              <h3 className="font-semibold text-gray-800 mb-3">Our Vision</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                To be the most trusted and preferred financial and legal services provider in India, known for our expertise, integrity, and commitment to client success.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-white rounded-xl shadow-lg p-4 text-center">
+                <div className="text-2xl font-bold text-[#2F6A9E] mb-1">500+</div>
+                <div className="text-xs text-gray-600">Happy Clients</div>
+              </div>
+              <div className="bg-white rounded-xl shadow-lg p-4 text-center">
+                <div className="text-2xl font-bold text-[#2F6A9E] mb-1">10+</div>
+                <div className="text-xs text-gray-600">Years Experience</div>
+              </div>
+              <div className="bg-white rounded-xl shadow-lg p-4 text-center">
+                <div className="text-2xl font-bold text-[#2F6A9E] mb-1">50+</div>
+                <div className="text-xs text-gray-600">Services</div>
+              </div>
+              <div className="bg-white rounded-xl shadow-lg p-4 text-center">
+                <div className="text-2xl font-bold text-[#2F6A9E] mb-1">99%</div>
+                <div className="text-xs text-gray-600">Success Rate</div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Mission & Vision */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <div className="bg-[#2F6A9E] w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Mission</h3>
-            <p className="text-gray-600 leading-relaxed">
-              To empower businesses and individuals with expert financial guidance and legal support, ensuring compliance while maximizing growth opportunities. We strive to make complex regulatory processes simple and accessible for everyone.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <div className="bg-[#2F6A9E] w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-              </svg>
-            </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Vision</h3>
-            <p className="text-gray-600 leading-relaxed">
-              To be the most trusted and preferred financial and legal services provider in India, known for our expertise, integrity, and commitment to client success. We aim to set new standards in service excellence and innovation.
-            </p>
-          </div>
-        </div>
-
-        {/* Why Choose Us */}
-        <div className="mb-20">
-          <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center">Why Choose Us</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-              <div className="bg-blue-50 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-[#2F6A9E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="font-semibold text-gray-800 mb-2">Expert Team</h3>
-              <p className="text-gray-600 text-sm">Highly qualified professionals with years of experience</p>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-              <div className="bg-blue-50 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-[#2F6A9E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="font-semibold text-gray-800 mb-2">Timely Delivery</h3>
-              <p className="text-gray-600 text-sm">We respect deadlines and deliver on time, every time</p>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-              <div className="bg-blue-50 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-[#2F6A9E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <h3 className="font-semibold text-gray-800 mb-2">Client Focus</h3>
-              <p className="text-gray-600 text-sm">Personalized solutions tailored to your specific needs</p>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-              <div className="bg-blue-50 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-[#2F6A9E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="font-semibold text-gray-800 mb-2">Trust & Integrity</h3>
-              <p className="text-gray-600 text-sm">Built on foundation of honesty and ethical practices</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Services Overview */}
-        <div className="mb-20">
-          <h2 className="text-3xl font-bold text-gray-800 mb-12 text-center">Our Services</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {['Accounting', 'GST', 'ITR/TDS', 'MCA', 'DGFT', 'Legal Drafting', 'Registration', 'Compliance', 'Investment', 'ROC', 'Labour', 'MSME'].map((service, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-lg p-4 text-center hover:shadow-xl transition-shadow cursor-pointer">
-                <div className="bg-gradient-to-br from-[#2F6A9E] to-[#1a4a75] w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
+          {/* Right Side - Image with Effects */}
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden p-4 mb-3 relative">
+            <div className="relative">
+              {/* Main Image */}
+              <div className="aspect-[4/3] bg-gradient-to-br from-[#2F6A9E]/10 to-[#1a4a75]/10 rounded-xl flex items-center justify-center">
+                <div className="text-center">
+                 <img src={assets.info1} className="h-full w-full object-cover"/>
                 </div>
-                <p className="text-sm font-medium text-gray-800">{service}</p>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Statistics Section */}
-        <div className="bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] rounded-3xl p-12 mb-20 shadow-2xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">500+</div>
-              <div className="text-blue-200">Happy Clients</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">10+</div>
-              <div className="text-blue-200">Years Experience</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">50+</div>
-              <div className="text-blue-200">Services Offered</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">100%</div>
-              <div className="text-blue-200">Client Satisfaction</div>
-            </div>
-          </div>
-        </div>
+              {/* Floating Badge 1 */}
+              <div className="absolute top-4 right-4 bg-white rounded-xl shadow-lg p-3 animate-float">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-[#2F6A9E] rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-gray-800">Trusted</div>
+                    <div className="text-xs text-gray-500">500+ Clients</div>
+                  </div>
+                </div>
+              </div>
 
-        {/* CTA Section */}
-        <div className="bg-white rounded-3xl shadow-xl p-12 text-center">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Ready to Get Started?</h2>
-          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            Contact us today to discuss how we can help you with your financial and legal needs. Our team is ready to assist you.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/contact" className="inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white font-semibold rounded-xl hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl">
-              Contact Us
-            </a>
-            <a href="/signup" className="inline-flex items-center justify-center px-8 py-3 border-2 border-[#2F6A9E] text-[#2F6A9E] font-semibold rounded-xl hover:bg-[#2F6A9E] hover:text-white transition-all">
-              Create Account
-            </a>
+              {/* Floating Badge 2 */}
+              <div className="absolute bottom-4 left-4 bg-white rounded-xl shadow-lg p-3 animate-float-slow">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-[#2F6A9E] rounded-full flex items-center justify-center">
+                   <img src={assets.info1} className="w-full h-full" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-gray-800">Fast</div>
+                    <div className="text-xs text-gray-500">Quick Service</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-15px); }
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+        .animate-float-slow {
+          animation: float-slow 4s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   )
 }
