@@ -3,8 +3,8 @@ import React from 'react'
 const Footer = () => {
   return (
     <footer className="bg-[#053131] text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Company Info */}
           <div>
             <h3 className="text-2xl font-bold mb-4">Mayank Varshney & Co.</h3>
@@ -73,13 +73,17 @@ const Footer = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <span className="text-blue-100 text-sm">Shop No. FF 05, Rise Retailia 1, Plot No. SC 01, Sector 1, Greater Noida West, Uttar Pradesh - 201306</span>
+                <span className="text-blue-100 text-sm">Shop No. FF 05, Rise Retailia 1
+Plot No. SC 01, Sector 1
+Greater Noida West
+Gautam Buddha Nagar
+Uttar Pradesh - 201306</span>
               </li>
               <li className="flex items-center gap-3">
                 <svg className="w-5 h-5 text-[#2F6A9E] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <a href="tel:+919910060345" className="text-blue-100 hover:text-white transition-colors">+91 99100 60345</a>
+                <a href="tel:+919910060345" className="text-blue-100 hover:text-white transition-colors">+91 9999117576 </a>
               </li>
               <li className="flex items-center gap-3">
                 <svg className="w-5 h-5 text-[#2F6A9E] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,6 +93,21 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+        </div>
+
+        {/* Google Map */}
+        <div className="bg-white/10 rounded-2xl overflow-hidden mb-12">
+        
+          <iframe 
+            src="https://www.google.com/maps?q=28.5807941,77.4282933&z=17&output=embed" 
+            width="100%" 
+            height="300" 
+            style={{ border: 0 }} 
+            allowFullScreen="" 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade" 
+            title="Mayank Varshney & Co. Location"
+          ></iframe>
         </div>
 
         {/* Bottom Bar */}

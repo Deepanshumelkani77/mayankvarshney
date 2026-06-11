@@ -1,6 +1,6 @@
 import logo from './mv_logoo.png'
 import header from './header.png'
-import info from './info.png'
+import info from './infoo.png'
 import info1 from './info1.png'
 
 
