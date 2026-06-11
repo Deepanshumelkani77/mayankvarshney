@@ -1,0 +1,158 @@
+import React, { useState } from 'react'
+import { assets } from '../assets/assets'
+
+const InfoSection = () => {
+  const [activeImage, setActiveImage] = useState(0)
+
+  const images = [
+    {
+      id: 1,
+      title: 'Professional Team',
+      desc: 'Expert professionals dedicated to your success'
+    },
+    {
+      id: 2,
+      title: 'Modern Office',
+      desc: 'State-of-the-art facilities for better service'
+    },
+    {
+      id: 3,
+      title: 'Client Meeting',
+      desc: 'Personalized consultations for your needs'
+    }
+  ]
+
+  return (
+    <div className="bg-white py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left Side - Image Effects */}
+          <div className="relative">
+            {/* Main Image */}
+            <div className="relative z-10">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+                <img 
+                  src={assets.info} 
+                  alt="About Us" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Floating Image 1 - Top Right */}
+            <div className="absolute -top-6 -right-6 z-20 animate-float-slow">
+              <div className="w-40 h-40 bg-gradient-to-br from-[#2F6A9E] to-[#1a4a75] rounded-2xl shadow-xl overflow-hidden">
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-center">
+                    <svg className="w-12 h-12 mx-auto text-white/80 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <p className="text-white/80 text-xs">Team</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Image 2 - Bottom Left */}
+            <div className="absolute -bottom-6 -left-6 z-20 animate-float">
+              <div className="w-36 h-36 bg-white rounded-2xl shadow-xl overflow-hidden border-2 border-[#2F6A9E]">
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="text-center">
+                    <svg className="w-10 h-10 mx-auto text-[#2F6A9E] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p className="text-gray-600 text-xs">Quality</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Decorative Elements */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#2F6A9E]/10 rounded-full blur-3xl -z-10"></div>
+          </div>
+
+          {/* Right Side - Information */}
+          <div className="space-y-8">
+            <div>
+              <span className="text-[#2F6A9E] font-semibold text-sm uppercase tracking-wider">About Us</span>
+              <h2 className="text-4xl font-bold text-gray-800 mt-2 mb-4">
+                Your Trusted Partner for Professional Services
+              </h2>
+              <p className="text-gray-600 leading-relaxed">
+                Mayank Varshney & Co. is dedicated to providing comprehensive accounting, taxation, and legal solutions to businesses and individuals across India. With years of experience and a team of expert professionals, we ensure compliance while helping you achieve your financial goals.
+              </p>
+            </div>
+
+            {/* Feature List */}
+            <div className="space-y-4">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-[#2F6A9E] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-800 mb-1">Expert Guidance</h3>
+                  <p className="text-gray-600 text-sm">Professional support from certified financial and legal experts</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-[#2F6A9E] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-800 mb-1">Secure Platform</h3>
+                  <p className="text-gray-600 text-sm">Bank-level security to protect your sensitive data</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-[#2F6A9E] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-800 mb-1">Quick Setup</h3>
+                  <p className="text-gray-600 text-sm">Get started in minutes with our streamlined onboarding</p>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <button className="bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white px-8 py-3 rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl">
+                Learn More
+              </button>
+              <button className="border-2 border-[#2F6A9E] text-[#2F6A9E] px-8 py-3 rounded-xl font-semibold hover:bg-[#2F6A9E] hover:text-white transition-all">
+                Our Services
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-15px); }
+        }
+        .animate-float {
+          animation: float 3s ease-in-out infinite;
+        }
+        .animate-float-slow {
+          animation: float-slow 4s ease-in-out infinite;
+        }
+      `}</style>
+    </div>
+  )
+}
+
+export default InfoSection
