@@ -178,7 +178,7 @@ const Appointment = () => {
               {/* Category Description */}
               {selectedCategory && (
                 <div className="mt-4 p-4 bg-[#2F6A9E]/10 rounded-lg animate-fadeIn">
-                  <p className="text-sm text-gray-700">{getCategoryInfo(selectedCategory)?.desc}</p>
+                  <p className="text-lg text-gray-700">{getCategoryInfo(selectedCategory)?.desc}</p>
                 </div>
               )}
             </div>
@@ -198,8 +198,8 @@ const Appointment = () => {
                           : 'border-gray-200 hover:border-[#2F6A9E] hover:bg-[#2F6A9E]/5'
                       }`}
                     >
-                      <p className="text-sm font-medium text-gray-800">{subService.name}</p>
-                      <p className="text-xs text-gray-500 mt-1">{subService.group}</p>
+                      <p className="text-lg font-medium text-gray-800">{subService.name}</p>
+                      <p className="text-sm text-gray-500 mt-1">{subService.group}</p>
                       
                       {/* Hover Effect */}
                       <div className="absolute inset-0 bg-[#053131] rounded-lg p-3 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
@@ -219,7 +219,7 @@ const Appointment = () => {
                 
                 {/* Date Selection */}
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-3">Choose Date</label>
+                  <label className="block text-lg font-medium text-gray-700 mb-3">Choose Date</label>
                   <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
                     {getDates().map((date) => (
                       <button
@@ -232,7 +232,7 @@ const Appointment = () => {
                             : 'border-gray-200 hover:border-[#2F6A9E] hover:bg-[#2F6A9E]/5'
                         }`}
                       >
-                        <div className="text-xs font-medium">{date.label}</div>
+                        <div className="text-sm font-medium">{date.label}</div>
                       </button>
                     ))}
                   </div>
@@ -240,7 +240,7 @@ const Appointment = () => {
 
                 {/* Time Selection */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-3">Choose Time Slot</label>
+                  <label className="block text-lg font-medium text-gray-700 mb-3">Choose Time Slot</label>
                   <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
                     {timeSlots.map((time) => (
                       <button
@@ -268,10 +268,10 @@ const Appointment = () => {
                 
                 {/* Booking Summary */}
                 <div className="mb-6 p-4 bg-[#2F6A9E]/10 rounded-lg">
-                  <p className="text-sm text-gray-600">Category: <span className="font-semibold text-[#2F6A9E]">{selectedCategory}</span></p>
-                  <p className="text-sm text-gray-600">Service: <span className="font-semibold text-[#2F6A9E]">{selectedSubService}</span></p>
-                  <p className="text-sm text-gray-600">Date: <span className="font-semibold text-[#2F6A9E]">{new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' })}</span></p>
-                  <p className="text-sm text-gray-600">Time: <span className="font-semibold text-[#2F6A9E]">{selectedTime}</span></p>
+                  <p className="text-lg text-gray-600">Category: <span className="font-semibold text-[#2F6A9E]">{selectedCategory}</span></p>
+                  <p className="text-lg text-gray-600">Service: <span className="font-semibold text-[#2F6A9E]">{selectedSubService}</span></p>
+                  <p className="text-lg text-gray-600">Date: <span className="font-semibold text-[#2F6A9E]">{new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' })}</span></p>
+                  <p className="text-lg text-gray-600">Time: <span className="font-semibold text-[#2F6A9E]">{selectedTime}</span></p>
                 </div>
 
                 <div className="space-y-4">
