@@ -47,10 +47,10 @@ const mainItems = [
 
 const Appointment = () => {
   const [selectedCategory, setSelectedCategory] = useState('')
-  const [selectedSubService, setSelectedSubService] = useState('')
+  const [selectedSubHeading, setSelectedSubHeading] = useState('')
+  const [selectedItem, setSelectedItem] = useState('')
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
-  const [hoveredCategory, setHoveredCategory] = useState(null)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -68,14 +68,16 @@ const Appointment = () => {
     e.preventDefault()
     console.log('Appointment booked:', {
       category: selectedCategory,
-      subService: selectedSubService,
+      subHeading: selectedSubHeading,
+      item: selectedItem,
       date: selectedDate,
       time: selectedTime,
       ...formData
     })
     alert('Appointment booked successfully!')
     setSelectedCategory('')
-    setSelectedSubService('')
+    setSelectedSubHeading('')
+    setSelectedItem('')
     setSelectedDate('')
     setSelectedTime('')
     setFormData({ name: '', email: '', phone: '', notes: '' })
@@ -88,36 +90,46 @@ const Appointment = () => {
     })
   }
 
+  const getCategoryInfo = (categoryId) => {
+    return mainItems.find(item => item.id === categoryId)
+  }
 
-
-  const getSubServices = () => {
+  const getSubHeadings = () => {
     if (!selectedCategory) return []
     const category = mainItems.find(item => item.id === selectedCategory)
-    if (!category) return []
+    if (!category || !category.groups) return []
     
-    let allSubServices = []
-    if (category.groups) {
-      category.groups.forEach(group => {
-        if (group.items) {
-          group.items.forEach(item => {
-            allSubServices.push({ name: item, group: group.title })
-          })
-        }
-        if (group.subgroups) {
-          group.subgroups.forEach(subgroup => {
-            subgroup.items.forEach(item => {
-              allSubServices.push({ name: item, group: subgroup.title })
-            })
-          })
-        }
-      })
-    }
-    if (category.options) {
-      category.options.forEach(opt => {
-        allSubServices.push({ name: opt, group: 'General' })
-      })
-    }
-    return allSubServices
+    let subHeadings = []
+    category.groups.forEach(group => {
+      subHeadings.push(group.title)
+      if (group.subgroups) {
+        group.subgroups.forEach(subgroup => {
+          subHeadings.push(subgroup.title)
+        })
+      }
+    })
+    return [...new Set(subHeadings)]
+  }
+
+  const getItems = () => {
+    if (!selectedCategory || !selectedSubHeading) return []
+    const category = mainItems.find(item => item.id === selectedCategory)
+    if (!category || !category.groups) return []
+    
+    let items = []
+    category.groups.forEach(group => {
+      if (group.title === selectedSubHeading && group.items) {
+        items = [...items, ...group.items]
+      }
+      if (group.subgroups) {
+        group.subgroups.forEach(subgroup => {
+          if (subgroup.title === selectedSubHeading && subgroup.items) {
+            items = [...items, ...subgroup.items]
+          }
+        })
+      }
+    })
+    return items
   }
 
   const getDates = () => {
@@ -134,120 +146,173 @@ const Appointment = () => {
     return dates
   }
 
-  const getCategoryInfo = (categoryId) => {
-    return mainItems.find(item => item.id === categoryId)
-  }
-
   return (
     <div className="bg-[#E5F0E5] min-h-screen">
       {/* Hero Section */}
       <div className="bg-[#053131] text-white py-4">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xl text-blue-100">Book Your Appointment</p>
+          <p className="text-xl text-blue-100 text-center">Book Your Appointment</p>
         </div>
       </div>
 
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Schedule Your Consultation</h2>
-          
-          <form onSubmit={handleFormSubmit} className="space-y-6">
-            {/* Service Category Selection */}
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Select Service Category</h3>
-              <div className="relative">
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => {
-                    setSelectedCategory(e.target.value)
-                    setSelectedSubService('')
-                  }}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition appearance-none bg-white cursor-pointer"
-                  required
-                >
-                  <option value="">Choose a service category</option>
-                  {mainItems.map(item => (
-                    <option key={item.id} value={item.id}>{item.label}</option>
-                  ))}
-                </select>
-                <svg className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-
-              {/* Category Description */}
-              {selectedCategory && (
-                <div className="mt-4 p-4 bg-[#2F6A9E]/10 rounded-lg animate-fadeIn">
-                  <p className="text-lg text-gray-700">{getCategoryInfo(selectedCategory)?.desc}</p>
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left: Summary Box */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-xl shadow-lg p-6 sticky top-4">
+              <h3 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">Appointment Summary</h3>
+              
+              <div className="space-y-3">
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Service Category</p>
+                  <p className="text-base font-semibold text-[#2F6A9E]">{selectedCategory || 'Not selected'}</p>
                 </div>
-              )}
-            </div>
-
-            {/* Sub-Service Selection */}
-            {selectedCategory && (
-              <div className="bg-white rounded-xl shadow-lg p-6 animate-fadeIn">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">Select Specific Service</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-64 overflow-y-auto">
-                  {getSubServices().map((subService, index) => (
-                    <div
-                      key={index}
-                      onClick={() => setSelectedSubService(subService.name)}
-                      className={`relative p-3 rounded-lg border-2 cursor-pointer transition-all group ${
-                        selectedSubService === subService.name
-                          ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
-                          : 'border-gray-200 hover:border-[#2F6A9E] hover:bg-[#2F6A9E]/5'
-                      }`}
-                    >
-                      <p className="text-lg font-medium text-gray-800">{subService.name}</p>
-                      <p className="text-sm text-gray-500 mt-1">{subService.group}</p>
-                      
-                      {/* Hover Effect */}
-                      <div className="absolute inset-0 bg-[#053131] rounded-lg p-3 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                        <p className="text-white text-xs text-center">{subService.name}</p>
-                        <p className="text-[#2F6A9E] text-xs text-center mt-1">{subService.group}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Date & Time Selection */}
-            {selectedSubService && (
-              <div className="bg-white rounded-xl shadow-lg p-6 animate-fadeIn">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">Select Date & Time</h3>
                 
-                {/* Date Selection */}
-                <div className="mb-6">
-                  <label className="block text-lg font-medium text-gray-700 mb-3">Choose Date</label>
-                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
-                    {getDates().map((date) => (
-                      <button
-                        key={date.value}
-                        type="button"
-                        onClick={() => setSelectedDate(date.value)}
-                        className={`p-3 rounded-lg border-2 transition-all text-center ${
-                          selectedDate === date.value
-                            ? 'border-[#2F6A9E] bg-[#2F6A9E] text-white'
-                            : 'border-gray-200 hover:border-[#2F6A9E] hover:bg-[#2F6A9E]/5'
-                        }`}
-                      >
-                        <div className="text-sm font-medium">{date.label}</div>
-                      </button>
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Sub-Heading</p>
+                  <p className="text-base font-semibold text-[#2F6A9E]">{selectedSubHeading || 'Not selected'}</p>
+                </div>
+                
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Service Item</p>
+                  <p className="text-base font-semibold text-[#2F6A9E]">{selectedItem || 'Not selected'}</p>
+                </div>
+                
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Date</p>
+                  <p className="text-base font-semibold text-[#2F6A9E]">
+                    {selectedDate ? new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' }) : 'Not selected'}
+                  </p>
+                </div>
+                
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Time</p>
+                  <p className="text-base font-semibold text-[#2F6A9E]">{selectedTime || 'Not selected'}</p>
+                </div>
+                
+                <div className="border-t pt-3">
+                  <p className="text-sm text-gray-500 font-medium">Name</p>
+                  <p className="text-base font-semibold text-gray-800">{formData.name || 'Not filled'}</p>
+                </div>
+                
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Email</p>
+                  <p className="text-base font-semibold text-gray-800">{formData.email || 'Not filled'}</p>
+                </div>
+                
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Phone</p>
+                  <p className="text-base font-semibold text-gray-800">{formData.phone || 'Not filled'}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Form */}
+          <div className="lg:col-span-2">
+            <form onSubmit={handleFormSubmit} className="space-y-4">
+              {/* Service Category Selection */}
+              <div className="bg-white rounded-xl shadow-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Service Category</h3>
+                <div className="relative">
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => {
+                      setSelectedCategory(e.target.value)
+                      setSelectedSubHeading('')
+                      setSelectedItem('')
+                    }}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition appearance-none bg-white cursor-pointer text-base"
+                    required
+                  >
+                    <option value="">Choose a service category</option>
+                    {mainItems.map(item => (
+                      <option key={item.id} value={item.id}>{item.label}</option>
                     ))}
+                  </select>
+                  <svg className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Sub-Heading Selection */}
+              {selectedCategory && (
+                <div className="bg-white rounded-xl shadow-lg p-4">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Sub-Heading</h3>
+                  <div className="relative">
+                    <select
+                      value={selectedSubHeading}
+                      onChange={(e) => {
+                        setSelectedSubHeading(e.target.value)
+                        setSelectedItem('')
+                      }}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition appearance-none bg-white cursor-pointer text-base"
+                      required
+                    >
+                      <option value="">Choose a sub-heading</option>
+                      {getSubHeadings().map((subHeading, index) => (
+                        <option key={index} value={subHeading}>{subHeading}</option>
+                      ))}
+                    </select>
+                    <svg className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
                   </div>
                 </div>
+              )}
 
-                {/* Time Selection */}
-                <div>
-                  <label className="block text-lg font-medium text-gray-700 mb-3">Choose Time Slot</label>
-                  <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+              {/* Item Selection */}
+              {selectedSubHeading && (
+                <div className="bg-white rounded-xl shadow-lg p-4">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Service Item</h3>
+                  <div className="relative">
+                    <select
+                      value={selectedItem}
+                      onChange={(e) => setSelectedItem(e.target.value)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition appearance-none bg-white cursor-pointer text-base"
+                      required
+                    >
+                      <option value="">Choose a service item</option>
+                      {getItems().map((item, index) => (
+                        <option key={index} value={item}>{item}</option>
+                      ))}
+                    </select>
+                    <svg className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+              )}
+
+              {/* Date Selection */}
+              {selectedItem && (
+                <div className="bg-white rounded-xl shadow-lg p-4">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Date</h3>
+                  <div className="relative">
+                    <input
+                      type="date"
+                      value={selectedDate}
+                      onChange={(e) => setSelectedDate(e.target.value)}
+                      min={new Date().toISOString().split('T')[0]}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                      required
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Time Selection */}
+              {selectedDate && (
+                <div className="bg-white rounded-xl shadow-lg p-4">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Time Slot</h3>
+                  <div className="grid grid-cols-4 gap-2">
                     {timeSlots.map((time) => (
                       <button
                         key={time}
                         type="button"
                         onClick={() => setSelectedTime(time)}
-                        className={`p-3 rounded-lg border-2 transition-all font-medium text-sm ${
+                        className={`p-2 rounded-lg border-2 transition-all font-medium text-xs ${
                           selectedTime === time
                             ? 'border-[#2F6A9E] bg-[#2F6A9E] text-white'
                             : 'border-gray-200 hover:border-[#2F6A9E] hover:bg-[#2F6A9E]/5 text-gray-800'
@@ -258,104 +323,78 @@ const Appointment = () => {
                     ))}
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* User Details */}
-            {selectedSubService && selectedDate && selectedTime && (
-              <div className="bg-white rounded-xl shadow-lg p-6 animate-fadeIn">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">Your Details</h3>
-                
-                {/* Booking Summary */}
-                <div className="mb-6 p-4 bg-[#2F6A9E]/10 rounded-lg">
-                  <p className="text-lg text-gray-600">Category: <span className="font-semibold text-[#2F6A9E]">{selectedCategory}</span></p>
-                  <p className="text-lg text-gray-600">Service: <span className="font-semibold text-[#2F6A9E]">{selectedSubService}</span></p>
-                  <p className="text-lg text-gray-600">Date: <span className="font-semibold text-[#2F6A9E]">{new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' })}</span></p>
-                  <p className="text-lg text-gray-600">Time: <span className="font-semibold text-[#2F6A9E]">{selectedTime}</span></p>
-                </div>
-
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition"
-                      placeholder="Enter your full name"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition"
-                      placeholder="Enter your email address"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      required
-                      value={formData.phone}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition"
-                      placeholder="Enter your phone number"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Additional Notes (Optional)</label>
-                    <textarea
-                      name="notes"
-                      value={formData.notes}
-                      onChange={handleFormChange}
-                      rows={3}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition resize-none"
-                      placeholder="Any additional information you'd like to share"
-                    ></textarea>
+              {/* User Details */}
+              {selectedTime && (
+                <div className="bg-white rounded-xl shadow-lg p-4">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Your Details</h3>
+                  
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                      <input
+                        type="text"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={handleFormChange}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                        placeholder="Enter your full name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleFormChange}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                        placeholder="Enter your email address"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        required
+                        value={formData.phone}
+                        onChange={handleFormChange}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                        placeholder="Enter your phone number"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Additional Notes (Optional)</label>
+                      <textarea
+                        name="notes"
+                        value={formData.notes}
+                        onChange={handleFormChange}
+                        rows={2}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition resize-none text-base"
+                        placeholder="Any additional information"
+                      ></textarea>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* Submit Button */}
-            {selectedSubService && selectedDate && selectedTime && formData.name && formData.email && formData.phone && (
-              <div className="animate-fadeIn">
+              {/* Submit Button */}
+              {formData.name && formData.email && formData.phone && (
                 <button
                   type="submit"
-                  className="w-full px-6 py-4 bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl text-lg"
+                  className="w-full px-6 py-3 bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl text-base"
                 >
                   Confirm Appointment Booking
                 </button>
-              </div>
-            )}
-          </form>
+              )}
+            </form>
+          </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out;
-        }
-      `}</style>
     </div>
   )
 }

@@ -31,7 +31,7 @@ const About = () => {
             <div className="bg-white rounded-xl shadow-lg p-4">
               <h3 className="font-semibold text-gray-800 mb-3">Our Mission</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-            To make financial and legal expertise accessible to everyone, enabling individuals, startups, and businesses to make smarter decisions, stay compliant, and achieve long-term success and growth.
+To make financial and legal expertise accessible to everyone, enabling individuals, startups, and businesses to make smarter decisions, stay compliant, and achieve long-term success and growth.
               </p>
             </div>
 
