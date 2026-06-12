@@ -50,10 +50,11 @@ const Appointment = () => {
   const [selectedSubHeading, setSelectedSubHeading] = useState('')
   const [selectedItem, setSelectedItem] = useState('')
   const [selectedDate, setSelectedDate] = useState('')
-  const [selectedTime, setSelectedTime] = useState('')
+  const [selectedTimes, setSelectedTimes] = useState([])
   const [hoveredCategory, setHoveredCategory] = useState(null)
   const [hoveredSubHeading, setHoveredSubHeading] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [timeMenuOpen, setTimeMenuOpen] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -74,7 +75,7 @@ const Appointment = () => {
       subHeading: selectedSubHeading,
       item: selectedItem,
       date: selectedDate,
-      time: selectedTime,
+      times: selectedTimes,
       ...formData
     })
     alert('Appointment booked successfully!')
@@ -82,7 +83,7 @@ const Appointment = () => {
     setSelectedSubHeading('')
     setSelectedItem('')
     setSelectedDate('')
-    setSelectedTime('')
+    setSelectedTimes([])
     setFormData({ name: '', email: '', phone: '', notes: '' })
   }
 
@@ -158,6 +159,30 @@ const Appointment = () => {
     setHoveredSubHeading(null)
   }
 
+  const handleTimeSlotToggle = (time) => {
+    const index = selectedTimes.indexOf(time)
+    if (index === -1) {
+      // Add time slot
+      setSelectedTimes([...selectedTimes, time])
+    } else {
+      // Remove time slot
+      setSelectedTimes(selectedTimes.filter(t => t !== time))
+    }
+  }
+
+  const handleTimeSlotRange = (startTime, endTime) => {
+    const startIndex = timeSlots.indexOf(startTime)
+    const endIndex = timeSlots.indexOf(endTime)
+    
+    if (startIndex === -1 || endIndex === -1) return
+    
+    const start = Math.min(startIndex, endIndex)
+    const end = Math.max(startIndex, endIndex)
+    
+    const range = timeSlots.slice(start, end + 1)
+    setSelectedTimes(range)
+  }
+
   return (
     <div className="bg-[#E5F0E5] min-h-screen">
       {/* Hero Section */}
@@ -199,7 +224,9 @@ const Appointment = () => {
                 
                 <div>
                   <p className="text-sm text-gray-500 font-medium">Time</p>
-                  <p className="text-base font-semibold text-[#2F6A9E]">{selectedTime || 'Not selected'}</p>
+                  <p className="text-base font-semibold text-[#2F6A9E]">
+                    {selectedTimes.length > 0 ? selectedTimes.join(', ') : 'Not selected'}
+                  </p>
                 </div>
                 
                 <div className="border-t pt-3">
@@ -271,7 +298,7 @@ const Appointment = () => {
                         {/* Sub-Headings Column */}
                         {hoveredCategory && (
                           <div className="w-1/3 border-r border-gray-200">
-                            <div className="p-2 max-h-64 overflow-y-auto">
+                            <div className="p-2">
                               {getSubHeadings(hoveredCategory).map((subHeading, index) => (
                                 <div
                                   key={index}
@@ -291,7 +318,7 @@ const Appointment = () => {
                         {/* Items Column */}
                         {hoveredCategory && hoveredSubHeading && (
                           <div className="w-1/3">
-                            <div className="p-2 max-h-64 overflow-y-auto">
+                            <div className="p-2">
                               {getItems(hoveredCategory, hoveredSubHeading).map((item, index) => (
                                 <div
                                   key={index}
@@ -330,28 +357,64 @@ const Appointment = () => {
               {/* Time Selection */}
               {selectedDate && (
                 <div className="bg-white rounded-xl shadow-lg p-4">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Time Slot</h3>
-                  <div className="grid grid-cols-4 gap-2">
-                    {timeSlots.map((time) => (
-                      <button
-                        key={time}
-                        type="button"
-                        onClick={() => setSelectedTime(time)}
-                        className={`p-2 rounded-lg border-2 transition-all font-medium text-xs ${
-                          selectedTime === time
-                            ? 'border-[#2F6A9E] bg-[#2F6A9E] text-white'
-                            : 'border-gray-200 hover:border-[#2F6A9E] hover:bg-[#2F6A9E]/5 text-gray-800'
-                        }`}
-                      >
-                        {time}
-                      </button>
-                    ))}
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Time Slots</h3>
+                  
+                  {/* Time Slot Dropdown Button */}
+                  <div className="relative">
+                    <button
+                      type="button"
+                      onClick={() => setTimeMenuOpen(!timeMenuOpen)}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-white text-left flex justify-between items-center text-base"
+                    >
+                      <span>{selectedTimes.length > 0 ? `${selectedTimes.length} time slot(s) selected` : 'Choose time slots'}</span>
+                      <svg className={`w-5 h-5 text-gray-400 transition-transform ${timeMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Time Slot Dropdown */}
+                    {timeMenuOpen && (
+                      <div className="absolute z-50 mt-2 w-full bg-white rounded-xl shadow-2xl border border-gray-200 p-3">
+                        <p className="text-xs text-gray-500 mb-2">Click to toggle, Shift+Click for range selection</p>
+                        <div className="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto">
+                          {timeSlots.map((time) => (
+                            <button
+                              key={time}
+                              type="button"
+                              onClick={(e) => {
+                                if (e.shiftKey && selectedTimes.length > 0) {
+                                  handleTimeSlotRange(selectedTimes[selectedTimes.length - 1], time)
+                                } else {
+                                  handleTimeSlotToggle(time)
+                                }
+                              }}
+                              className={`p-2 rounded-lg border-2 transition-all font-medium text-xs ${
+                                selectedTimes.includes(time)
+                                  ? 'border-[#2F6A9E] bg-[#2F6A9E] text-white'
+                                  : 'border-gray-200 hover:border-[#2F6A9E] hover:bg-[#2F6A9E]/5 text-gray-800'
+                              }`}
+                            >
+                              {time}
+                            </button>
+                          ))}
+                        </div>
+                        <div className="mt-3 pt-3 border-t">
+                          <button
+                            type="button"
+                            onClick={() => setTimeMenuOpen(false)}
+                            className="w-full px-4 py-2 bg-[#2F6A9E] text-white rounded-lg font-medium hover:bg-[#1a4a75] transition"
+                          >
+                            Done
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
 
               {/* User Details */}
-              {selectedTime && (
+              {selectedTimes.length > 0 && (
                 <div className="bg-white rounded-xl shadow-lg p-4">
                   <h3 className="text-lg font-semibold text-gray-800 mb-3">Your Details</h3>
                   
