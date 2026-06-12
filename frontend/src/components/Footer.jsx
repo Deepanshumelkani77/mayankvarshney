@@ -9,7 +9,7 @@ const Footer = () => {
           <div>
             <h3 className="text-2xl lg:text-3xl font-bold mb-4">Mayank Varshney & Co.</h3>
             <p className="text-base text-blue-100 mb-6 leading-relaxed">
-              Your trusted partner for professional financial, taxation, and legal services across India. We help businesses navigate compliance with ease.
+        Your trusted partner for professional financial, taxation, and legal services worldwide. We help businesses and individuals navigate compliance with confidence and ease.
             </p>
             <div className="flex space-x-4">
               <a href="https://www.facebook.com/mayankvarshneyco" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#2F6A9E] transition-colors" aria-label="Facebook">
