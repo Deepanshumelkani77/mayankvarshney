@@ -51,6 +51,9 @@ const Appointment = () => {
   const [selectedItem, setSelectedItem] = useState('')
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
+  const [hoveredCategory, setHoveredCategory] = useState(null)
+  const [hoveredSubHeading, setHoveredSubHeading] = useState(null)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -94,9 +97,9 @@ const Appointment = () => {
     return mainItems.find(item => item.id === categoryId)
   }
 
-  const getSubHeadings = () => {
-    if (!selectedCategory) return []
-    const category = mainItems.find(item => item.id === selectedCategory)
+  const getSubHeadings = (categoryId) => {
+    if (!categoryId) return []
+    const category = mainItems.find(item => item.id === categoryId)
     if (!category || !category.groups) return []
     
     let subHeadings = []
@@ -111,19 +114,19 @@ const Appointment = () => {
     return [...new Set(subHeadings)]
   }
 
-  const getItems = () => {
-    if (!selectedCategory || !selectedSubHeading) return []
-    const category = mainItems.find(item => item.id === selectedCategory)
+  const getItems = (categoryId, subHeadingTitle) => {
+    if (!categoryId || !subHeadingTitle) return []
+    const category = mainItems.find(item => item.id === categoryId)
     if (!category || !category.groups) return []
     
     let items = []
     category.groups.forEach(group => {
-      if (group.title === selectedSubHeading && group.items) {
+      if (group.title === subHeadingTitle && group.items) {
         items = [...items, ...group.items]
       }
       if (group.subgroups) {
         group.subgroups.forEach(subgroup => {
-          if (subgroup.title === selectedSubHeading && subgroup.items) {
+          if (subgroup.title === subHeadingTitle && subgroup.items) {
             items = [...items, ...subgroup.items]
           }
         })
@@ -144,6 +147,15 @@ const Appointment = () => {
       })
     }
     return dates
+  }
+
+  const handleSelectItem = (item, subHeading, category) => {
+    setSelectedItem(item)
+    setSelectedSubHeading(subHeading)
+    setSelectedCategory(category)
+    setMenuOpen(false)
+    setHoveredCategory(null)
+    setHoveredSubHeading(null)
   }
 
   return (
@@ -211,79 +223,92 @@ const Appointment = () => {
           {/* Right: Form */}
           <div className="lg:col-span-2">
             <form onSubmit={handleFormSubmit} className="space-y-4">
-              {/* Service Category Selection */}
+              {/* Service Selection - Mega Menu */}
               <div className="bg-white rounded-xl shadow-lg p-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Service Category</h3>
+                <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Service</h3>
+                
+                {/* Service Selection Button */}
                 <div className="relative">
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => {
-                      setSelectedCategory(e.target.value)
-                      setSelectedSubHeading('')
-                      setSelectedItem('')
-                    }}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition appearance-none bg-white cursor-pointer text-base"
-                    required
+                  <button
+                    type="button"
+                    onClick={() => setMenuOpen(!menuOpen)}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-white text-left flex justify-between items-center text-base"
                   >
-                    <option value="">Choose a service category</option>
-                    {mainItems.map(item => (
-                      <option key={item.id} value={item.id}>{item.label}</option>
-                    ))}
-                  </select>
-                  <svg className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                    <span>{selectedItem || 'Choose a service'}</span>
+                    <svg className={`w-5 h-5 text-gray-400 transition-transform ${menuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {/* Mega Menu Dropdown */}
+                  {menuOpen && (
+                    <div className="absolute z-50 mt-2 w-full bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
+                      <div className="flex">
+                        {/* Categories Column */}
+                        <div className="w-1/3 border-r border-gray-200 bg-gray-50">
+                          <div className="p-2">
+                            {mainItems.map((item) => (
+                              <div
+                                key={item.id}
+                                onMouseEnter={() => {
+                                  setHoveredCategory(item.id)
+                                  setHoveredSubHeading(null)
+                                }}
+                                onClick={() => {
+                                  setHoveredCategory(item.id)
+                                  setHoveredSubHeading(null)
+                                }}
+                                className={`px-4 py-3 rounded-lg cursor-pointer transition-colors ${
+                                  hoveredCategory === item.id ? 'bg-[#2F6A9E] text-white' : 'hover:bg-gray-200 text-gray-800'
+                                }`}
+                              >
+                                <p className="font-medium text-sm">{item.label}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Sub-Headings Column */}
+                        {hoveredCategory && (
+                          <div className="w-1/3 border-r border-gray-200">
+                            <div className="p-2 max-h-64 overflow-y-auto">
+                              {getSubHeadings(hoveredCategory).map((subHeading, index) => (
+                                <div
+                                  key={index}
+                                  onMouseEnter={() => setHoveredSubHeading(subHeading)}
+                                  onClick={() => setHoveredSubHeading(subHeading)}
+                                  className={`px-4 py-3 rounded-lg cursor-pointer transition-colors ${
+                                    hoveredSubHeading === subHeading ? 'bg-[#2F6A9E] text-white' : 'hover:bg-gray-100 text-gray-800'
+                                  }`}
+                                >
+                                  <p className="font-medium text-sm">{subHeading}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Items Column */}
+                        {hoveredCategory && hoveredSubHeading && (
+                          <div className="w-1/3">
+                            <div className="p-2 max-h-64 overflow-y-auto">
+                              {getItems(hoveredCategory, hoveredSubHeading).map((item, index) => (
+                                <div
+                                  key={index}
+                                  onClick={() => handleSelectItem(item, hoveredSubHeading, hoveredCategory)}
+                                  className="px-4 py-3 rounded-lg cursor-pointer transition-colors hover:bg-[#2F6A9E] hover:text-white text-gray-800"
+                                >
+                                  <p className="font-medium text-sm">{item}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
-
-              {/* Sub-Heading Selection */}
-              {selectedCategory && (
-                <div className="bg-white rounded-xl shadow-lg p-4">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Sub-Heading</h3>
-                  <div className="relative">
-                    <select
-                      value={selectedSubHeading}
-                      onChange={(e) => {
-                        setSelectedSubHeading(e.target.value)
-                        setSelectedItem('')
-                      }}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition appearance-none bg-white cursor-pointer text-base"
-                      required
-                    >
-                      <option value="">Choose a sub-heading</option>
-                      {getSubHeadings().map((subHeading, index) => (
-                        <option key={index} value={subHeading}>{subHeading}</option>
-                      ))}
-                    </select>
-                    <svg className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                </div>
-              )}
-
-              {/* Item Selection */}
-              {selectedSubHeading && (
-                <div className="bg-white rounded-xl shadow-lg p-4">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Service Item</h3>
-                  <div className="relative">
-                    <select
-                      value={selectedItem}
-                      onChange={(e) => setSelectedItem(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition appearance-none bg-white cursor-pointer text-base"
-                      required
-                    >
-                      <option value="">Choose a service item</option>
-                      {getItems().map((item, index) => (
-                        <option key={index} value={item}>{item}</option>
-                      ))}
-                    </select>
-                    <svg className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </div>
-                </div>
-              )}
 
               {/* Date Selection */}
               {selectedItem && (
