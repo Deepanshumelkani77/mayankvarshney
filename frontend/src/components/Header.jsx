@@ -42,52 +42,53 @@ const Header = () => {
   }, [selected])
 
   return (
-    <header className="relative w-full bg-[#053131] text-white py-16">
+    <header className="relative w-full bg-[#053131] text-white py-8">
       <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-center text-2xl sm:text-3xl font-bold mb-6">Mayank Varshney & Co. — Secure & Legal Services </h1>
+        <h1 className="text-center text-2xl sm:text-5xl lg:text-3xl font-bold mb-8">Mayank Varshney & Co. — Financial & Legal Services </h1>
 
         {/* Search bar centered */}
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-8">
           <div className="w-full max-w-3xl">
             <label className="sr-only">Search services</label>
             <div className="flex items-center bg-white rounded-xl shadow-sm overflow-hidden">
               <input
                 value={query}
                 onChange={e => setQuery(e.target.value)}
-                className="flex-1 px-8 py-4 text-gray-800 focus:outline-none"
+                className="flex-1 px-8 py-4 text-xl text-gray-800 focus:outline-none"
                 placeholder="Search services, e.g., GST, Accounting..."
                 aria-label="Search services"
               />
-              <button className="bg-emerald-600 text-white px-8 py-4 hover:bg-emerald-700">Search</button>
+              <button className="bg-emerald-600 text-white px-8 py-4 text-xl font-semibold hover:bg-emerald-700">Search</button>
             </div>
-          </div>
-        </div>
-
-        {/* Services chips (horizontally scrollable) */}
-        <div className="mt-6">
-          <div className="flex gap-3 overflow-x-auto no-scrollbar py-2">
-            {services.map(s => (
-              <button
-                key={s}
-                onClick={() => setSelected(s)}
-                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium ${selected === s ? 'bg-white text-emerald-700' : 'bg-white/20 text-white hover:bg-white/30'}`}
-              >
-                {s}
-              </button>
-            ))}
           </div>
         </div>
 
         {/* Due dates panel (horizontal auto-scrolling marquee) */}
-        <div className="mt-6">
-          <div className="bg-white text-gray-800 rounded-lg shadow-md p-4 overflow-hidden">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold">Upcoming Due Dates — {selected}</h3>
-              <div className="text-sm text-gray-500">{dueDates.length} items</div>
+        <div className="bg-white text-gray-800 rounded-lg shadow-md overflow-hidden">
+          {/* Services chips at top of panel */}
+          <div className="bg-gray-50 border-b border-gray-200 px-4 py-2">
+            <div className="flex gap-3 overflow-x-auto no-scrollbar py-1">
+              {services.map(s => (
+                <button
+                  key={s}
+                  onClick={() => setSelected(s)}
+                  className={`flex-shrink-0 px-6 py-3 rounded-full text-lg font-medium ${selected === s ? 'bg-[#2F6A9E] text-white' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'}`}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Due dates content */}
+          <div className="px-6 py-3" >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-2xl font-semibold text-[#053131]">Upcoming Due Dates — {selected}</h3>
+              <div className="text-lg text-gray-500">{dueDates.length} items</div>
             </div>
 
             {dueDates.length === 0 ? (
-              <div className="text-sm text-gray-600">No upcoming due dates for {selected}.</div>
+              <div className="text-lg text-gray-600">No upcoming due dates for {selected}.</div>
             ) : (
               <>
                 <style>{`
@@ -98,7 +99,7 @@ const Header = () => {
                   .marquee { overflow: hidden; position: relative; }
                   .marquee-track { display: inline-block; white-space: nowrap; will-change: transform; animation-name: marquee; animation-timing-function: linear; animation-iteration-count: infinite; }
                   .marquee:hover .marquee-track { animation-play-state: paused; }
-                  .marquee-item { display: inline-block; padding: 12px 20px; margin-right: 12px; background: #f8fafc; border-radius: 8px; }
+                  .marquee-item { display: inline-block; padding: 16px 24px; margin-right: 16px; background: #f8fafc; border-radius: 12px; }
                 `}</style>
 
                 <div className="marquee">
@@ -109,10 +110,10 @@ const Header = () => {
                     {dueDates.concat(dueDates).map((d, idx) => (
                       <div key={idx} className="marquee-item flex items-center gap-4">
                         <div>
-                          <div className="font-medium">{d.title}</div>
-                          <div className="text-xs text-gray-500">Details available on selection</div>
+                          <div className="text-lg font-medium text-gray-800">{d.title}</div>
+                          <div className="text-base text-gray-500">Details available on selection</div>
                         </div>
-                        <div className="text-sm font-medium text-emerald-600">{d.date}</div>
+                        <div className="text-lg font-medium text-emerald-600">{d.date}</div>
                       </div>
                     ))}
                   </div>

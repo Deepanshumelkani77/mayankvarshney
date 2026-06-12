@@ -49,7 +49,7 @@ const mainItems = [
    
   ] },
   { id: 'Compliance', label: 'Compliance', desc: 'Regulatory compliance and reporting.', options: ['Annual Compliance', 'Quarterly Reporting'] },
- { id: 'Investment', label: 'Investment', desc: 'Investment advisory and planning.', options: ['Financial Planning', 'Investment Analysis'] },
+
 
 
 
@@ -79,6 +79,7 @@ const Navbar = () => {
   const topbarRef = useRef(null)
   const [openDropdown, setOpenDropdown] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [topMenuOpen, setTopMenuOpen] = useState(false)
   const dropdownRef = useRef(null)
   const [hoveredItem, setHoveredItem] = useState(null)
   const [hoveredColumn, setHoveredColumn] = useState(null)
@@ -86,12 +87,16 @@ const Navbar = () => {
   const hoverTimeoutRef = useRef(null)
   const [itrOffset, setItrOffset] = useState(0)
   const [spacerHeight, setSpacerHeight] = useState(0)
+  const topMenuRef = useRef(null)
 
   useEffect(() => {
     function handleOutside(e) {
       if (navRef.current && !navRef.current.contains(e.target)) {
         setOpenDropdown(null)
         setMobileOpen(false)
+      }
+      if (topMenuRef.current && !topMenuRef.current.contains(e.target)) {
+        setTopMenuOpen(false)
       }
     }
     document.addEventListener('mousedown', handleOutside)
@@ -163,31 +168,76 @@ const Navbar = () => {
       <div
         ref={topbarRef}
         className={`fixed top-0 left-0 right-0 bg-[#053131] text-white transition-all duration-300 ${
-          showTopBar ? 'h-12 opacity-100 pointer-events-auto' : 'h-0 opacity-0 pointer-events-none'
+          showTopBar ? 'h-14 opacity-100 pointer-events-auto' : 'h-0 opacity-0 pointer-events-none'
         } z-50`}
       >
-        <div className="max-w-8xl mx-auto h-12 flex items-center justify-between px-4">
-          <div className="flex items-center gap-6 text-lg">
-            <div className="flex items-center gap-3">
-              <span className="hidden sm:inline">📞</span>
-              <a href="tel:+919876543210" className="hover:underline">+91 9876543210</a>
-            </div>
-
-            <div className="hidden sm:flex items-center gap-3">
-              <span>✉️</span>
-              <a href="mailto:info@mayankca.com" className="hover:underline">info@mayankca.com</a>
-            </div>
+        <div className="max-w-8xl mx-auto h-14 flex items-center justify-between px-4">
+          {/* Left Side - Contact Icons */}
+          <div className="flex items-center gap-4">
+            <a href="tel:+919910060345" className="flex items-center gap-2 hover:text-[#2F6A9E] transition-colors group" title="Call Us">
+              <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+             
+            </a>
+            <a href="mailto:care@mayankvarshney.com" className="flex items-center gap-2 hover:text-[#2F6A9E] transition-colors group" title="Email Us">
+              <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              
+            </a>
+            <a href="https://wa.me/9910060345" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-[#2F6A9E] transition-colors group" title="WhatsApp">
+              <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+             
+            </a>
           </div>
 
-          <div className="flex items-center gap-4 text-lg">
-            <div className="hidden sm:flex items-center gap-8">
-              <Link to="/" className="hover:underline">Home</Link>
-              <Link to="/about" className="hover:underline">About</Link>
-              <Link to="/blog" className="hover:underline">Blog</Link>
-              <Link to="/contact" className="hover:underline">Contact</Link>
-            </div>
+          {/* Center - Blinking Text */}
+          <div className="flex-1 text-center">
+            <p className="text-base font-semibold animate-pulse text-white">
+              🎉 Special Offer: Get 20% Off on First Consultation! 🎉
+            </p>
+          </div>
 
-            <button onClick={() => openSignup('login')} className="ml-2 inline-flex items-center bg-emerald-600 text-white px-3 py-1.5 rounded-md text-sm hover:bg-emerald-700">Sign Up</button>
+          {/* Right Side - Menu Button */}
+          <div className="flex items-center gap-3">
+            {/* Profile Icon */}
+            <button
+              onClick={() => openSignup('login')}
+              className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+              title="Login"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </button>
+
+            {/* Menu Button */}
+            <div className="relative" ref={topMenuRef}>
+              <button
+                onClick={() => setTopMenuOpen(!topMenuOpen)}
+                className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              
+              </button>
+
+              {/* Dropdown Menu */}
+              {topMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-50 animate-fadeIn">
+                  <Link to="/" className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Home</Link>
+                  <Link to="/about" className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">About</Link>
+                  <Link to="/contact" className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Contact</Link>
+                  <Link to="/blog" className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Blog</Link>
+                  <Link to="/career" className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Career</Link>
+                  <Link to="/review" className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Reviews</Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -197,7 +247,7 @@ const Navbar = () => {
         ref={navRef}
         onMouseLeave={() => setOpenDropdown(null)}
         className={`fixed left-0 right-0 bg-[#E5F0E5] shadow-md w-full transition-all duration-300 ${
-          showTopBar ? 'top-12' : 'top-0'
+          showTopBar ? 'top-14' : 'top-0'
         } z-40`}
       >
         <div className="max-w-8xl mx-auto flex items-center justify-between px-4 py-4">
@@ -207,10 +257,10 @@ const Navbar = () => {
          </div>
 
           <div className="hidden md:flex flex-1 justify-center">
-            <ul className="flex gap-1 font-medium flex-wrap px-2 text-lg">
+            <ul className="flex gap-1 font-medium flex-wrap px-2 text-base">
               {mainItems.map(item => (
                 <li key={item.id} onMouseEnter={() => setOpenDropdown(item.id)} className="relative">
-                  <button data-item={item.id} onClick={() => toggleDropdown(item.id)} className="px-3 py-2 hover:text-emerald-600 flex items-center gap-2">
+                  <button data-item={item.id} onClick={() => toggleDropdown(item.id)} className="px-4 py-2 hover:text-emerald-600 flex items-center gap-2 text-base">
                     <span>{item.label}</span>
                     <svg className={`h-4 w-4 transition-transform duration-200 ${openDropdown === item.id ? 'rotate-180' : 'rotate-0'}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -222,7 +272,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <Link to="/appointment" className="hidden md:inline bg-emerald-600 text-white px-4 py-2 rounded-md">Book Appointment</Link>
+            <Link to="/appointment" className="hidden md:inline bg-emerald-600 text-white px-5 py-2.5 rounded-md text-base font-medium">Book Appointment</Link>
 
             <button onClick={() => setMobileOpen(prev => !prev)} className="md:hidden p-2 rounded-md bg-white/10">
               <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -248,7 +298,7 @@ const Navbar = () => {
                   {openDropdown === item.id && item.options && item.options.length > 0 ? (
                     <ul className="pl-4 pb-2 pt-1 space-y-1">
                       {item.options.map(opt => (
-                        <li key={opt} className="text-sm px-2 py-1 rounded hover:bg-gray-100">{opt}</li>
+                        <li key={opt} className="text-base px-2 py-1.5 rounded hover:bg-gray-100">{opt}</li>
                       ))}
                     </ul>
                   ) : null}
@@ -277,7 +327,7 @@ const Navbar = () => {
                               <div key={g.title} className="mb-1">
                                 <button
                                   onMouseEnter={() => setHoveredGroup(g.title)}
-                                  className={`w-full text-left px-3 py-2 rounded-md transition-colors  ${hoveredGroup === g.title ? 'bg-emerald-50 text-emerald-700' : 'hover:bg-gray-50'}`}
+                                  className={`w-full text-left px-4 py-2.5 rounded-md transition-colors text-base ${hoveredGroup === g.title ? 'bg-emerald-50 text-emerald-700' : 'hover:bg-gray-50'}`}
                                 >
                                   {g.title}
                                 </button>
@@ -291,11 +341,11 @@ const Navbar = () => {
                               const grp = info.groups.find(g => g.title === hoveredGroup)
                               return (
                                 <div onMouseEnter={() => {/* keep hoveredGroup while inside panel */}} onMouseLeave={() => setHoveredGroup(null)} className="w-[720px] bg-white rounded-md p-2 border-none">
-                                  <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2">{grp.title}</h4>
-                                  <p className="text-sm px-2  text-gray-600 mb-3">{info.desc}</p>
+                                  <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{grp.title}</h4>
+                                  <p className="text-base px-2 text-gray-600 mb-3">{info.desc}</p>
                                   <ul className="space-y-2   ">
                                     {grp.items.map(it => (
-                                      <li key={it} className="px-2 py-1 rounded hover:bg-gray-50">{it}</li>
+                                      <li key={it} className="px-2 py-1.5 rounded hover:bg-gray-50 text-base">{it}</li>
                                     ))}
                                   </ul>
                                 </div>
@@ -319,12 +369,12 @@ const Navbar = () => {
                             {g.subgroups ? (
                               g.subgroups.map((sg, sgi) => (
                                 <div key={sgi} className="mb-4">
-                                  <h4 className="font-semibold mb-2 text-lg text-[#2F6A9E]">{sg.title}</h4>
+                                  <h4 className="font-semibold mb-2 text-base text-[#2F6A9E]">{sg.title}</h4>
                                   <ul className="space-y-2 flex flex-col">
                                     {sg.items.map(opt => (
                                       <li key={opt} className="relative">
                                         <div
-                                          className="py-2 rounded hover:bg-gray-100 cursor-pointer"
+                                          className="py-2.5 rounded hover:bg-gray-100 cursor-pointer text-base"
                                           onMouseEnter={() => handleItemHover(opt, gi, sg)}
                                           onMouseLeave={() => handleItemLeave()}
                                         >
@@ -337,12 +387,12 @@ const Navbar = () => {
                               ))
                             ) : (
                               <>
-                                <h4 className="font-semibold mb-2 text-lg text-[#2F6A9E]">{g.title}</h4>
+                                <h4 className="font-semibold mb-2 text-base text-[#2F6A9E]">{g.title}</h4>
                                 <ul className="space-y-2 flex flex-col ">
                                   {g.items.map(opt => (
                                     <li key={opt} className="relative">
                                       <div 
-                                        className=" py-2 rounded hover:bg-gray-100 cursor-pointer "
+                                        className="py-2.5 rounded hover:bg-gray-100 cursor-pointer text-base"
                                         onMouseEnter={() => handleItemHover(opt, gi)}
                                         onMouseLeave={() => handleItemLeave()}
                                       >
@@ -361,7 +411,7 @@ const Navbar = () => {
                       {/* Preview panel - overlay positioned dynamically */}
                       <div className={`absolute bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 shadow-2xl transition-all duration-500 ease-out z-10 ${hoveredItem ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2 pointer-events-none'} ${hoveredColumn === 0 || hoveredColumn === 1 ? 'left-1/2 top-6 w-1/2' : (hoveredColumn === 2 || hoveredColumn === 3) ? 'left-0 top-6 w-1/2' : 'left-1/2 top-6 w-1/2'}`}>
                         <h4 className="font-semibold text-[#2F6A9E] mb-3 text-xl">{hoveredItem || ''}</h4>
-                        <p className="text-sm text-gray-600 mb-4">Professional service with expert guidance. We provide comprehensive support for this service with detailed documentation and expert consultation.</p>
+                        <p className="text-base text-gray-600 mb-4">Professional service with expert guidance. We provide comprehensive support for this service with detailed documentation and expert consultation.</p>
                         <div className="space-y-3">
                           <div className="flex items-center gap-2 text-sm text-gray-700">
                             <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -369,7 +419,7 @@ const Navbar = () => {
                             </svg>
                             <span>Expert consultation</span>
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-700">
+                          <div className="flex items-center gap-2 text-base text-gray-700">
                             <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
@@ -382,7 +432,7 @@ const Navbar = () => {
                             <span>24/7 support</span>
                           </div>
                         </div>
-                        <button className="mt-4 w-full bg-emerald-600 text-white py-3 rounded-md text-sm hover:bg-emerald-700 transition-colors font-semibold">
+                        <button className="mt-4 w-full bg-emerald-600 text-white py-3 rounded-md text-base font-semibold hover:bg-emerald-700 transition-colors">
                           Learn More
                         </button>
                       </div>
@@ -394,7 +444,7 @@ const Navbar = () => {
                 const cols = [0,1,2].map(i => (info.options || []).slice(i*per, (i+1)*per))
                 return (
                   <div ref={dropdownRef} className="relative p-6 max-h-[50vh] overflow-y-auto">
-                    <h3 className="text-lg font-semibold text-center mb-4">{info.label}</h3>
+                    <h3 className="text-xl font-semibold text-center mb-4">{info.label}</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                       {cols.map((col, ci) => (
                         <ul 
@@ -406,7 +456,7 @@ const Navbar = () => {
                           {col.map(opt => (
                             <li key={opt} className="relative">
                               <div 
-                                className="px-3 py-2 rounded hover:bg-gray-100 cursor-pointer text-center"
+                                className="px-3 py-2.5 rounded hover:bg-gray-100 cursor-pointer text-center text-base"
                                 onMouseEnter={() => handleItemHover(opt, ci)}
                                 onMouseLeave={() => handleItemLeave()}
                               >
@@ -422,7 +472,7 @@ const Navbar = () => {
                     {/* Preview panel - overlay positioned dynamically */}
                     <div className={`absolute bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 shadow-2xl transition-all duration-500 ease-out z-10 ${hoveredItem ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2 pointer-events-none'} ${hoveredColumn === 0 || hoveredColumn === 1 ? 'left-1/2 top-16 w-1/2' : (hoveredColumn === 2 || hoveredColumn === 3) ? 'left-0 top-16 w-1/2' : 'left-1/2 top-16 w-1/2'}`}>
                       <h4 className="font-semibold text-[#2F6A9E] mb-3 text-xl">{hoveredItem || ''}</h4>
-                      <p className="text-sm text-gray-600 mb-4">Professional service with expert guidance. We provide comprehensive support for this service with detailed documentation and expert consultation.</p>
+                      <p className="text-base text-gray-600 mb-4">Professional service with expert guidance. We provide comprehensive support for this service with detailed documentation and expert consultation.</p>
                       <div className="space-y-3">
                         <div className="flex items-center gap-2 text-sm text-gray-700">
                           <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
