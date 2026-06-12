@@ -7,7 +7,7 @@ const About = () => {
       {/* Hero Section */}
       <div className="bg-[#053131] text-white py-4">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xl text-blue-100">Learn more about Mayank Varshney & Co.</p>
+          <p className="text-xl text-blue-100 text-center">Learn more about Mayank Varshney & Co.</p>
         </div>
       </div>
 
@@ -16,7 +16,7 @@ const About = () => {
           {/* Left Side - Content */}
           <div className="space-y-6 p-4 overflow-auto">
             <div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">About Mayank Varshney & Co.</h2>
+          
               <p className="text-gray-600 mb-4 leading-relaxed">
                 Founded with a vision to simplify complex financial and legal processes, Mayank Varshney & Co. has grown into a trusted name in the industry. Our journey began with a simple mission: to provide professional, reliable, and affordable services to businesses of all sizes.
               </p>
@@ -31,7 +31,7 @@ const About = () => {
             <div className="bg-white rounded-xl shadow-lg p-4">
               <h3 className="font-semibold text-gray-800 mb-3">Our Mission</h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                To empower businesses and individuals with expert financial guidance and legal support, ensuring compliance while maximizing growth opportunities.
+            To make financial and legal expertise accessible to everyone, enabling individuals, startups, and businesses to make smarter decisions, stay compliant, and achieve long-term success and growth.
               </p>
             </div>
 
