@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useRef } from 'react'
 
 const sampleDueDates = {
   GST: [
@@ -36,10 +36,23 @@ const services = [
 const Header = () => {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState('GST')
+  const scrollContainerRef = useRef(null)
 
   const dueDates = useMemo(() => {
     return sampleDueDates[selected] || []
   }, [selected])
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -200, behavior: 'smooth' })
+    }
+  }
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 200, behavior: 'smooth' })
+    }
+  }
 
   return (
     <header className="relative w-full bg-[#053131] text-white py-8">
@@ -67,16 +80,44 @@ const Header = () => {
         <div className="bg-white text-gray-800 rounded-lg shadow-md overflow-hidden">
           {/* Services chips at top of panel */}
           <div className="bg-gray-50 border-b border-gray-200 px-4 py-2">
-            <div className="flex gap-3 overflow-x-auto no-scrollbar py-1">
-              {services.map(s => (
-                <button
-                  key={s}
-                  onClick={() => setSelected(s)}
-                  className={`flex-shrink-0 px-6 py-3 rounded-full text-lg font-medium ${selected === s ? 'bg-[#2F6A9E] text-white' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'}`}
-                >
-                  {s}
-                </button>
-              ))}
+            <div className="flex items-center gap-2">
+              {/* Left scroll button */}
+              <button
+                onClick={scrollLeft}
+                className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-white border border-gray-300 rounded-full hover:bg-gray-100 transition-colors shadow-sm"
+                title="Scroll left"
+              >
+                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Scrollable chips container */}
+              <div
+                ref={scrollContainerRef}
+                className="flex gap-3 overflow-x-auto no-scrollbar py-1 scroll-smooth"
+              >
+                {services.map(s => (
+                  <button
+                    key={s}
+                    onClick={() => setSelected(s)}
+                    className={`flex-shrink-0 px-6 py-3 rounded-full text-lg font-medium ${selected === s ? 'bg-[#2F6A9E] text-white' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'}`}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+
+              {/* Right scroll button */}
+              <button
+                onClick={scrollRight}
+                className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-white border border-gray-300 rounded-full hover:bg-gray-100 transition-colors shadow-sm"
+                title="Scroll right"
+              >
+                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
           </div>
 
