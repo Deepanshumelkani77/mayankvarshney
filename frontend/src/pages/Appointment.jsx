@@ -53,8 +53,6 @@ const Appointment = () => {
   const [selectedTimes, setSelectedTimes] = useState([])
   const [requestCustomTime, setRequestCustomTime] = useState(false)
   const [customTimeRequest, setCustomTimeRequest] = useState('')
-  const [paymentMethod, setPaymentMethod] = useState('')
-  const [paymentDetails, setPaymentDetails] = useState('')
   const [hoveredCategory, setHoveredCategory] = useState(null)
   const [hoveredSubHeading, setHoveredSubHeading] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -83,8 +81,6 @@ const Appointment = () => {
       times: selectedTimes,
       requestCustomTime,
       customTimeRequest,
-      paymentMethod,
-      paymentDetails,
       ...formData
     })
     alert('Appointment booked successfully!')
@@ -95,8 +91,6 @@ const Appointment = () => {
     setSelectedTimes([])
     setRequestCustomTime(false)
     setCustomTimeRequest('')
-    setPaymentMethod('')
-    setPaymentDetails('')
     setFormData({ firstName: '', lastName: '', email: '', phone: '', notes: '' })
   }
 
@@ -264,16 +258,6 @@ const Appointment = () => {
                 <div>
                   <p className="text-sm text-gray-500 font-medium">Phone</p>
                   <p className="text-base font-semibold text-gray-800">{formData.phone || 'Not filled'}</p>
-                </div>
-
-                <div className="border-t pt-3">
-                  <p className="text-sm text-gray-500 font-medium">Payment Method</p>
-                  <p className="text-base font-semibold text-[#2F6A9E]">{paymentMethod || 'Not selected'}</p>
-                </div>
-
-                <div>
-                  <p className="text-sm text-gray-500 font-medium">Consultation Fee</p>
-                  <p className="text-base font-semibold text-[#2F6A9E]">₹500</p>
                 </div>
               </div>
             </div>
@@ -556,8 +540,8 @@ const Appointment = () => {
               {/* Row 5: Additional Notes */}
               {formData.email && formData.phone && (
                 <div className="bg-white rounded-xl shadow-lg p-4">
-
-
+                 
+                  
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Additional Notes (Optional)</label>
                     <textarea
@@ -572,63 +556,8 @@ const Appointment = () => {
                 </div>
               )}
 
-              {/* Row 6: Payment */}
-              {formData.email && formData.phone && (
-                <div className="bg-white rounded-xl shadow-lg p-4">
-                  <h3 className="text-lg font-bold text-gray-800 mb-4 border-b pb-2">Consultation Fee Payment</h3>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Payment Method *</label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                      {['UPI', 'Credit Card', 'Debit Card', 'Net Banking'].map((method) => (
-                        <button
-                          key={method}
-                          type="button"
-                          onClick={() => setPaymentMethod(method)}
-                          className={`px-4 py-3 rounded-lg border-2 transition-all font-medium text-sm ${
-                            paymentMethod === method
-                              ? 'border-[#2F6A9E] bg-[#2F6A9E] text-white'
-                              : 'border-gray-200 hover:border-[#2F6A9E] hover:bg-[#2F6A9E]/5 text-gray-800'
-                          }`}
-                        >
-                          {method}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {paymentMethod && (
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {paymentMethod === 'UPI' ? 'UPI ID / Phone Number' :
-                         paymentMethod === 'Credit Card' || paymentMethod === 'Debit Card' ? 'Card Number' :
-                         'Bank Account Number'} *
-                      </label>
-                      <input
-                        type="text"
-                        value={paymentDetails}
-                        onChange={(e) => setPaymentDetails(e.target.value)}
-                        placeholder={
-                          paymentMethod === 'UPI' ? 'Enter UPI ID or Phone Number' :
-                          paymentMethod === 'Credit Card' || paymentMethod === 'Debit Card' ? 'Enter Card Number' :
-                          'Enter Bank Account Number'
-                        }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
-                        required
-                      />
-                    </div>
-                  )}
-
-                  <div className="mt-4 p-3 bg-[#2F6A9E]/10 rounded-lg border border-[#2F6A9E]/20">
-                    <p className="text-sm text-gray-700">
-                      <span className="font-semibold text-[#2F6A9E]">Consultation Fee:</span> ₹500 (Payable in advance)
-                    </p>
-                  </div>
-                </div>
-              )}
-
               {/* Submit Button */}
-              {formData.email && formData.phone && paymentMethod && paymentDetails && (
+              {formData.email && formData.phone && (
                 <button
                   type="submit"
                   className="w-full px-6 py-3 bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl text-base"
