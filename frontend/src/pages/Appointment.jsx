@@ -82,8 +82,8 @@ const Appointment = () => {
       ...formData
     })
     alert('Appointment booked successfully!')
-    setSelectedCategory('')
-    setSelectedSubHeading('')
+    setSelectedCategory([])
+    setSelectedSubHeading([])
     setSelectedItems([])
     setSelectedDate('')
     setSelectedTimes([])
@@ -160,11 +160,39 @@ const Appointment = () => {
     if (index === -1) {
       // Add item
       setSelectedItems([...selectedItems, item])
-      setSelectedSubHeading(subHeading)
-      setSelectedCategory(category)
+      if (!selectedCategory.includes(category)) {
+        setSelectedCategory([...selectedCategory, category])
+      }
+      if (!selectedSubHeading.includes(subHeading)) {
+        setSelectedSubHeading([...selectedSubHeading, subHeading])
+      }
     } else {
       // Remove item
       setSelectedItems(selectedItems.filter(i => i !== item))
+      // Remove category if no items from this category remain
+      const remainingItems = selectedItems.filter(i => i !== item)
+      const categoryItems = mainItems.find(c => c.id === category)
+      if (categoryItems) {
+        const hasItemsFromCategory = categoryItems.groups.some(g =>
+          g.items?.some(i => remainingItems.includes(i)) ||
+          g.subgroups?.some(s => s.items?.some(i => remainingItems.includes(i)))
+        )
+        if (!hasItemsFromCategory) {
+          setSelectedCategory(selectedCategory.filter(c => c !== category))
+        }
+      }
+      // Remove subheading if no items from this subheading remain
+      const hasItemsFromSubheading = mainItems.some(c =>
+        c.groups?.some(g =>
+          (g.title === subHeading && g.items?.some(i => remainingItems.includes(i))) ||
+          g.subgroups?.some(s =>
+            (s.title === subHeading && s.items?.some(i => remainingItems.includes(i)))
+          )
+        )
+      )
+      if (!hasItemsFromSubheading) {
+        setSelectedSubHeading(selectedSubHeading.filter(s => s !== subHeading))
+      }
     }
     setMenuOpen(false)
     setHoveredCategory(null)
@@ -212,11 +240,11 @@ const Appointment = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 text-sm">
               <div>
                 <p className="text-xs text-gray-500">Category</p>
-                <p className="text-sm font-semibold text-[#2F6A9E] truncate">{selectedCategory || '-'}</p>
+                <p className="text-sm font-semibold text-[#2F6A9E] truncate">{selectedCategory.length > 0 ? selectedCategory.join(', ') : '-'}</p>
               </div>
               <div>
                 <p className="text-xs text-gray-500">Sub-Heading</p>
-                <p className="text-sm font-semibold text-[#2F6A9E] truncate">{selectedSubHeading || '-'}</p>
+                <p className="text-sm font-semibold text-[#2F6A9E] truncate">{selectedSubHeading.length > 0 ? selectedSubHeading.join(', ') : '-'}</p>
               </div>
               <div>
                 <p className="text-xs text-gray-500">Services</p>
@@ -263,7 +291,7 @@ const Appointment = () => {
                         onClick={() => setMenuOpen(!menuOpen)}
                         className="w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-gray-50 focus:bg-white text-left flex justify-between items-center text-base"
                       >
-                        <span>{selectedItems.length > 0 ? `${selectedItems.length} service(s) selected - You can add more` : 'Choose services'}</span>
+                        <span>{selectedItems.length > 0 ? ` You can add more` : 'Choose services'}</span>
                         <svg className={`w-5 h-5 text-gray-400 transition-transform ${menuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
