@@ -254,15 +254,15 @@ const Navbar = () => {
 
          <div>
           <Link to="/">
-            <img src={assets.logo} alt="logo" className="h-14" />
+            <img src={assets.logo} alt="logo" className="h-10 sm:h-12 md:h-14" />
           </Link>
          </div>
 
           <div className="hidden md:flex flex-1 justify-center">
-            <ul className="flex gap-1 font-medium flex-wrap px-2 text-base">
+            <ul className="flex  font-medium flex-wrap px-2 text-base">
               {mainItems.map(item => (
                 <li key={item.id} onMouseEnter={() => setOpenDropdown(item.id)} className="relative">
-                  <button data-item={item.id} onClick={() => toggleDropdown(item.id)} className="px-4 py-2 hover:text-emerald-600 flex items-center gap-2 text-base">
+                  <button data-item={item.id} onClick={() => toggleDropdown(item.id)} className="px-3 py-2 hover:text-emerald-600 flex items-center gap-2 text-base">
                     <span>{item.label}</span>
                     <svg className={`h-4 w-4 transition-transform duration-200 ${openDropdown === item.id ? 'rotate-180' : 'rotate-0'}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -292,26 +292,44 @@ const Navbar = () => {
               {mainItems.map(item => (
                 <li key={item.id} className="border-b last:border-b-0">
                   <button onClick={() => toggleDropdown(item.id)} className="w-full text-left px-3 py-2 flex justify-between items-center">
-                    <span>{item.label}</span>
+                    <span className="text-base font-medium">{item.label}</span>
                     <svg className={`h-4 w-4 transition-transform duration-200 ${openDropdown === item.id ? 'rotate-180' : 'rotate-0'}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
-                  {openDropdown === item.id && item.options && item.options.length > 0 ? (
-                    <ul className="pl-4 pb-2 pt-1 space-y-1">
-                      {item.options.map(opt => (
-                        <li key={opt} className="text-base px-2 py-1.5 rounded hover:bg-gray-100">{opt}</li>
+                  {openDropdown === item.id && item.groups && item.groups.length > 0 ? (
+                    <ul className="pl-4 pb-2 pt-1 space-y-1 max-h-60 overflow-y-auto">
+                      {item.groups.map((group, gi) => (
+                        <li key={gi} className="mt-2">
+                          <h5 className="text-sm font-semibold text-[#2F6A9E] mb-1">{group.title}</h5>
+                          {group.items && group.items.map((opt, oi) => (
+                            <div key={oi} className="text-sm px-2 py-1.5 rounded hover:bg-gray-100 text-gray-700">{opt}</div>
+                          ))}
+                          {group.subgroups && group.subgroups.map((sg, sgi) => (
+                            <div key={sgi} className="mt-1">
+                              <h6 className="text-xs font-semibold text-gray-600 mb-1">{sg.title}</h6>
+                              {sg.items.map((opt, oi) => (
+                                <div key={oi} className="text-xs px-2 py-1 rounded hover:bg-gray-100 text-gray-700">{opt}</div>
+                              ))}
+                            </div>
+                          ))}
+                        </li>
                       ))}
                     </ul>
                   ) : null}
                 </li>
               ))}
             </ul>
+            <div className="mt-4 pt-4 border-t">
+              <Link to="/appointment" onClick={() => setMobileOpen(false)} className="block w-full bg-emerald-600 text-white px-5 py-3 rounded-md text-base font-medium text-center hover:bg-emerald-700 transition-colors">
+                Book Appointment
+              </Link>
+            </div>
           </div>
         </div>
 
         {/* Dropdown panel (single shared panel, content changes per openDropdown) */}
-        <div className={`absolute left-0 right-0 top-20 z-40 mt-0 flex ${openDropdown === 'ITR / TDS' ? 'justify-start pl-4' : 'justify-center'} pointer-events-none`}>
+        <div className={`hidden md:flex absolute left-0 right-0 top-20 z-40 mt-0 ${openDropdown === 'ITR / TDS' ? 'justify-start pl-4' : 'justify-center'} pointer-events-none`}>
           <div style={openDropdown === 'ITR / TDS' ? { marginLeft: `${itrOffset}px` } : {}} className={`${openDropdown === 'ITR / TDS' ? 'w-auto max-w-3xl' : 'w-[90vw] max-w-6xl'} bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-4 scale-95'}`}>
             {openDropdown ? (
               (() => {
@@ -342,7 +360,7 @@ const Navbar = () => {
                             {hoveredGroup && (() => {
                               const grp = info.groups.find(g => g.title === hoveredGroup)
                               return (
-                                <div onMouseEnter={() => {/* keep hoveredGroup while inside panel */}} onMouseLeave={() => setHoveredGroup(null)} className="w-[720px] bg-white rounded-md p-2 border-none">
+                                <div onMouseEnter={() => {/* keep hoveredGroup while inside panel */}} onMouseLeave={() => setHoveredGroup(null)} className="w-[720px] md:w-[720px] sm:w-full bg-white rounded-md p-2 border-none">
                                   <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{grp.title}</h4>
                                   <p className="text-base px-2 text-gray-600 mb-3">{info.desc}</p>
                                   <ul className="space-y-2   ">
@@ -411,7 +429,7 @@ const Navbar = () => {
                         <div className="hidden md:block"></div>
                       </div>
                       {/* Preview panel - overlay positioned dynamically */}
-                      <div className={`absolute bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 shadow-2xl transition-all duration-500 ease-out z-10 ${hoveredItem ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2 pointer-events-none'} ${hoveredColumn === 0 || hoveredColumn === 1 ? 'left-1/2 top-6 w-1/2' : (hoveredColumn === 2 || hoveredColumn === 3) ? 'left-0 top-6 w-1/2' : 'left-1/2 top-6 w-1/2'}`}>
+                      <div className={`hidden md:block absolute bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border border-emerald-200 shadow-2xl transition-all duration-500 ease-out z-10 ${hoveredItem ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-2 pointer-events-none'} ${hoveredColumn === 0 || hoveredColumn === 1 ? 'left-1/2 top-6 w-1/2' : (hoveredColumn === 2 || hoveredColumn === 3) ? 'left-0 top-6 w-1/2' : 'left-1/2 top-6 w-1/2'}`}>
                         <h4 className="font-semibold text-[#2F6A9E] mb-3 text-xl">{hoveredItem || ''}</h4>
                         <p className="text-base text-gray-600 mb-4">Professional service with expert guidance. We provide comprehensive support for this service with detailed documentation and expert consultation.</p>
                         <div className="space-y-3">
