@@ -169,7 +169,7 @@ const Navbar = () => {
         ref={topbarRef}
         className={`fixed top-0 left-0 right-0 bg-[#053131] text-white transition-all duration-300 ${
           showTopBar ? 'h-14 opacity-100 pointer-events-auto' : 'h-0 opacity-0 pointer-events-none'
-        } z-50`}
+        } z-[100]`}
       >
         <div className="max-w-8xl mx-auto h-14 flex items-center justify-between px-4">
           {/* Left Side - Contact Icons */}
@@ -228,13 +228,13 @@ const Navbar = () => {
 
               {/* Dropdown Menu */}
               {topMenuOpen && (
-                <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-50 animate-fadeIn">
-                  <Link to="/" className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Home</Link>
-                  <Link to="/about" className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">About</Link>
-                  <Link to="/contact" className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Contact</Link>
-                  <Link to="/blog" className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Blog</Link>
-                  <Link to="/career" className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Career</Link>
-                  <Link to="/review" className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Reviews</Link>
+                <div className="absolute  right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-[9999] animate-fadeIn">
+                  <Link to="/" onClick={() => setTopMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Home</Link>
+                  <Link to="/about" onClick={() => setTopMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">About</Link>
+                  <Link to="/contact" onClick={() => setTopMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Contact</Link>
+                  <Link to="/blog" onClick={() => setTopMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Blog</Link>
+                  <Link to="/career" onClick={() => setTopMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Career</Link>
+                  <Link to="/review" onClick={() => setTopMenuOpen(false)} className="block px-4 py-2 text-gray-700 hover:bg-[#2F6A9E] hover:text-white transition-colors">Reviews</Link>
                 </div>
               )}
             </div>
@@ -246,14 +246,16 @@ const Navbar = () => {
       <nav
         ref={navRef}
         onMouseLeave={() => setOpenDropdown(null)}
-        className={`fixed left-0 right-0 bg-[#E5F0E5] shadow-md w-full transition-all duration-300 ${
+        className={`fixed left-0 right-0 bg-[#E5F0E5] shadow-md w-full ${
           showTopBar ? 'top-14' : 'top-0'
-        } z-40`}
+        } z-50`}
       >
         <div className="max-w-8xl mx-auto flex items-center justify-between px-4 py-4">
 
          <div>
-          <img src={assets.logo} alt="logo" className="h-14" />
+          <Link to="/">
+            <img src={assets.logo} alt="logo" className="h-14" />
+          </Link>
          </div>
 
           <div className="hidden md:flex flex-1 justify-center">

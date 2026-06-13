@@ -82,8 +82,19 @@ const Contact = () => {
 
           {/* Right: Map */}
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-            <div className="p-4 bg-white">
-              <h3 className="text-xl font-semibold text-black text-center">Our Location</h3>
+            <div className="p-4 bg-white flex justify-between items-center">
+              <h3 className="text-xl font-semibold text-black">Our Location</h3>
+              <a 
+                href="https://www.google.com/maps?q=28.5807941,77.4282933&z=17" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 bg-[#2F6A9E] text-white rounded-lg hover:bg-[#1a4a75] transition-colors text-sm font-medium"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                Open in Maps
+              </a>
             </div>
             <div className="h-120">
               <iframe src="https://www.google.com/maps?q=28.5807941,77.4282933&z=17&output=embed" width="100%" height="100%" style={{ border: 0 }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Mayank Varshney & Co. Location"></iframe>

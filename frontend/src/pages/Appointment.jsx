@@ -56,7 +56,8 @@ const Appointment = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [timeMenuOpen, setTimeMenuOpen] = useState(false)
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
     notes: ''
@@ -84,7 +85,7 @@ const Appointment = () => {
     setSelectedItem('')
     setSelectedDate('')
     setSelectedTimes([])
-    setFormData({ name: '', email: '', phone: '', notes: '' })
+    setFormData({ firstName: '', lastName: '', email: '', phone: '', notes: '' })
   }
 
   const handleFormChange = (e) => {
@@ -231,7 +232,7 @@ const Appointment = () => {
                 
                 <div className="border-t pt-3">
                   <p className="text-sm text-gray-500 font-medium">Name</p>
-                  <p className="text-base font-semibold text-gray-800">{formData.name || 'Not filled'}</p>
+                  <p className="text-base font-semibold text-gray-800">{formData.firstName && formData.lastName ? `${formData.firstName} ${formData.lastName}` : 'Not filled'}</p>
                 </div>
                 
                 <div>
@@ -249,10 +250,11 @@ const Appointment = () => {
 
           {/* Right: Form */}
           <div className="lg:col-span-2">
-            <form onSubmit={handleFormSubmit} className="space-y-4">
-              {/* Service Selection - Mega Menu */}
+            <form onSubmit={handleFormSubmit} className="">
+              {/* Row 1: Service Selection */}
               <div className="bg-white rounded-xl shadow-lg p-4">
-                <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Service</h3>
+              
+                 <p className="block text-sm font-medium text-gray-700 mb-2">Select Service</p>
                 
                 {/* Service Selection Button */}
                 <div className="relative">
@@ -269,7 +271,7 @@ const Appointment = () => {
 
                   {/* Mega Menu Dropdown */}
                   {menuOpen && (
-                    <div className="absolute z-50 mt-2 w-full bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
+                    <div className="absolute z-50 mt-2 w-[900px] bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
                       <div className="flex">
                         {/* Categories Column */}
                         <div className="w-1/3 border-r border-gray-200 bg-gray-50">
@@ -337,102 +339,129 @@ const Appointment = () => {
                 </div>
               </div>
 
-              {/* Date Selection */}
+              {/* Row 2: Date & Time Selection */}
               {selectedItem && (
                 <div className="bg-white rounded-xl shadow-lg p-4">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Date</h3>
-                  <div className="relative">
-                    <input
-                      type="date"
-                      value={selectedDate}
-                      onChange={(e) => setSelectedDate(e.target.value)}
-                      min={new Date().toISOString().split('T')[0]}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
-                      required
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* Time Selection */}
-              {selectedDate && (
-                <div className="bg-white rounded-xl shadow-lg p-4">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Select Time Slots</h3>
+               
                   
-                  {/* Time Slot Dropdown Button */}
-                  <div className="relative">
-                    <button
-                      type="button"
-                      onClick={() => setTimeMenuOpen(!timeMenuOpen)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-white text-left flex justify-between items-center text-base"
-                    >
-                      <span>{selectedTimes.length > 0 ? `${selectedTimes.length} time slot(s) selected` : 'Choose time slots'}</span>
-                      <svg className={`w-5 h-5 text-gray-400 transition-transform ${timeMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-
-                    {/* Time Slot Dropdown */}
-                    {timeMenuOpen && (
-                      <div className="absolute z-50 mt-2 w-full bg-white rounded-xl shadow-2xl border border-gray-200 p-3">
-                        <p className="text-xs text-gray-500 mb-2">Click to toggle, Shift+Click for range selection</p>
-                        <div className="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto">
-                          {timeSlots.map((time) => (
-                            <button
-                              key={time}
-                              type="button"
-                              onClick={(e) => {
-                                if (e.shiftKey && selectedTimes.length > 0) {
-                                  handleTimeSlotRange(selectedTimes[selectedTimes.length - 1], time)
-                                } else {
-                                  handleTimeSlotToggle(time)
-                                }
-                              }}
-                              className={`p-2 rounded-lg border-2 transition-all font-medium text-xs ${
-                                selectedTimes.includes(time)
-                                  ? 'border-[#2F6A9E] bg-[#2F6A9E] text-white'
-                                  : 'border-gray-200 hover:border-[#2F6A9E] hover:bg-[#2F6A9E]/5 text-gray-800'
-                              }`}
-                            >
-                              {time}
-                            </button>
-                          ))}
-                        </div>
-                        <div className="mt-3 pt-3 border-t">
-                          <button
-                            type="button"
-                            onClick={() => setTimeMenuOpen(false)}
-                            className="w-full px-4 py-2 bg-[#2F6A9E] text-white rounded-lg font-medium hover:bg-[#1a4a75] transition"
-                          >
-                            Done
-                          </button>
-                        </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Date Selection */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                      <div className="relative">
+                        <input
+                          type="date"
+                          value={selectedDate}
+                          onChange={(e) => setSelectedDate(e.target.value)}
+                          min={new Date().toISOString().split('T')[0]}
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                          required
+                        />
                       </div>
-                    )}
+                    </div>
+
+                    {/* Time Selection */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Time Slots</label>
+                      
+                      {/* Time Slot Dropdown Button */}
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={() => setTimeMenuOpen(!timeMenuOpen)}
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-white text-left flex justify-between items-center text-base"
+                        >
+                          <span>{selectedTimes.length > 0 ? `${selectedTimes.length} time slot(s) selected` : 'Choose time slots'}</span>
+                          <svg className={`w-5 h-5 text-gray-400 transition-transform ${timeMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+
+                        {/* Time Slot Dropdown */}
+                        {timeMenuOpen && (
+                          <div className="absolute z-50 mt-2 w-[400px] bg-white rounded-xl shadow-2xl border border-gray-200 p-3">
+                            <p className="text-xs text-gray-500 mb-2">Click to toggle, Shift+Click for range selection</p>
+                            <div className="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto">
+                              {timeSlots.map((time) => (
+                                <button
+                                  key={time}
+                                  type="button"
+                                  onClick={(e) => {
+                                    if (e.shiftKey && selectedTimes.length > 0) {
+                                      handleTimeSlotRange(selectedTimes[selectedTimes.length - 1], time)
+                                    } else {
+                                      handleTimeSlotToggle(time)
+                                    }
+                                  }}
+                                  className={`p-2 rounded-lg border-2 transition-all font-medium text-xs ${
+                                    selectedTimes.includes(time)
+                                      ? 'border-[#2F6A9E] bg-[#2F6A9E] text-white'
+                                      : 'border-gray-200 hover:border-[#2F6A9E] hover:bg-[#2F6A9E]/5 text-gray-800'
+                                  }`}
+                                >
+                                  {time}
+                                </button>
+                              ))}
+                            </div>
+                            <div className="mt-3 pt-3 border-t">
+                              <button
+                                type="button"
+                                onClick={() => setTimeMenuOpen(false)}
+                                className="w-full px-4 py-2 bg-[#2F6A9E] text-white rounded-lg font-medium hover:bg-[#1a4a75] transition"
+                              >
+                                Done
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
 
-              {/* User Details */}
+              {/* Row 3: First Name & Last Name */}
               {selectedTimes.length > 0 && (
                 <div className="bg-white rounded-xl shadow-lg p-4">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Your Details</h3>
+                
                   
-                  <div className="space-y-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
                       <input
                         type="text"
-                        name="name"
+                        name="firstName"
                         required
-                        value={formData.name}
+                        value={formData.firstName}
                         onChange={handleFormChange}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
-                        placeholder="Enter your full name"
+                        placeholder="Enter your first name"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                      <input
+                        type="text"
+                        name="lastName"
+                        required
+                        value={formData.lastName}
+                        onChange={handleFormChange}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                        placeholder="Enter your last name"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Row 4: Email & Phone */}
+              {formData.firstName && formData.lastName && (
+                <div className="bg-white rounded-xl shadow-lg p-4">
+           
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
                       <input
                         type="email"
                         name="email"
@@ -444,7 +473,7 @@ const Appointment = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
                       <input
                         type="tel"
                         name="phone"
@@ -455,23 +484,31 @@ const Appointment = () => {
                         placeholder="Enter your phone number"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Additional Notes (Optional)</label>
-                      <textarea
-                        name="notes"
-                        value={formData.notes}
-                        onChange={handleFormChange}
-                        rows={2}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition resize-none text-base"
-                        placeholder="Any additional information"
-                      ></textarea>
-                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Row 5: Additional Notes */}
+              {formData.email && formData.phone && (
+                <div className="bg-white rounded-xl shadow-lg p-4">
+                 
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Additional Notes (Optional)</label>
+                    <textarea
+                      name="notes"
+                      value={formData.notes}
+                      onChange={handleFormChange}
+                      rows={3}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition resize-none text-base"
+                      placeholder="Any additional information"
+                    ></textarea>
                   </div>
                 </div>
               )}
 
               {/* Submit Button */}
-              {formData.name && formData.email && formData.phone && (
+              {formData.email && formData.phone && (
                 <button
                   type="submit"
                   className="w-full px-6 py-3 bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl text-base"
