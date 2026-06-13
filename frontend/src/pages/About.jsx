@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { assets } from '../assets/assets'
 
 const About = () => {
+  const [mainImageLoaded, setMainImageLoaded] = useState(false)
+  const [badgeImageLoaded, setBadgeImageLoaded] = useState(false)
   return (
     <div className="bg-[#E5F0E5]">
       {/* Hero Section */}
@@ -51,7 +53,18 @@ To make financial and legal expertise accessible to everyone, enabling individua
               {/* Main Image */}
               <div className="aspect-[4/3] bg-gradient-to-br from-[#2F6A9E]/10 to-[#1a4a75]/10 rounded-xl flex items-center justify-center">
                 <div className="text-center">
-                 <img src={assets.info1} className="h-full w-full object-cover"/>
+                  {!mainImageLoaded && (
+                    <div className="w-full h-full flex items-center justify-center bg-gray-200 animate-pulse">
+                      <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                  )}
+                  <img 
+                    src={assets.info1} 
+                    className={`h-full w-full object-cover transition-opacity duration-300 ${mainImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                    onLoad={() => setMainImageLoaded(true)}
+                  />
                 </div>
               </div>
 
@@ -74,7 +87,18 @@ To make financial and legal expertise accessible to everyone, enabling individua
               <div className="absolute bottom-4 left-4 bg-white rounded-xl shadow-lg p-3 animate-float-slow">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 bg-[#2F6A9E] rounded-full flex items-center justify-center">
-                   <img src={assets.info1} className="w-full h-full" />
+                    {!badgeImageLoaded && (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-300 animate-pulse">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    )}
+                    <img 
+                      src={assets.info1} 
+                      className={`w-full h-full transition-opacity duration-300 ${badgeImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                      onLoad={() => setBadgeImageLoaded(true)}
+                    />
                   </div>
                   <div>
                     <div className="text-xs font-semibold text-gray-800">Fast</div>

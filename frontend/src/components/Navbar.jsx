@@ -248,7 +248,7 @@ const Navbar = () => {
         onMouseLeave={() => setOpenDropdown(null)}
         className={`fixed left-0 right-0 bg-[#E5F0E5] shadow-md w-full ${
           showTopBar ? 'top-14' : 'top-0'
-        } z-50`}
+        } ${topMenuOpen ? 'z-40' : 'z-50'}`}
       >
         <div className="max-w-8xl mx-auto flex items-center justify-between px-4 py-4">
 
