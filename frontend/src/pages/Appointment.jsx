@@ -504,34 +504,33 @@ const Appointment = () => {
                 </div>
 
                 {/* Additional Notes */}
-                {formData.email && (
-                  <div className="mt-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                      </svg>
-                      Additional Notes (Optional)
-                    </label>
-                    <textarea
-                      name="notes"
-                      value={formData.notes}
-                      onChange={handleFormChange}
-                      rows={1}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition resize-none text-base bg-gray-50 focus:bg-white"
-                      placeholder="Any additional information"
-                    ></textarea>
-                  </div>
-                )}
+                <div className="mt-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                    Additional Notes (Optional)
+                  </label>
+                  <textarea
+                    name="notes"
+                    value={formData.notes}
+                    onChange={handleFormChange}
+                    rows={1}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition resize-none text-base bg-gray-50 focus:bg-white"
+                    placeholder="Any additional information"
+                  ></textarea>
+                </div>
 
                 {/* Submit Button */}
-                {formData.email && (
-                  <button
-                    type="submit"
-                    className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl text-base"
-                  >
-                    Confirm Appointment Booking
-                  </button>
-                )}
+                <button
+                  type="submit"
+                  disabled={formData.email === ''}
+                  className={`w-full mt-4 px-6 py-3 bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl text-base ${
+                    formData.email === '' ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
+                >
+                  Confirm Appointment Booking
+                </button>
               </div>
             </form>
           </div>
