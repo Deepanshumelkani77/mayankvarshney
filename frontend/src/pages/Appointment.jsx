@@ -46,8 +46,8 @@ const mainItems = [
 ]
 
 const Appointment = () => {
-  const [selectedCategory, setSelectedCategory] = useState('')
-  const [selectedSubHeading, setSelectedSubHeading] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState([])
+  const [selectedSubHeading, setSelectedSubHeading] = useState([])
   const [selectedItems, setSelectedItems] = useState([])
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTimes, setSelectedTimes] = useState([])
@@ -263,7 +263,7 @@ const Appointment = () => {
                         onClick={() => setMenuOpen(!menuOpen)}
                         className="w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-gray-50 focus:bg-white text-left flex justify-between items-center text-base"
                       >
-                        <span>{selectedItems.length > 0 ? `${selectedItems.length} service(s) selected` : 'Choose services'}</span>
+                        <span>{selectedItems.length > 0 ? `${selectedItems.length} service(s) selected - You can add more` : 'Choose services'}</span>
                         <svg className={`w-5 h-5 text-gray-400 transition-transform ${menuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
@@ -365,7 +365,6 @@ const Appointment = () => {
                       className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
                         selectedItems.length === 0 ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
                       }`}
-                      required
                     />
                   </div>
 
@@ -468,7 +467,6 @@ const Appointment = () => {
                     <input
                       type="text"
                       name="name"
-                      required
                       value={formData.name}
                       onChange={handleFormChange}
                       disabled={(selectedTimes.length === 0 && !requestCustomTime)}
@@ -490,7 +488,6 @@ const Appointment = () => {
                     <input
                       type="email"
                       name="email"
-                      required
                       value={formData.email}
                       onChange={handleFormChange}
                       disabled={(selectedTimes.length === 0 && !requestCustomTime)}
@@ -524,10 +521,7 @@ const Appointment = () => {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  disabled={formData.email === ''}
-                  className={`w-full mt-4 px-6 py-3 bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl text-base ${
-                    formData.email === '' ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
+                  className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl text-base"
                 >
                   Confirm Appointment Booking
                 </button>
