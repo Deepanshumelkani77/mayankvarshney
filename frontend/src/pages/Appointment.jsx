@@ -48,9 +48,11 @@ const mainItems = [
 const Appointment = () => {
   const [selectedCategory, setSelectedCategory] = useState('')
   const [selectedSubHeading, setSelectedSubHeading] = useState('')
-  const [selectedItem, setSelectedItem] = useState('')
+  const [selectedItems, setSelectedItems] = useState([])
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTimes, setSelectedTimes] = useState([])
+  const [requestCustomTime, setRequestCustomTime] = useState(false)
+  const [customTimeRequest, setCustomTimeRequest] = useState('')
   const [hoveredCategory, setHoveredCategory] = useState(null)
   const [hoveredSubHeading, setHoveredSubHeading] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -74,17 +76,21 @@ const Appointment = () => {
     console.log('Appointment booked:', {
       category: selectedCategory,
       subHeading: selectedSubHeading,
-      item: selectedItem,
+      items: selectedItems,
       date: selectedDate,
       times: selectedTimes,
+      requestCustomTime,
+      customTimeRequest,
       ...formData
     })
     alert('Appointment booked successfully!')
     setSelectedCategory('')
     setSelectedSubHeading('')
-    setSelectedItem('')
+    setSelectedItems([])
     setSelectedDate('')
     setSelectedTimes([])
+    setRequestCustomTime(false)
+    setCustomTimeRequest('')
     setFormData({ firstName: '', lastName: '', email: '', phone: '', notes: '' })
   }
 
@@ -152,9 +158,16 @@ const Appointment = () => {
   }
 
   const handleSelectItem = (item, subHeading, category) => {
-    setSelectedItem(item)
-    setSelectedSubHeading(subHeading)
-    setSelectedCategory(category)
+    const index = selectedItems.indexOf(item)
+    if (index === -1) {
+      // Add item
+      setSelectedItems([...selectedItems, item])
+      setSelectedSubHeading(subHeading)
+      setSelectedCategory(category)
+    } else {
+      // Remove item
+      setSelectedItems(selectedItems.filter(i => i !== item))
+    }
     setMenuOpen(false)
     setHoveredCategory(null)
     setHoveredSubHeading(null)
@@ -212,8 +225,10 @@ const Appointment = () => {
                 </div>
                 
                 <div>
-                  <p className="text-sm text-gray-500 font-medium">Service Item</p>
-                  <p className="text-base font-semibold text-[#2F6A9E]">{selectedItem || 'Not selected'}</p>
+                  <p className="text-sm text-gray-500 font-medium">Service Items</p>
+                  <p className="text-base font-semibold text-[#2F6A9E]">
+                    {selectedItems.length > 0 ? selectedItems.join(', ') : 'Not selected'}
+                  </p>
                 </div>
                 
                 <div>
@@ -226,7 +241,7 @@ const Appointment = () => {
                 <div>
                   <p className="text-sm text-gray-500 font-medium">Time</p>
                   <p className="text-base font-semibold text-[#2F6A9E]">
-                    {selectedTimes.length > 0 ? selectedTimes.join(', ') : 'Not selected'}
+                    {requestCustomTime && customTimeRequest ? customTimeRequest + ' (Custom Request)' : selectedTimes.length > 0 ? selectedTimes.join(', ') : 'Not selected'}
                   </p>
                 </div>
                 
@@ -263,7 +278,7 @@ const Appointment = () => {
                     onClick={() => setMenuOpen(!menuOpen)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-white text-left flex justify-between items-center text-base"
                   >
-                    <span>{selectedItem || 'Choose a service'}</span>
+                    <span>{selectedItems.length > 0 ? `${selectedItems.length} service(s) selected` : 'Choose services'}</span>
                     <svg className={`w-5 h-5 text-gray-400 transition-transform ${menuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
@@ -325,9 +340,18 @@ const Appointment = () => {
                                 <div
                                   key={index}
                                   onClick={() => handleSelectItem(item, hoveredSubHeading, hoveredCategory)}
-                                  className="px-4 py-3 rounded-lg cursor-pointer transition-colors hover:bg-[#2F6A9E] hover:text-white text-gray-800"
+                                  className={`px-4 py-3 rounded-lg cursor-pointer transition-colors flex items-center justify-between ${
+                                    selectedItems.includes(item)
+                                      ? 'bg-[#2F6A9E] text-white'
+                                      : 'hover:bg-[#2F6A9E] hover:text-white text-gray-800'
+                                  }`}
                                 >
                                   <p className="font-medium text-sm">{item}</p>
+                                  {selectedItems.includes(item) && (
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                  )}
                                 </div>
                               ))}
                             </div>
@@ -340,7 +364,7 @@ const Appointment = () => {
               </div>
 
               {/* Row 2: Date & Time Selection */}
-              {selectedItem && (
+              {selectedItems.length > 0 && (
                 <div className="bg-white rounded-xl shadow-lg p-4">
                
                   
@@ -354,7 +378,7 @@ const Appointment = () => {
                           value={selectedDate}
                           onChange={(e) => setSelectedDate(e.target.value)}
                           min={new Date().toISOString().split('T')[0]}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                          className="w-full h-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
                           required
                         />
                       </div>
@@ -363,13 +387,13 @@ const Appointment = () => {
                     {/* Time Selection */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Time Slots</label>
-                      
+
                       {/* Time Slot Dropdown Button */}
                       <div className="relative">
                         <button
                           type="button"
                           onClick={() => setTimeMenuOpen(!timeMenuOpen)}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-white text-left flex justify-between items-center text-base"
+                          className="w-full h-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-white text-left flex justify-between items-center text-base"
                         >
                           <span>{selectedTimes.length > 0 ? `${selectedTimes.length} time slot(s) selected` : 'Choose time slots'}</span>
                           <svg className={`w-5 h-5 text-gray-400 transition-transform ${timeMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -379,7 +403,7 @@ const Appointment = () => {
 
                         {/* Time Slot Dropdown */}
                         {timeMenuOpen && (
-                          <div className="absolute z-50 mt-2 w-[400px] bg-white rounded-xl shadow-2xl border border-gray-200 p-3">
+                          <div className="absolute z-50 mt-2 w-full bg-white rounded-xl shadow-2xl border border-gray-200 p-3">
                             <p className="text-xs text-gray-500 mb-2">Click to toggle, Shift+Click for range selection</p>
                             <div className="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto">
                               {timeSlots.map((time) => (
@@ -416,12 +440,37 @@ const Appointment = () => {
                         )}
                       </div>
                     </div>
+
+                    {/* Custom Time Request */}
+                    <div className="mt-2 pt-2 ">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={requestCustomTime}
+                          onChange={(e) => setRequestCustomTime(e.target.checked)}
+                          className="w-4 h-4 text-[#2F6A9E] border-gray-300 rounded focus:ring-[#2F6A9E]"
+                        />
+                        <span className="text-sm text-gray-700">Request a custom time slot not listed above</span>
+                      </label>
+                      {requestCustomTime && (
+                        <div className="mt-2">
+                          <input
+                            type="text"
+                            value={customTimeRequest}
+                            onChange={(e) => setCustomTimeRequest(e.target.value)}
+                            placeholder="Enter your preferred time (e.g., 08:00 AM)"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                          />
+                          <p className="text-xs text-gray-500 mt-1">* Subject to acceptance by the consultant</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
 
               {/* Row 3: First Name & Last Name */}
-              {selectedTimes.length > 0 && (
+              {(selectedTimes.length > 0 || (requestCustomTime && customTimeRequest)) && (
                 <div className="bg-white rounded-xl shadow-lg p-4">
                 
                   
