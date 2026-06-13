@@ -267,16 +267,21 @@ const Appointment = () => {
           <div className="lg:col-span-2">
             <form onSubmit={handleFormSubmit} className="">
               {/* Row 1: Service Selection */}
-              <div className="bg-white rounded-xl shadow-lg p-4">
+              <div className="bg-white  shadow-lg p-6 pt-3 pb-3">
               
-                 <p className="block text-sm font-medium text-gray-700 mb-2">Select Service</p>
+                <p className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                  </svg>
+                  Select Services
+                </p>
                 
                 {/* Service Selection Button */}
                 <div className="relative">
                   <button
                     type="button"
                     onClick={() => setMenuOpen(!menuOpen)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-white text-left flex justify-between items-center text-base"
+                    className="w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-gray-50 focus:bg-white text-left flex justify-between items-center text-base"
                   >
                     <span>{selectedItems.length > 0 ? `${selectedItems.length} service(s) selected` : 'Choose services'}</span>
                     <svg className={`w-5 h-5 text-gray-400 transition-transform ${menuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -365,20 +370,24 @@ const Appointment = () => {
 
               {/* Row 2: Date & Time Selection */}
               {selectedItems.length > 0 && (
-                <div className="bg-white rounded-xl shadow-lg p-4">
-               
+                <div className="bg-white  shadow-lg p-6 pt-3 pb-3">
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Date Selection */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        Date *
+                      </label>
                       <div className="relative">
                         <input
                           type="date"
                           value={selectedDate}
                           onChange={(e) => setSelectedDate(e.target.value)}
                           min={new Date().toISOString().split('T')[0]}
-                          className="w-full h-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                          className="w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base bg-gray-50 focus:bg-white"
                           required
                         />
                       </div>
@@ -386,14 +395,19 @@ const Appointment = () => {
 
                     {/* Time Selection */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Time Slots</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Time Slots *
+                      </label>
 
                       {/* Time Slot Dropdown Button */}
                       <div className="relative">
                         <button
                           type="button"
                           onClick={() => setTimeMenuOpen(!timeMenuOpen)}
-                          className="w-full h-10 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-white text-left flex justify-between items-center text-base"
+                          className="w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-white text-left flex justify-between items-center text-base"
                         >
                           <span>{selectedTimes.length > 0 ? `${selectedTimes.length} time slot(s) selected` : 'Choose time slots'}</span>
                           <svg className={`w-5 h-5 text-gray-400 transition-transform ${timeMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -459,7 +473,7 @@ const Appointment = () => {
                             value={customTimeRequest}
                             onChange={(e) => setCustomTimeRequest(e.target.value)}
                             placeholder="Enter your preferred time (e.g., 08:00 AM)"
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base bg-gray-50 focus:bg-white"
                           />
                           <p className="text-xs text-gray-500 mt-1">* Subject to acceptance by the consultant</p>
                         </div>
@@ -471,31 +485,40 @@ const Appointment = () => {
 
               {/* Row 3: First Name & Last Name */}
               {(selectedTimes.length > 0 || (requestCustomTime && customTimeRequest)) && (
-                <div className="bg-white rounded-xl shadow-lg p-4">
-                
-                  
+                <div className="bg-white  shadow-lg p-6 pt-3 pb-3">
+                 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        First Name *
+                      </label>
                       <input
                         type="text"
                         name="firstName"
                         required
                         value={formData.firstName}
                         onChange={handleFormChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base bg-gray-50 focus:bg-white"
                         placeholder="Enter your first name"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        Last Name *
+                      </label>
                       <input
                         type="text"
                         name="lastName"
                         required
                         value={formData.lastName}
                         onChange={handleFormChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base bg-gray-50 focus:bg-white"
                         placeholder="Enter your last name"
                       />
                     </div>
@@ -505,31 +528,40 @@ const Appointment = () => {
 
               {/* Row 4: Email & Phone */}
               {formData.firstName && formData.lastName && (
-                <div className="bg-white rounded-xl shadow-lg p-4">
-           
+                <div className="bg-white  shadow-lg p-6 pt-3 pb-3">
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        Email Address *
+                      </label>
                       <input
                         type="email"
                         name="email"
                         required
                         value={formData.email}
                         onChange={handleFormChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base bg-gray-50 focus:bg-white"
                         placeholder="Enter your email address"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        Phone Number *
+                      </label>
                       <input
                         type="tel"
                         name="phone"
                         required
                         value={formData.phone}
                         onChange={handleFormChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base bg-gray-50 focus:bg-white"
                         placeholder="Enter your phone number"
                       />
                     </div>
@@ -539,17 +571,21 @@ const Appointment = () => {
 
               {/* Row 5: Additional Notes */}
               {formData.email && formData.phone && (
-                <div className="bg-white rounded-xl shadow-lg p-4">
+                <div className="bg-white  shadow-lg p-6 pt-3 pb-3">
                  
-                  
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Additional Notes (Optional)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
+                      Additional Notes (Optional)
+                    </label>
                     <textarea
                       name="notes"
                       value={formData.notes}
                       onChange={handleFormChange}
                       rows={3}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition resize-none text-base"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition resize-none text-base bg-gray-50 focus:bg-white"
                       placeholder="Any additional information"
                     ></textarea>
                   </div>
