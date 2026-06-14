@@ -369,7 +369,7 @@ const Navbar = () => {
 
         {/* Dropdown panel (single shared panel, content changes per openDropdown) */}
         <div className="hidden md:flex absolute left-0 right-0 top-16 z-40 mt-0 justify-center">
-          <div onMouseEnter={() => setOpenDropdown(openDropdown)} onMouseLeave={() => setOpenDropdown(null)} className="w-[90vw] max-w-6xl bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100' : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'}">
+          <div onMouseEnter={() => setOpenDropdown(openDropdown)} onMouseLeave={() => setOpenDropdown(null)} className="w-[90vw] max-w-7xl bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100' : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'}">
             {openDropdown ? (
               (() => {
                 const info = mainItems.find(i => i.id === openDropdown)
@@ -520,10 +520,10 @@ const Navbar = () => {
                       </div>
 
                       {/* Right panel - details when hovering an option */}
-                      <div className="relative w-[300px]">
+                      <div className="relative w-[500px]">
                         {hoveredGroup && (() => {
                           return (
-                            <div className="w-[300px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
+                            <div className="w-[500px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
                               <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{hoveredGroup}</h4>
                               <p className="text-base px-2 text-gray-600 mb-3">{info.desc}</p>
                             </div>
