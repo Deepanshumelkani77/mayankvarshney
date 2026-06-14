@@ -46,11 +46,8 @@ const mainItems = [
                     {title:'ESI',items:['Return filing','Profile Updation']},
                     {title:'National Company Law Tribunal',items:['Claim Filing']},
   ]},
-  { id: 'DGFT', label: 'DGFT', desc: 'DGFT registration, returns, and compliance.', groups:[
-   {title:'Registration',items:['Import Export Code']},
-   {title:'Assessment',items:['Assessment']},
-   {title:'Refund',items:['Refund','SAD Refund']}
-  ]},
+
+
  { id: 'Legal Drafting', label: 'Legal Drafting', desc: 'Legal document preparation and review.', groups:[
     {title:'PROPERTY MATTERS',items:['Property Registration','Property Title Verification','Gift Deed','Sale Deed','Rent Agreement','Lease Deed','Relinquishment Deed']},
     { title: 'WILL & POWER OF ATTORNEY (POA)', subgroups: [
@@ -61,13 +58,16 @@ const mainItems = [
     {title:'AGREEMENTS DRAFTING',items:['Memorandum Of Understanding','Franchise Agreement','Joint Venture Agreement','Founders Agreement','Shareholders Agreement','Share Purchase Agreement','Consultancy Agreement','Freelancer Agreement','Agency Agreement','Non Disclosure Agreement']},
     {title:'OTHERS',items:['Account Opening Resolution','Website Terms And Conditions','Website Privacy Policy','Website Disclaimer Policy','Appointment Letter','Resignation Letter','Offer Letter']}
   ] },
-  { id: 'Registration', label: 'Registration', desc: 'Business registration and compliance.', groups:[
-    {title:'Business Registrations',items:['GSTIN Registrations','MSME Registration','FSSAI Registration','PF Registration','ESI Registration','TAN Registration','IEC Registration','APEDA Registration','Shop & Establishment Registration','Society Registration','Club Registration','Trust Registration','Partnership Registration','BIS Registration']},
-    {title:'Property related Registrations',items:['RERA Registration','Property Registration','Gift Deed Registration','Sale Deed Registration','Gift Deed Registration','Sale Deed Registration','Lease Deed Registration','Relinquishment Deed Registration','Will Probate','General Power of Attorney (GPA) Registration']},
-    {title:'Other Registrations',items:['Agreement Registration','Bar Code Registration','Digital Signature Certificate']},
-   
-  ] },
-  { id: 'Compliance', label: 'Compliance', desc: 'Regulatory compliance and reporting.', options: ['Annual Compliance', 'Quarterly Reporting'] },
+
+  { id: 'Legal Services', label: 'Legal Services', desc: 'Legal document preparation and review.', groups:[
+{title:'Appeal Filing',items:['Income Tax Appeal Filing','GST Appeal Filing']},
+{title:'Civil Matters',items:['Legal Notice','Consumer Complaints','RTI Filing','']},
+{title:'Registration',items:[{subtittle:'Document Registration',subitem:['Residential Property Registration','Commercial Property Registration','Gift Deed Registration','Sale Deed Registration','WILL Registration','Subsequent WILL Registration','Will Probate','Lease Deed Registration','Relinquishment Deed Registration','General Power of Attorney (GPA) Registration','Builder Collaboration Agreement Registration','Agreement Registration','Bar Code Registration','Digital Signature Certificate','Mariage Registration']}]}, 
+{title:'Certificates',items:['Legal Heir Certificate','Family Members Certificate']},
+{title:'Property Assessment',items:['Residential Property review and assesment','Commercial Property review and assesment','Industrial Property review and assesment','Title Verification','Representation Services for Property and Builder Collaboration','Representation in Property Auction Service']}, 
+]},
+
+
 
 
 
@@ -105,7 +105,6 @@ const Navbar = () => {
   const [hoveredGroup, setHoveredGroup] = useState(null)
   const [hoveredSubItem, setHoveredSubItem] = useState(null)
   const hoverTimeoutRef = useRef(null)
-  const [itrOffset, setItrOffset] = useState(0)
   const [spacerHeight, setSpacerHeight] = useState(0)
   const topMenuRef = useRef(null)
 
@@ -162,14 +161,6 @@ const Navbar = () => {
 
   useEffect(() => {
     const measure = () => {
-      // ITR offset measurement
-      if (openDropdown === 'ITR / TDS') {
-        const el = document.querySelector('[data-item="ITR / TDS"]')
-        if (el) {
-          const rect = el.getBoundingClientRect()
-          setItrOffset(Math.round(rect.left))
-        }
-      }
       // spacer height (topbar + main nav)
       const topH = topbarRef.current ? Math.round(topbarRef.current.getBoundingClientRect().height) : 0
       const navH = navRef.current ? Math.round(navRef.current.getBoundingClientRect().height) : 0
@@ -300,7 +291,7 @@ const Navbar = () => {
             <ul className="flex  font-medium flex-wrap px-2 text-base">
               {mainItems.map(item => (
                 <li key={item.id} onMouseEnter={() => setOpenDropdown(item.id)} className="relative">
-                  <button data-item={item.id} onClick={() => toggleDropdown(item.id)} className="px-3 py-2 hover:text-emerald-600 flex items-center gap-2 text-base">
+                  <button data-item={item.id} onClick={() => toggleDropdown(item.id)} className="px-6 py-2 hover:text-emerald-600 flex items-center gap-2 text-base">
                     <span>{item.label}</span>
                     <svg className={`h-4 w-4 transition-transform duration-200 ${openDropdown === item.id ? 'rotate-180' : 'rotate-0'}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -377,102 +368,19 @@ const Navbar = () => {
         </div>
 
         {/* Dropdown panel (single shared panel, content changes per openDropdown) */}
-        <div className={`hidden md:flex absolute left-0 right-0 top-20 z-40 mt-0 ${openDropdown === 'ITR / TDS' ? 'justify-start pl-4' : 'justify-center'} pointer-events-none`}>
-          <div style={openDropdown === 'ITR / TDS' ? { marginLeft: `${itrOffset}px` } : {}} className={`${openDropdown === 'ITR / TDS' ? 'w-auto max-w-3xl' : 'w-[90vw] max-w-6xl'} bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100 pointer-events-auto' : 'opacity-0 -translate-y-4 scale-95'}`}>
+        <div className="hidden md:flex absolute left-0 right-0 top-16 z-40 mt-0 justify-center">
+          <div onMouseEnter={() => setOpenDropdown(openDropdown)} onMouseLeave={() => setOpenDropdown(null)} className="w-[90vw] max-w-6xl bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100' : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'}">
             {openDropdown ? (
               (() => {
                 const info = mainItems.find(i => i.id === openDropdown)
                 // If groups provided, render each group as a column with its own heading
                 if (info.groups && info.groups.length) {
-                  // Special layout for ITR / TDS: vertical group list on left, details on right
-                  if (info.id === 'ITR / TDS') {
-                    return (
-                      <div ref={dropdownRef} className="relative p-3">
-                        <div className="flex items-start gap-3 h-[500px]">
-                          {/* compact left list */}
-                          <div className="w-60 bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]">
-                            {info.groups.map((g) => (
-                              <div key={g.title} className="mb-1">
-                                <button
-                                  onMouseEnter={() => {
-                                    setHoveredGroup(g.title)
-                                    setHoveredSubItem(null)
-                                  }}
-                                  className={`w-full text-left px-4 py-2.5 rounded-md transition-colors text-base flex items-center justify-between ${hoveredGroup === g.title ? 'bg-emerald-50 text-emerald-700' : 'hover:bg-gray-50'}`}
-                                >
-                                  <span>{g.title}</span>
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                  </svg>
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-
-                          {/* Middle panel - items when hovering a heading */}
-                          <div className="relative w-[300px]">
-                            {hoveredGroup && (() => {
-                              const grp = info.groups.find(g => g.title === hoveredGroup)
-                              return (
-                                <div className="w-[300px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
-                                  <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{grp.title}</h4>
-                                  <p className="text-base px-2 text-gray-600 mb-3">{info.desc}</p>
-                                  <ul className="space-y-2">
-                                    {grp.items.map((it, idx) => {
-                                      const isObject = typeof it === 'object' && it !== null
-                                      const itemText = isObject ? it.subtittle : it
-                                      const hasSubItems = isObject && it.subitem && it.subitem.length > 0
-                                      const key = isObject ? it.subtittle : it
-                                      return (
-                                        <li key={key} className="px-2 py-1.5 rounded hover:bg-gray-50 text-base cursor-pointer flex items-center justify-between"
-                                          onMouseEnter={() => {
-                                            if (hasSubItems) {
-                                              setHoveredSubItem(it)
-                                            } else {
-                                              setHoveredSubItem(null)
-                                            }
-                                          }}
-                                        >
-                                          <span>{itemText}</span>
-                                          {hasSubItems && (
-                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                            </svg>
-                                          )}
-                                        </li>
-                                      )
-                                    })}
-                                  </ul>
-                                </div>
-                              )
-                            })()}
-                          </div>
-
-                          {/* Right panel - sub-items when hovering an item with sub-items */}
-                          <div className="relative flex-1">
-                            {hoveredSubItem && (() => {
-                              return (
-                                <div className="w-[420px] md:w-[420px] sm:w-full bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
-                                  <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{hoveredSubItem.subtittle}</h4>
-                                  <ul className="space-y-2">
-                                    {hoveredSubItem.subitem?.map((sub, idx) => (
-                                      <li key={sub} className="px-2 py-1.5 rounded hover:bg-gray-50 text-base">{sub}</li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              )
-                            })()}
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  }
-                  // generic groups layout for other items - same structure as ITR/TDS
+                  // generic groups layout for all items
                   return (
                     <div ref={dropdownRef} className="relative p-3">
                       <div className="flex items-start gap-3 h-[500px]">
                         {/* Left column - all headings */}
-                        <div className="w-60 bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]">
+                        <div className="w-[400px] bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]">
                           {info.groups.map((g) => (
                             <div key={g.title} className="mb-1">
                               {g.subgroups ? (
@@ -510,7 +418,7 @@ const Navbar = () => {
                         </div>
 
                         {/* Middle panel - items when hovering a heading */}
-                        <div className="relative w-[300px]">
+                        <div className="relative w-[400px]">
                           {hoveredGroup && (() => {
                             // Find the group or subgroup that matches the hovered heading
                             let grp = info.groups.find(g => g.title === hoveredGroup)
@@ -532,9 +440,9 @@ const Navbar = () => {
                             }
 
                             return (
-                              <div className="w-[300px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
+                              <div className="w-[400px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
                                 <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{title}</h4>
-                                <p className="text-base px-2 text-gray-600 mb-3">{info.desc}</p>
+                               
                                 <ul className="space-y-2">
                                   {items?.map((it, idx) => {
                                     const isObject = typeof it === 'object' && it !== null
@@ -567,10 +475,10 @@ const Navbar = () => {
                         </div>
 
                         {/* Right panel - sub-items when hovering an item with sub-items */}
-                        <div className="relative flex-1">
+                        <div className="relative w-[400px]">
                           {hoveredSubItem && (() => {
                             return (
-                              <div className="w-[420px] md:w-[420px] sm:w-full bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
+                              <div className="w-[400px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
                                 <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{hoveredSubItem.subtittle}</h4>
                                 <ul className="space-y-2">
                                   {hoveredSubItem.subitem?.map((sub, idx) => (
@@ -592,7 +500,7 @@ const Navbar = () => {
                   <div ref={dropdownRef} className="relative p-3">
                     <div className="flex items-start gap-3 h-[500px]">
                       {/* Left column - all options as headings */}
-                      <div className="w-60 bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]">
+                      <div className="w-[400px] bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]">
                         {cols.map((col, ci) => (
                           <div key={ci} className="mb-1">
                             {col.map((opt, oi) => (
@@ -612,10 +520,10 @@ const Navbar = () => {
                       </div>
 
                       {/* Right panel - details when hovering an option */}
-                      <div className="relative flex-1">
+                      <div className="relative w-[300px]">
                         {hoveredGroup && (() => {
                           return (
-                            <div className="w-[720px] md:w-[720px] sm:w-full bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
+                            <div className="w-[300px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
                               <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{hoveredGroup}</h4>
                               <p className="text-base px-2 text-gray-600 mb-3">{info.desc}</p>
                             </div>
