@@ -20,22 +20,31 @@ const mainItems = [
                       {title:'BIS',items:['BIS Registration','Eco Mark Scheme Certification','ISI Mark Certification','BIS CRS Registration','BIS LAB Recognition Scheme','Hallmark Registration','Assaying and Hallmarking Centre','STQC Certification','AGMARK License','FMCS BIS Certification']},
                        {title:'Trademark',items:['Trademark Registration','Trademark Objection','Trademark Assignment','Trademark Rectification','Intellectual Property Dispute','Trademark Renewal','Trademark Hearing','Trademark Opposition','Trademark Search','Brand Name Registration','Logo Registration','Wordmark Registration','IP Risk Assessment Reports']},
   ] },
-  { id: 'ITR / TDS', label: 'ITR / TDS', desc: 'Income tax returns and compliance.', groups:[
-    { title: 'IncomeTax_ITR', items: ['ITR 1','ITR 2','ITR 3','ITR 4','ITR 5','ITR 6','ITR 7','PAN Reissue Application','New PAN Application','ITR Revision','Tax Planning','Reply to Notices by IT Deptt.'  ] },
-    { title: 'IncomeTax_Assessments', items:['Assessment U/S 143','Assessment U/S 147']},
-    {title:'IncomeTax_TDS',items:['TDS on Salary return Filing (24Q)','Correction/Revision in Salary TDS Return  filings (24Q)','TDS other than Salary return Filing (26Q)','Correction/Revision in other than Salary TDS filings (26Q)','TDS on Sale of Property by Resident (26QB)','Correction/Revision on Sale of Property TDS filings by Resident (26QB)','TDS on Rent of Property (26QC)','Correction/Revision on TDS on rent of Property (26QC)','Obtaining Lower rate of TDS on Sale of Property by Non Resident ','Correction/Revision on TDS on Sale of Property by Non Resident ','TAN Application']}
-  ] },
+
   
-  { id: 'GST', label: 'GST', desc: 'GST registration, returns, and compliance.', groups:[
-    {title:'GST Registration',items:['GSTIN Registrations']},
-    {title:'Return Filing',items:['GST Monthly Return','GST Quarterly Return','GST Annual Return']},
-    {title:'Assessment ',items:['GST Assessment','GSTIN Cancellation','GST LUT Application Filing','Reply to Notices']}
+  { id: 'IT/TDS', label: 'IT/TDS', desc: 'GST registration, returns, and compliance.', groups:[
+    {title:'Income Tax',items:['Income Tax Return Filing','Income Tax Return Revision','Drafting of Reply to Notices by IT Deptt.','Client Representation Services','Advance Tax Computation and Challan payment','Self Assessment Tax Computation and Challan payment','New PAN Application','PAN Reissue Application','Tax Planning']},
+    {title:'Income Tax Assessments',items:['Assessment U/S 143','Assessment U/S 143']},
+    {title:'TDS ',items:['TDS on Salary return Filing (24Q)','Correction/Revision in Salary TDS Return  filings (24Q)','TDS other than Salary return Filing (26Q)','Correction/Revision in other than Salary TDS filings (26Q)','TDS on Sale of Property by Resident (26QB)','Correction/Revision on Sale of Property TDS filings by Resident (26QB)','TDS on Rent of Property (26QC)','Correction/Revision on TDS on rent of Property (26QC)','Obtaining Lower rate of TDS on Sale of Property by Non Resident ','Correction/Revision on TDS on Sale of Property by Non Resident ','TAN Application']}
   ] },
-  { id: 'MCA', label: 'MCA', desc: 'Company filings, annual returns and compliance.', groups:[
-    {title:'Incorporation',items:['Private Limited Company Incorporaton','Public Limited Company Incorporation','Section 8 Company Incorporation','Nidhi Company Incorporation','Producer Company Incorporation','Limited Liability Partnership (LLP) Incorporation','Commencement Certificate',]},
-    {title:'Change Filings',items:['Change of Registered Address','Appointment of Director','Resignation of Director','Increase in Authorised Capital','Transfer of Shares','Amendment in Memorandum of Association','Amendment in Articles of Association','Change of Company Name']},
-    {title:'Annual Returns',items:['Annual Return Filing (AOC 4, MGT 7)','Directors Report','DIN Application','DIN Cancellation','Directors KYC']},
-    {title:'Closure',items:['Winding Up of a Private Limited Company','Winding Up of a Public Limited Company','Winding Up of a Section 8 Company','Winding Up of a Nidhi Company ','Winding Up of a Producer Company','Winding Up of a Limited Liability Partnership (LLP)']}
+  { id: 'Compliance', label: 'Compliance', desc: 'Company filings, annual returns and compliance.', groups:[
+    {title:'Accounting',items:[{subtittle:'Onsite Accounting',subitem:['Day to Day Onsite Accounting','Weekly Onsite Accounting','Monthly Onsite Accounting','Quarterly Onsite Accounting','Yearly Onsite Accounting','Payroll Services']},{subtittle:"Offsite Accounting",subitem:['Day to Day Offsite Accounting','Weekly Offsite Accounting','Monthly Offsite Accounting','Quarterly Offsite Accounting','Yearly Offsite Accounting','Payroll Services']},{subtittle:'Asset Management',subitem:['Fixed Assets Tagging','Fixed Asset Valuation','Inventory Tagging','Inventory Valuation']},]},
+    {title:'GST',items:[{subtittle:'Return Filing',subitem:['GST Monthly Return','GST Quarterly Return','GST Annual Return']},{subtittle:'Assessment',subitem:['GST Assessments','GSTIN Cancellation','GST LUT Application Filing','Reply to Notices']},]},
+    {title:'MCA',items:['Commencement Certificate',]},
+    {title:'Change Filings',items:['Appointment of Director','Resignation of Director','Removal of Director','Change of Company Name','Change of Registered Address','Increase in Authorised Capital','Transfer of Shares','Amendment in Memorandum of Association','Amendment in Articles of Association','Appointment of Auditor','Resignation of Auditor','Revival of Struck Off Companies']},
+    {title:'DIN',items:['DIN Application','DIN Surrender','Directors Annual KYC','Director particulars updation','DIN ENquiry/Verification']},
+    {title:'Closure',items:['Winding Up of a Private Limited Company','Winding Up of a Public Limited Company','Winding Up of a OPC Company','Winding Up of a Limited Liability Partnership (LLP)','Winding Up of a Section 8 Company','Winding Up of a Nidhi Company ','Winding Up of a Producer Company']},
+        {title:'Entity Conversion',items:['Change LLP Agreement','Change Partnership Deed','Dissolve a Partnership Firm','Convert Proprietorship to Partnership','Proprietorship to Limited Liability Partnership','Convert Partnership to Limited Liability Partnership','Convert Private Limited Company to Limited Liability Partnership','Convert Proprietorship to Open Person Company','Convert Proprietorship to Private Limited Company','Covert Partnership to Private Limited COmpany','Convert Limited Liability Partnership to Private Limited Company','Convert Open Person Company to Private Limited Company','Convert Private Limited Company to Public Limited Company']},
+            {title:'Annual Returns',items:['Annual Filings of a Proprietorship','Annual Filings of Partnership','Annual filings of Society','Annual Filing of Club','Annual Filing of Trust','Annual filings of Limited Liability Partnership','Annual Filing of One Person Company','Annual filing of Private Limited Company','Annual Filing of Public Limited Company','Annual Filing of Section 8 Company','Annual Filing of Nidhi Company','Annual Filing of Producer Company ','Annual Filing of ndian Subsidiary ']},
+                {title:'DGFT',items:[{subtittle:'Assessment',subitem:['Assessment']},{subtittle:'Refund',subitem:['Refund','SAD Refund']}]},
+                    {title:'MSME',items:['Modification in Registration','Renewal']},
+                    {title:'FSSAI',items:['Annual Return Filing','Renewals']},
+                    {title:'FDA',items:['Annual Return Filing','Renewals']},
+                    {title:'Fire Department',items:['RENEWAL of NOC  of Fire Service','NOC from Fire Department before commencement of Construction Activities']},
+                    {title:'Pollution Control Board',items:['Renewals']},
+                    {title:'ProvidentFund',items:['Return filing','Refund','Profile Updation']},
+                    {title:'ESI',items:['Return filing','Profile Updation']},
+                    {title:'National Company Law Tribunal',items:['Claim Filing']},
   ]},
   { id: 'DGFT', label: 'DGFT', desc: 'DGFT registration, returns, and compliance.', groups:[
    {title:'Registration',items:['Import Export Code']},
@@ -94,6 +103,7 @@ const Navbar = () => {
   const [hoveredItem, setHoveredItem] = useState(null)
   const [hoveredColumn, setHoveredColumn] = useState(null)
   const [hoveredGroup, setHoveredGroup] = useState(null)
+  const [hoveredSubItem, setHoveredSubItem] = useState(null)
   const hoverTimeoutRef = useRef(null)
   const [itrOffset, setItrOffset] = useState(0)
   const [spacerHeight, setSpacerHeight] = useState(0)
@@ -123,9 +133,10 @@ const Navbar = () => {
 
   // dropdown scroll handler placeholder (no hover previews)
   useEffect(() => {
-    // clear hoveredGroup when dropdown closes
+    // clear hoveredGroup and hoveredSubItem when dropdown closes
     if (openDropdown === null) {
       setHoveredGroup(null)
+      setHoveredSubItem(null)
     }
   }, [openDropdown])
 
@@ -329,15 +340,25 @@ const Navbar = () => {
                       {item.groups.map((group, gi) => (
                         <li key={gi} className="mt-2">
                           <h5 className="text-sm font-semibold text-[#2F6A9E] mb-1">{group.title}</h5>
-                          {group.items && group.items.map((opt, oi) => (
-                            <div key={oi} className="text-sm px-2 py-1.5 rounded hover:bg-gray-100 text-gray-700">{opt}</div>
-                          ))}
+                          {group.items && group.items.map((opt, oi) => {
+                            const isObject = typeof opt === 'object' && opt !== null
+                            const optText = isObject ? opt.subtittle : opt
+                            const key = isObject ? opt.subtittle : opt
+                            return (
+                              <div key={key} className="text-sm px-2 py-1.5 rounded hover:bg-gray-100 text-gray-700">{optText}</div>
+                            )
+                          })}
                           {group.subgroups && group.subgroups.map((sg, sgi) => (
                             <div key={sgi} className="mt-1">
                               <h6 className="text-xs font-semibold text-gray-600 mb-1">{sg.title}</h6>
-                              {sg.items.map((opt, oi) => (
-                                <div key={oi} className="text-xs px-2 py-1 rounded hover:bg-gray-100 text-gray-700">{opt}</div>
-                              ))}
+                              {sg.items.map((opt, oi) => {
+                                const isObject = typeof opt === 'object' && opt !== null
+                                const optText = isObject ? opt.subtittle : opt
+                                const key = isObject ? opt.subtittle : opt
+                                return (
+                                  <div key={key} className="text-xs px-2 py-1 rounded hover:bg-gray-100 text-gray-700">{optText}</div>
+                                )
+                              })}
                             </div>
                           ))}
                         </li>
@@ -367,13 +388,16 @@ const Navbar = () => {
                   if (info.id === 'ITR / TDS') {
                     return (
                       <div ref={dropdownRef} className="relative p-3">
-                        <div className="flex items-start gap-3">
+                        <div className="flex items-start gap-3 h-[500px]">
                           {/* compact left list */}
-                          <div className="w-60 bg-white p-1 rounded-md border-none ">
+                          <div className="w-60 bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]">
                             {info.groups.map((g) => (
                               <div key={g.title} className="mb-1">
                                 <button
-                                  onMouseEnter={() => setHoveredGroup(g.title)}
+                                  onMouseEnter={() => {
+                                    setHoveredGroup(g.title)
+                                    setHoveredSubItem(null)
+                                  }}
                                   className={`w-full text-left px-4 py-2.5 rounded-md transition-colors text-base flex items-center justify-between ${hoveredGroup === g.title ? 'bg-emerald-50 text-emerald-700' : 'hover:bg-gray-50'}`}
                                 >
                                   <span>{g.title}</span>
@@ -385,17 +409,54 @@ const Navbar = () => {
                             ))}
                           </div>
 
-                          {/* details panel - appears to the right when hovering an option */}
-                          <div className="relative">
+                          {/* Middle panel - items when hovering a heading */}
+                          <div className="relative w-[300px]">
                             {hoveredGroup && (() => {
                               const grp = info.groups.find(g => g.title === hoveredGroup)
                               return (
-                                <div className="w-[720px] md:w-[720px] sm:w-full bg-white rounded-md p-2 border-none">
+                                <div className="w-[300px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
                                   <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{grp.title}</h4>
                                   <p className="text-base px-2 text-gray-600 mb-3">{info.desc}</p>
-                                  <ul className="space-y-2   ">
-                                    {grp.items.map(it => (
-                                      <li key={it} className="px-2 py-1.5 rounded hover:bg-gray-50 text-base">{it}</li>
+                                  <ul className="space-y-2">
+                                    {grp.items.map((it, idx) => {
+                                      const isObject = typeof it === 'object' && it !== null
+                                      const itemText = isObject ? it.subtittle : it
+                                      const hasSubItems = isObject && it.subitem && it.subitem.length > 0
+                                      const key = isObject ? it.subtittle : it
+                                      return (
+                                        <li key={key} className="px-2 py-1.5 rounded hover:bg-gray-50 text-base cursor-pointer flex items-center justify-between"
+                                          onMouseEnter={() => {
+                                            if (hasSubItems) {
+                                              setHoveredSubItem(it)
+                                            } else {
+                                              setHoveredSubItem(null)
+                                            }
+                                          }}
+                                        >
+                                          <span>{itemText}</span>
+                                          {hasSubItems && (
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                          )}
+                                        </li>
+                                      )
+                                    })}
+                                  </ul>
+                                </div>
+                              )
+                            })()}
+                          </div>
+
+                          {/* Right panel - sub-items when hovering an item with sub-items */}
+                          <div className="relative flex-1">
+                            {hoveredSubItem && (() => {
+                              return (
+                                <div className="w-[420px] md:w-[420px] sm:w-full bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
+                                  <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{hoveredSubItem.subtittle}</h4>
+                                  <ul className="space-y-2">
+                                    {hoveredSubItem.subitem?.map((sub, idx) => (
+                                      <li key={sub} className="px-2 py-1.5 rounded hover:bg-gray-50 text-base">{sub}</li>
                                     ))}
                                   </ul>
                                 </div>
@@ -409,16 +470,19 @@ const Navbar = () => {
                   // generic groups layout for other items - same structure as ITR/TDS
                   return (
                     <div ref={dropdownRef} className="relative p-3">
-                      <div className="flex items-start gap-3">
+                      <div className="flex items-start gap-3 h-[500px]">
                         {/* Left column - all headings */}
-                        <div className="w-60 bg-white p-1 rounded-md border-none">
+                        <div className="w-60 bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]">
                           {info.groups.map((g) => (
                             <div key={g.title} className="mb-1">
                               {g.subgroups ? (
                                 g.subgroups.map((sg, sgi) => (
                                   <button
                                     key={sgi}
-                                    onMouseEnter={() => setHoveredGroup(sg.title)}
+                                    onMouseEnter={() => {
+                                      setHoveredGroup(sg.title)
+                                      setHoveredSubItem(null)
+                                    }}
                                     className={`w-full text-left px-4 py-2.5 rounded-md transition-colors text-base flex items-center justify-between ${hoveredGroup === sg.title ? 'bg-emerald-50 text-emerald-700' : 'hover:bg-gray-50'}`}
                                   >
                                     <span>{sg.title}</span>
@@ -429,7 +493,10 @@ const Navbar = () => {
                                 ))
                               ) : (
                                 <button
-                                  onMouseEnter={() => setHoveredGroup(g.title)}
+                                  onMouseEnter={() => {
+                                    setHoveredGroup(g.title)
+                                    setHoveredSubItem(null)
+                                  }}
                                   className={`w-full text-left px-4 py-2.5 rounded-md transition-colors text-base flex items-center justify-between ${hoveredGroup === g.title ? 'bg-emerald-50 text-emerald-700' : 'hover:bg-gray-50'}`}
                                 >
                                   <span>{g.title}</span>
@@ -442,8 +509,8 @@ const Navbar = () => {
                           ))}
                         </div>
 
-                        {/* Right panel - items when hovering a heading */}
-                        <div className="relative">
+                        {/* Middle panel - items when hovering a heading */}
+                        <div className="relative w-[300px]">
                           {hoveredGroup && (() => {
                             // Find the group or subgroup that matches the hovered heading
                             let grp = info.groups.find(g => g.title === hoveredGroup)
@@ -465,12 +532,49 @@ const Navbar = () => {
                             }
 
                             return (
-                              <div className="w-[720px] md:w-[720px] sm:w-full bg-white rounded-md p-2 border-none">
+                              <div className="w-[300px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
                                 <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{title}</h4>
                                 <p className="text-base px-2 text-gray-600 mb-3">{info.desc}</p>
                                 <ul className="space-y-2">
-                                  {items?.map(it => (
-                                    <li key={it} className="px-2 py-1.5 rounded hover:bg-gray-50 text-base">{it}</li>
+                                  {items?.map((it, idx) => {
+                                    const isObject = typeof it === 'object' && it !== null
+                                    const itemText = isObject ? it.subtittle : it
+                                    const hasSubItems = isObject && it.subitem && it.subitem.length > 0
+                                    const key = isObject ? it.subtittle : it
+                                    return (
+                                      <li key={key} className="px-2 py-1.5 rounded hover:bg-gray-50 text-base cursor-pointer flex items-center justify-between"
+                                        onMouseEnter={() => {
+                                          if (hasSubItems) {
+                                            setHoveredSubItem(it)
+                                          } else {
+                                            setHoveredSubItem(null)
+                                          }
+                                        }}
+                                      >
+                                        <span>{itemText}</span>
+                                        {hasSubItems && (
+                                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                          </svg>
+                                        )}
+                                      </li>
+                                    )
+                                  })}
+                                </ul>
+                              </div>
+                            )
+                          })()}
+                        </div>
+
+                        {/* Right panel - sub-items when hovering an item with sub-items */}
+                        <div className="relative flex-1">
+                          {hoveredSubItem && (() => {
+                            return (
+                              <div className="w-[420px] md:w-[420px] sm:w-full bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
+                                <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{hoveredSubItem.subtittle}</h4>
+                                <ul className="space-y-2">
+                                  {hoveredSubItem.subitem?.map((sub, idx) => (
+                                    <li key={sub} className="px-2 py-1.5 rounded hover:bg-gray-50 text-base">{sub}</li>
                                   ))}
                                 </ul>
                               </div>
@@ -486,9 +590,9 @@ const Navbar = () => {
                 const cols = [0,1,2].map(i => (info.options || []).slice(i*per, (i+1)*per))
                 return (
                   <div ref={dropdownRef} className="relative p-3">
-                    <div className="flex items-start gap-3">
+                    <div className="flex items-start gap-3 h-[500px]">
                       {/* Left column - all options as headings */}
-                      <div className="w-60 bg-white p-1 rounded-md border-none">
+                      <div className="w-60 bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]">
                         {cols.map((col, ci) => (
                           <div key={ci} className="mb-1">
                             {col.map((opt, oi) => (
@@ -508,10 +612,10 @@ const Navbar = () => {
                       </div>
 
                       {/* Right panel - details when hovering an option */}
-                      <div className="relative">
+                      <div className="relative flex-1">
                         {hoveredGroup && (() => {
                           return (
-                            <div className="w-[720px] md:w-[720px] sm:w-full bg-white rounded-md p-2 border-none">
+                            <div className="w-[720px] md:w-[720px] sm:w-full bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
                               <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{hoveredGroup}</h4>
                               <p className="text-base px-2 text-gray-600 mb-3">{info.desc}</p>
                             </div>
