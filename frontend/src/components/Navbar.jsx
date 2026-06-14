@@ -380,7 +380,7 @@ const Navbar = () => {
                     <div ref={dropdownRef} className="relative p-3">
                       <div className="flex items-start gap-3 h-[500px]">
                         {/* Left column - all headings */}
-                        <div className="w-[400px] bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]">
+                        <div className="w-[400px] bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]" style={{scrollbarWidth: 'thin', scrollbarColor: '#10b981 #f3f4f6'}}>
                           {info.groups.map((g) => (
                             <div key={g.title} className="mb-1">
                               {g.subgroups ? (
@@ -440,7 +440,7 @@ const Navbar = () => {
                             }
 
                             return (
-                              <div className="w-[400px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
+                              <div className="w-[400px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto" style={{scrollbarWidth: 'thin', scrollbarColor: '#10b981 #f3f4f6'}}>
                                 <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{title}</h4>
                                
                                 <ul className="space-y-2">
@@ -478,7 +478,7 @@ const Navbar = () => {
                         <div className="relative w-[400px]">
                           {hoveredSubItem && (() => {
                             return (
-                              <div className="w-[400px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
+                              <div className="w-[400px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto" style={{scrollbarWidth: 'thin', scrollbarColor: '#10b981 #f3f4f6'}}>
                                 <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{hoveredSubItem.subtittle}</h4>
                                 <ul className="space-y-2">
                                   {hoveredSubItem.subitem?.map((sub, idx) => (
@@ -500,7 +500,7 @@ const Navbar = () => {
                   <div ref={dropdownRef} className="relative p-3">
                     <div className="flex items-start gap-3 h-[500px]">
                       {/* Left column - all options as headings */}
-                      <div className="w-[400px] bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]">
+                      <div className="w-[400px] bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]" style={{scrollbarWidth: 'thin', scrollbarColor: '#10b981 #f3f4f6'}}>
                         {cols.map((col, ci) => (
                           <div key={ci} className="mb-1">
                             {col.map((opt, oi) => (
@@ -523,7 +523,7 @@ const Navbar = () => {
                       <div className="relative w-[500px]">
                         {hoveredGroup && (() => {
                           return (
-                            <div className="w-[500px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto">
+                            <div className="w-[500px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto" style={{scrollbarWidth: 'thin', scrollbarColor: '#10b981 #f3f4f6'}}>
                               <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{hoveredGroup}</h4>
                               <p className="text-base px-2 text-gray-600 mb-3">{info.desc}</p>
                             </div>
