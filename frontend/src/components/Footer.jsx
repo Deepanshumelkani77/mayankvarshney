@@ -8,7 +8,7 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <h3 className="text-2xl lg:text-3xl font-bold mb-4">Mayank Varshney & Co.</h3>
-            <p className="text-base text-blue-100 mb-6 leading-relaxed">
+            <p className="text-base text-blue-100 mb-6 leading-relaxed text-justify">
         Your trusted partner for professional financial, taxation, and legal services worldwide. We help businesses and individuals navigate compliance with confidence and ease.
             </p>
             <div className="flex space-x-4">
@@ -77,7 +77,7 @@ const Footer = () => {
                   href="https://www.google.com/maps/search/?api=1&query=Shop+No.+FF+05,+Rise+Retailia+1,+Plot+No.+SC+01,+Sector+1,+Greater+Noida+West,+Gautam+Buddha+Nagar,+Uttar+Pradesh+-+201306"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-base text-blue-100 hover:text-white transition-colors underline decoration-dotted decoration-blue-300 hover:decoration-solid"
+                  className="text-base text-blue-100 hover:text-white transition-colors underline decoration-dotted decoration-blue-300 hover:decoration-solid text-justify"
                 >
                   Shop No. FF 05, Rise Retailia 1
 Plot No. SC 01, Sector 1
