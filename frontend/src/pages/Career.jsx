@@ -111,20 +111,25 @@ const Career = () => {
       {/* Application Form Modal */}
       {showApplicationForm && selectedJob && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[999] flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Apply for {selectedJob.title}</h2>
+          <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full">
+            <div className="bg-gradient-to-r from-[#053131] to-[#0a4a4a] text-white px-6 py-4 rounded-t-xl">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h2 className="text-xl font-bold">Apply for {selectedJob.title}</h2>
+                  <p className="text-sm text-blue-100 mt-1">{selectedJob.department} • {selectedJob.location}</p>
+                </div>
                 <button 
                   onClick={() => setShowApplicationForm(false)}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-white hover:text-gray-200 transition-colors"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
-              <form onSubmit={handleFormSubmit} className="space-y-4">
+            </div>
+            <form onSubmit={handleFormSubmit} className="p-6 space-y-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
                   <input
@@ -133,9 +138,24 @@ const Career = () => {
                     required
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent"
+                    placeholder="John Doe"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent text-sm"
                   />
                 </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Experience *</label>
+                  <input
+                    type="text"
+                    name="experience"
+                    required
+                    value={formData.experience}
+                    onChange={handleInputChange}
+                    placeholder="3 years"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent text-sm"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
                   <input
@@ -144,71 +164,63 @@ const Career = () => {
                     required
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent"
+                    placeholder="john@example.com"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
                   <input
                     type="tel"
                     name="phone"
                     required
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent"
+                    placeholder="+91 9876543210"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent text-sm"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Total Experience (Years) *</label>
-                  <input
-                    type="text"
-                    name="experience"
-                    required
-                    value={formData.experience}
-                    onChange={handleInputChange}
-                    placeholder="e.g., 3 years"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Cover Letter</label>
-                  <textarea
-                    name="coverLetter"
-                    rows={4}
-                    value={formData.coverLetter}
-                    onChange={handleInputChange}
-                    placeholder="Tell us why you're interested in this position..."
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Resume (PDF) *</label>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Cover Letter</label>
+                <textarea
+                  name="coverLetter"
+                  rows={2}
+                  value={formData.coverLetter}
+                  onChange={handleInputChange}
+                  placeholder="Brief description about yourself..."
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent text-sm resize-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Resume (PDF) *</label>
+                <div className="relative">
                   <input
                     type="file"
                     name="resume"
                     required
                     accept=".pdf"
                     onChange={handleFileChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent text-sm file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#2F6A9E] file:text-white hover:file:bg-[#245a80]"
                   />
                 </div>
-                <div className="flex gap-4 pt-4">
-                  <button
-                    type="submit"
-                    className="flex-1 bg-[#2F6A9E] text-white px-6 py-3 rounded-md font-medium hover:bg-[#245a80] transition-colors"
-                  >
-                    Submit Application
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setShowApplicationForm(false)}
-                    className="flex-1 bg-gray-200 text-gray-800 px-6 py-3 rounded-md font-medium hover:bg-gray-300 transition-colors"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </div>
+              </div>
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="submit"
+                  className="flex-1 bg-[#2F6A9E] text-white px-4 py-2.5 rounded-md font-medium hover:bg-[#245a80] transition-colors text-sm"
+                >
+                  Submit Application
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowApplicationForm(false)}
+                  className="flex-1 bg-gray-200 text-gray-800 px-4 py-2.5 rounded-md font-medium hover:bg-gray-300 transition-colors text-sm"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
