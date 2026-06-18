@@ -8,6 +8,7 @@ import About from './pages/About'
 import Signup from './pages/Signup'
 import Appointment from './pages/Appointment'
 import Career from './pages/Career.jsx'
+import Blog from './pages/Blog.jsx'
 
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/signup" element={<Signup/>} />
           <Route path="/appointment" element={<Appointment/>} />
           <Route path="/career" element={<Career/>} />
+          <Route path="/blog" element={<Blog/>} />
         </Routes>
       </main>
       <Footer />

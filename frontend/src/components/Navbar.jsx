@@ -304,6 +304,7 @@ const Navbar = () => {
 
           <div className="flex items-center gap-3">
             <Link to="/career" className="hidden md:inline text-white px-4 py-2.5 rounded-md text-base font-medium hover:bg-white/10 transition-colors">Career</Link>
+            <Link to="/blog" className="hidden md:inline text-white px-4 py-2.5 rounded-md text-base font-medium hover:bg-white/10 transition-colors">Blog</Link>
             <Link to="/appointment" className="hidden md:inline bg-emerald-600 text-white px-5 py-2.5 rounded-md text-base font-medium">Book Appointment</Link>
 
             <button onClick={() => setMobileOpen(prev => !prev)} className="md:hidden p-2 rounded-md bg-white/10">
