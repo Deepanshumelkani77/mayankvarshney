@@ -101,28 +101,14 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-[#053131] via-[#0a4a4a] to-[#053131] text-white py-16 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
-        </div>
+      <div className="relative bg-gradient-to-br from-[#053131] via-[#0a4a4a] to-[#053131] text-white py-4 overflow-hidden">
+        
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-fade-in">
-            Insights & Updates
-          </h1>
-          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-8">
+        
+          <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto ">
             Stay updated with the latest insights on taxation, business compliance, legal matters, and financial management.
           </p>
-          <div className="flex justify-center gap-4 flex-wrap">
-            <div className="bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20">
-              <span className="text-2xl font-bold">{blogPosts.length}+</span>
-              <span className="text-sm ml-2">Articles</span>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20">
-              <span className="text-2xl font-bold">{categories.length - 1}</span>
-              <span className="text-sm ml-2">Categories</span>
-            </div>
-          </div>
+         
         </div>
       </div>
 
