@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 const Review = () => {
   const [selectedFilter, setSelectedFilter] = useState('All')
   const [showReviewForm, setShowReviewForm] = useState(false)
+  const [selectedRating, setSelectedRating] = useState(0)
 
   // Placeholder review data - this will be replaced with dynamic data from database
   const reviews = [
@@ -277,7 +278,7 @@ const Review = () => {
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold">Write a Review</h2>
                 <button 
-                  onClick={() => setShowReviewForm(false)}
+                  onClick={() => {setShowReviewForm(false); setSelectedRating(0)}}
                   className="text-white hover:text-gray-200 transition-colors"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -323,12 +324,14 @@ const Review = () => {
                     <button
                       key={star}
                       type="button"
-                      className="text-3xl text-gray-300 hover:text-yellow-400 transition-colors"
+                      onClick={() => setSelectedRating(star)}
+                      className={`text-3xl transition-colors ${star <= selectedRating ? 'text-yellow-400' : 'text-gray-300 hover:text-yellow-400'}`}
                     >
                       ★
                     </button>
                   ))}
                 </div>
+                
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Review Title *</label>
@@ -357,7 +360,7 @@ const Review = () => {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setShowReviewForm(false)}
+                  onClick={() => {setShowReviewForm(false); setSelectedRating(0)}}
                   className="flex-1 bg-gray-200 text-gray-800 px-6 py-3 rounded-xl font-medium hover:bg-gray-300 transition-colors"
                 >
                   Cancel
