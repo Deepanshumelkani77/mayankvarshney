@@ -58,8 +58,10 @@ const Appointment = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [timeMenuOpen, setTimeMenuOpen] = useState(false)
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
+    phone: '',
     notes: ''
   })
 
@@ -89,7 +91,7 @@ const Appointment = () => {
     setSelectedTimes([])
     setRequestCustomTime(false)
     setCustomTimeRequest('')
-    setFormData({ name: '', email: '', notes: '' })
+    setFormData({ firstName: '', lastName: '', email: '', phone: '', notes: '' })
   }
 
   const handleFormChange = (e) => {
@@ -232,327 +234,417 @@ const Appointment = () => {
         </div>
       </div>
 
-      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="space-y-3">
-          {/* Summary Bar */}
-          <div className="bg-white rounded-xl shadow-lg p-4">
-            <h3 className="text-lg font-bold text-gray-800 mb-3">Appointment Summary</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 text-sm">
-              <div>
-                <p className="text-xs text-gray-500">Category</p>
-                <p className="text-sm font-semibold text-[#2F6A9E] truncate">{selectedCategory.length > 0 ? selectedCategory.join(', ') : '-'}</p>
-              </div>
-              <div>
-                <p className="text-xs text-gray-500">Sub-Heading</p>
-                <p className="text-sm font-semibold text-[#2F6A9E] truncate">{selectedSubHeading.length > 0 ? selectedSubHeading.join(', ') : '-'}</p>
-              </div>
-              <div>
-                <p className="text-xs text-gray-500">Services</p>
-                <p className="text-sm font-semibold text-[#2F6A9E] truncate">{selectedItems.length > 0 ? `${selectedItems.length} selected` : '-'}</p>
-              </div>
-              <div>
-                <p className="text-xs text-gray-500">Date</p>
-                <p className="text-sm font-semibold text-[#2F6A9E] truncate">{selectedDate ? new Date(selectedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '-'}</p>
-              </div>
-              <div>
-                <p className="text-xs text-gray-500">Time</p>
-                <p className="text-sm font-semibold text-[#2F6A9E] truncate">{requestCustomTime && customTimeRequest ? 'Custom' : selectedTimes.length > 0 ? `${selectedTimes.length} slots` : '-'}</p>
-              </div>
-              <div>
-                <p className="text-xs text-gray-500">Name</p>
-                <p className="text-sm font-semibold text-gray-800 truncate">{formData.name || '-'}</p>
-              </div>
-              <div>
-                <p className="text-xs text-gray-500">Email</p>
-                <p className="text-sm font-semibold text-gray-800 truncate">{formData.email || '-'}</p>
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-2 py-2">
+        <div className="grid lg:grid-cols-4 gap-3">
+          {/* Left Column - Appointment Summary */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24">
+              <h3 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                <svg className="w-6 h-6 text-[#2F6A9E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                </svg>
+                Appointment Summary
+              </h3>
+              
+              <div className="space-y-4">
+                {/* Selected Services */}
+                <div className="border-b border-gray-100 pb-4">
+                  <p className="text-xs text-gray-500 mb-2">Selected Services</p>
+                  {selectedItems.length > 0 ? (
+                    <div className="space-y-2">
+                      {selectedItems.map((item, index) => (
+                        <div key={index} className="flex items-start gap-2">
+                          <svg className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          <p className="text-sm text-gray-800">{item}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-400 italic">No services selected</p>
+                  )}
+                </div>
+
+                {/* Date & Time */}
+                <div className="border-b border-gray-100 pb-4">
+                  <p className="text-xs text-gray-500 mb-2">Date & Time</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-[#2F6A9E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <p className="text-sm text-gray-800">
+                        {selectedDate ? new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' }) : 'Not selected'}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-[#2F6A9E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <p className="text-sm text-gray-800">
+                        {requestCustomTime && customTimeRequest ? customTimeRequest : selectedTimes.length > 0 ? selectedTimes.join(', ') : 'Not selected'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Contact Information */}
+                <div className="border-b border-gray-100 pb-4">
+                  <p className="text-xs text-gray-500 mb-2">Contact Information</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-[#2F6A9E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      <p className="text-sm text-gray-800">{formData.firstName || ''} {formData.lastName || ''}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-[#2F6A9E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      <p className="text-sm text-gray-800">{formData.email || 'Not provided'}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Additional Notes */}
+                {formData.notes && (
+                  <div className="border-b border-gray-100 pb-4">
+                    <p className="text-xs text-gray-500 mb-2">Additional Notes</p>
+                    <p className="text-sm text-gray-800">{formData.notes}</p>
+                  </div>
+                )}
+
+              
               </div>
             </div>
           </div>
 
-          {/* Form */}
-          <div>
+          {/* Right Column - Form */}
+          <div className="lg:col-span-3">
             <form onSubmit={handleFormSubmit} className="">
-              {/* All Fields in One Row */}
-              <div className="bg-white shadow-lg p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
-                  {/* Service Selection */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                      </svg>
-                      Services *
-                    </label>
+              <div className="bg-white shadow-lg p-3 rounded-xl">
+               
 
-                    {/* Service Selection Button */}
-                    <div className="relative">
-                      <button
-                        type="button"
-                        onClick={() => setMenuOpen(!menuOpen)}
-                        className="w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-gray-50 focus:bg-white text-left flex justify-between items-center text-base"
-                      >
-                        <span>{selectedItems.length > 0 ? ` You can add more` : 'Choose services'}</span>
-                        <svg className={`w-5 h-5 text-gray-400 transition-transform ${menuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                <div className="space-y-6">
+                  {/* Row 1: Service, Date, Time Slot, Custom Time */}
+                  <div className="grid md:grid-cols-4 gap-4">
+                    {/* Service Selection */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                         </svg>
-                      </button>
+                        Services *
+                      </label>
 
-                      {/* Mega Menu Dropdown */}
-                      {menuOpen && (
-                        <div className="absolute z-50 mt-2 w-[900px] bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
-                          <div className="flex">
-                            {/* Categories Column */}
-                            <div className="w-1/3 border-r border-gray-200 bg-gray-50">
-                              <div className="p-2">
-                                {mainItems.map((item) => (
-                                  <div
-                                    key={item.id}
-                                    onMouseEnter={() => {
-                                      setHoveredCategory(item.id)
-                                      setHoveredSubHeading(null)
-                                    }}
-                                    onClick={() => {
-                                      setHoveredCategory(item.id)
-                                      setHoveredSubHeading(null)
-                                    }}
-                                    className={`px-4 py-3 rounded-lg cursor-pointer transition-colors ${
-                                      hoveredCategory === item.id ? 'bg-[#2F6A9E] text-white' : 'hover:bg-gray-200 text-gray-800'
-                                    }`}
-                                  >
-                                    <p className="font-medium text-sm">{item.label}</p>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={() => setMenuOpen(!menuOpen)}
+                          className="w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition bg-gray-50 focus:bg-white text-left flex justify-between items-center text-base"
+                        >
+                          <span>{selectedItems.length > 0 ? `Add more services` : 'Choose services'}</span>
+                          <svg className={`w-5 h-5 text-gray-400 transition-transform ${menuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
 
-                            {/* Sub-Headings Column */}
-                            {hoveredCategory && (
-                              <div className="w-1/3 border-r border-gray-200">
+                        {menuOpen && (
+                          <div className="absolute z-50 mt-2 w-[900px] bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden">
+                            <div className="flex">
+                              <div className="w-1/3 border-r border-gray-200 bg-gray-50">
                                 <div className="p-2">
-                                  {getSubHeadings(hoveredCategory).map((subHeading, index) => (
+                                  {mainItems.map((item) => (
                                     <div
-                                      key={index}
-                                      onMouseEnter={() => setHoveredSubHeading(subHeading)}
-                                      onClick={() => setHoveredSubHeading(subHeading)}
+                                      key={item.id}
+                                      onMouseEnter={() => {
+                                        setHoveredCategory(item.id)
+                                        setHoveredSubHeading(null)
+                                      }}
+                                      onClick={() => {
+                                        setHoveredCategory(item.id)
+                                        setHoveredSubHeading(null)
+                                      }}
                                       className={`px-4 py-3 rounded-lg cursor-pointer transition-colors ${
-                                        hoveredSubHeading === subHeading ? 'bg-[#2F6A9E] text-white' : 'hover:bg-gray-100 text-gray-800'
+                                        hoveredCategory === item.id ? 'bg-[#2F6A9E] text-white' : 'hover:bg-gray-200 text-gray-800'
                                       }`}
                                     >
-                                      <p className="font-medium text-sm">{subHeading}</p>
+                                      <p className="font-medium text-sm">{item.label}</p>
                                     </div>
                                   ))}
                                 </div>
                               </div>
-                            )}
 
-                            {/* Items Column */}
-                            {hoveredCategory && hoveredSubHeading && (
-                              <div className="w-1/3">
-                                <div className="p-2">
-                                  {getItems(hoveredCategory, hoveredSubHeading).map((item, index) => (
-                                    <div
-                                      key={index}
-                                      onClick={() => handleSelectItem(item, hoveredSubHeading, hoveredCategory)}
-                                      className={`px-4 py-3 rounded-lg cursor-pointer transition-colors flex items-center justify-between ${
-                                        selectedItems.includes(item)
-                                          ? 'bg-[#2F6A9E] text-white'
-                                          : 'hover:bg-[#2F6A9E] hover:text-white text-gray-800'
-                                      }`}
-                                    >
-                                      <p className="font-medium text-sm">{item}</p>
-                                      {selectedItems.includes(item) && (
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                        </svg>
-                                      )}
-                                    </div>
-                                  ))}
+                              {hoveredCategory && (
+                                <div className="w-1/3 border-r border-gray-200">
+                                  <div className="p-2">
+                                    {getSubHeadings(hoveredCategory).map((subHeading, index) => (
+                                      <div
+                                        key={index}
+                                        onMouseEnter={() => setHoveredSubHeading(subHeading)}
+                                        onClick={() => setHoveredSubHeading(subHeading)}
+                                        className={`px-4 py-3 rounded-lg cursor-pointer transition-colors ${
+                                          hoveredSubHeading === subHeading ? 'bg-[#2F6A9E] text-white' : 'hover:bg-gray-100 text-gray-800'
+                                        }`}
+                                      >
+                                        <p className="font-medium text-sm">{subHeading}</p>
+                                      </div>
+                                    ))}
+                                  </div>
                                 </div>
-                              </div>
-                            )}
+                              )}
+
+                              {hoveredCategory && hoveredSubHeading && (
+                                <div className="w-1/3">
+                                  <div className="p-2">
+                                    {getItems(hoveredCategory, hoveredSubHeading).map((item, index) => (
+                                      <div
+                                        key={index}
+                                        onClick={() => handleSelectItem(item, hoveredSubHeading, hoveredCategory)}
+                                        className={`px-4 py-3 rounded-lg cursor-pointer transition-colors flex items-center justify-between ${
+                                          selectedItems.includes(item)
+                                            ? 'bg-[#2F6A9E] text-white'
+                                            : 'hover:bg-[#2F6A9E] hover:text-white text-gray-800'
+                                        }`}
+                                      >
+                                        <p className="font-medium text-sm">{item}</p>
+                                        {selectedItems.includes(item) && (
+                                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                          </svg>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Date Selection */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      Date *
-                    </label>
-                    <input
-                      type="date"
-                      value={selectedDate}
-                      onChange={(e) => setSelectedDate(e.target.value)}
-                      min={new Date().toISOString().split('T')[0]}
-                      disabled={selectedItems.length === 0}
-                      className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
-                        selectedItems.length === 0 ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
-                      }`}
-                    />
-                  </div>
-
-                  {/* Time Selection */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      Time Slots *
-                    </label>
-
-                    {/* Time Slot Dropdown Button */}
-                    <div className="relative">
-                      <button
-                        type="button"
-                        onClick={() => setTimeMenuOpen(!timeMenuOpen)}
-                        disabled={selectedDate === ''}
-                        className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-left flex justify-between items-center text-base ${
-                          selectedDate === '' ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'
-                        }`}
-                      >
-                        <span>{selectedTimes.length > 0 ? `${selectedTimes.length} time slot(s) selected` : 'Choose time slots'}</span>
-                        <svg className={`w-5 h-5 text-gray-400 transition-transform ${timeMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    {/* Date Selection */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                      </button>
+                        Date *
+                      </label>
+                      <input
+                        type="date"
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                        min={new Date().toISOString().split('T')[0]}
+                        disabled={selectedItems.length === 0}
+                        className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
+                          selectedItems.length === 0 ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
+                        }`}
+                      />
+                    </div>
 
-                      {/* Time Slot Dropdown */}
-                      {timeMenuOpen && (
-                        <div className="absolute z-50 mt-2 w-full bg-white rounded-xl shadow-2xl border border-gray-200 p-3">
-                          <p className="text-xs text-gray-500 mb-2">Click to toggle, Shift+Click for range selection</p>
-                          <div className="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto">
-                            {timeSlots.map((time) => (
+                    {/* Time Slot Selection */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Time Slot *
+                      </label>
+
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={() => setTimeMenuOpen(!timeMenuOpen)}
+                          disabled={selectedDate === ''}
+                          className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-left flex justify-between items-center text-base ${
+                            selectedDate === '' ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'
+                          }`}
+                        >
+                          <span>{selectedTimes.length > 0 ? `${selectedTimes.length} selected` : 'Choose time'}</span>
+                          <svg className={`w-5 h-5 text-gray-400 transition-transform ${timeMenuOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+
+                        {timeMenuOpen && (
+                          <div className="absolute z-50 mt-2 w-full bg-white rounded-xl shadow-2xl border border-gray-200 p-3">
+                            <p className="text-xs text-gray-500 mb-2">Click to toggle, Shift+Click for range selection</p>
+                            <div className="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto">
+                              {timeSlots.map((time) => (
+                                <button
+                                  key={time}
+                                  type="button"
+                                  onClick={(e) => {
+                                    if (e.shiftKey && selectedTimes.length > 0) {
+                                      handleTimeSlotRange(selectedTimes[selectedTimes.length - 1], time)
+                                    } else {
+                                      handleTimeSlotToggle(time)
+                                    }
+                                  }}
+                                  className={`p-2 rounded-lg border-2 transition-all font-medium text-xs ${
+                                    selectedTimes.includes(time)
+                                      ? 'border-[#2F6A9E] bg-[#2F6A9E] text-white'
+                                      : 'border-gray-200 hover:border-[#2F6A9E] hover:bg-[#2F6A9E]/5 text-gray-800'
+                                  }`}
+                                >
+                                  {time}
+                                </button>
+                              ))}
+                            </div>
+                            <div className="mt-3 pt-3 border-t">
                               <button
-                                key={time}
                                 type="button"
-                                onClick={(e) => {
-                                  if (e.shiftKey && selectedTimes.length > 0) {
-                                    handleTimeSlotRange(selectedTimes[selectedTimes.length - 1], time)
-                                  } else {
-                                    handleTimeSlotToggle(time)
-                                  }
-                                }}
-                                className={`p-2 rounded-lg border-2 transition-all font-medium text-xs ${
-                                  selectedTimes.includes(time)
-                                    ? 'border-[#2F6A9E] bg-[#2F6A9E] text-white'
-                                    : 'border-gray-200 hover:border-[#2F6A9E] hover:bg-[#2F6A9E]/5 text-gray-800'
-                                }`}
+                                onClick={() => setTimeMenuOpen(false)}
+                                className="w-full px-4 py-2 bg-[#2F6A9E] text-white rounded-lg font-medium hover:bg-[#1a4a75] transition"
                               >
-                                {time}
+                                Done
                               </button>
-                            ))}
+                            </div>
                           </div>
-                          <div className="mt-3 pt-3 border-t">
-                            <button
-                              type="button"
-                              onClick={() => setTimeMenuOpen(false)}
-                              className="w-full px-4 py-2 bg-[#2F6A9E] text-white rounded-lg font-medium hover:bg-[#1a4a75] transition"
-                            >
-                              Done
-                            </button>
-                          </div>
-                        </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Custom Time Request */}
+                    <div>
+                      <label className="flex items-center gap-2 cursor-pointer h-12">
+                        <input
+                          type="checkbox"
+                          checked={requestCustomTime}
+                          onChange={(e) => setRequestCustomTime(e.target.checked)}
+                          disabled={selectedDate === ''}
+                          className="w-4 h-4 text-[#2F6A9E] border-gray-300 rounded focus:ring-[#2F6A9E]"
+                        />
+                        <span className={`text-sm ${selectedDate === '' ? 'text-gray-400' : 'text-gray-700'}`}>Request custom time</span>
+                      </label>
+                      {requestCustomTime && (
+                        <input
+                          type="text"
+                          value={customTimeRequest}
+                          onChange={(e) => setCustomTimeRequest(e.target.value)}
+                          placeholder="Preferred time"
+                          className="w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-sm bg-gray-50 focus:bg-white"
+                        />
                       )}
                     </div>
                   </div>
 
-                  {/* Custom Time Request */}
-                  <div>
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={requestCustomTime}
-                        onChange={(e) => setRequestCustomTime(e.target.checked)}
-                        disabled={selectedDate === ''}
-                        className="w-4 h-4 text-[#2F6A9E] border-gray-300 rounded focus:ring-[#2F6A9E]"
-                      />
-                      <span className={`text-sm ${selectedDate === '' ? 'text-gray-400' : 'text-gray-700'}`}>Custom time</span>
-                    </label>
-                    {requestCustomTime && (
+                  {/* Row 2: First Name, Last Name, Email, Phone */}
+                  <div className="grid md:grid-cols-4 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        First Name *
+                      </label>
                       <input
                         type="text"
-                        value={customTimeRequest}
-                        onChange={(e) => setCustomTimeRequest(e.target.value)}
-                        placeholder="Preferred time"
-                        className="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-sm bg-gray-50 focus:bg-white"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleFormChange}
+                        disabled={(selectedTimes.length === 0 && !requestCustomTime)}
+                        className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
+                          (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
+                        }`}
+                        placeholder="First name"
                       />
-                    )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        Last Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleFormChange}
+                        disabled={(selectedTimes.length === 0 && !requestCustomTime)}
+                        className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
+                          (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
+                        }`}
+                        placeholder="Last name"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        Email *
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleFormChange}
+                        disabled={(selectedTimes.length === 0 && !requestCustomTime)}
+                        className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
+                          (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
+                        }`}
+                        placeholder="Email"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        Phone *
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleFormChange}
+                        disabled={(selectedTimes.length === 0 && !requestCustomTime)}
+                        className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
+                          (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
+                        }`}
+                        placeholder="Phone"
+                      />
+                    </div>
                   </div>
 
-                  {/* Name */}
+                  {/* Row 3: Additional Notes */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                       <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                       </svg>
-                      Name *
+                      Additional Notes (Optional)
                     </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
+                    <textarea
+                      name="notes"
+                      value={formData.notes}
                       onChange={handleFormChange}
-                      disabled={(selectedTimes.length === 0 && !requestCustomTime)}
-                      className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
-                        (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
-                      }`}
-                      placeholder="Enter your name"
-                    />
+                      rows={1}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition resize-none text-base bg-gray-50 focus:bg-white"
+                      placeholder="Any additional information or special requirements"
+                    ></textarea>
                   </div>
 
-                  {/* Email */}
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                      </svg>
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleFormChange}
-                      disabled={(selectedTimes.length === 0 && !requestCustomTime)}
-                      className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
-                        (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
-                      }`}
-                      placeholder="Enter your email"
-                    />
-                  </div>
-
-                </div>
-
-                {/* Additional Notes */}
-                <div className="mt-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                    <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="w-full px-6 py-4 bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl text-base flex items-center justify-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    Additional Notes (Optional)
-                  </label>
-                  <textarea
-                    name="notes"
-                    value={formData.notes}
-                    onChange={handleFormChange}
-                    rows={1}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition resize-none text-base bg-gray-50 focus:bg-white"
-                    placeholder="Any additional information"
-                  ></textarea>
+                    Confirm Appointment Booking
+                  </button>
                 </div>
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="w-full mt-4 px-6 py-3 bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl text-base"
-                >
-                  Confirm Appointment Booking
-                </button>
               </div>
             </form>
           </div>
