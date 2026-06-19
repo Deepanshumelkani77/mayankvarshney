@@ -119,8 +119,8 @@ const Review = () => {
       </div>
 
       {/* Rating Overview Section */}
-      <div className="py-12 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="py-12 pt-6 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 border border-gray-100">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               {/* Overall Rating */}
@@ -165,7 +165,7 @@ const Review = () => {
 
       {/* Filter Section */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div className="flex gap-2 flex-wrap items-center">
               <span className="text-sm text-gray-500 mr-2">Filter by Service:</span>
@@ -198,7 +198,7 @@ const Review = () => {
 
       {/* Reviews Section */}
       <div className="py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
               {selectedFilter === 'All' ? 'All Reviews' : `${selectedFilter} Reviews`}
