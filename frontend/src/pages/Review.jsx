@@ -119,37 +119,45 @@ const Review = () => {
       </div>
 
       {/* Rating Overview Section */}
-      <div className="py-12 bg-white shadow-sm">
+      <div className="py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Overall Rating */}
-            <div className="text-center">
-              <div className="text-7xl font-bold text-gray-900 mb-4">{averageRating}</div>
-              <div className="flex justify-center gap-1 mb-4">
-                {renderStars(Math.round(averageRating))}
-              </div>
-              <p className="text-gray-600">Based on {reviews.length} reviews</p>
-            </div>
-
-            {/* Rating Distribution */}
-            <div className="space-y-3">
-              {ratingDistribution.map(({ star, count, percentage }) => (
-                <div key={star} className="flex items-center gap-4">
-                  <div className="flex items-center gap-1 w-20">
-                    <span className="text-sm font-medium text-gray-700">{star}</span>
-                    <svg className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
+          <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 border border-gray-100">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              {/* Overall Rating */}
+              <div className="text-center">
+                <div className="relative inline-block">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#2F6A9E] to-[#1a4a6e] rounded-full blur-2xl opacity-20"></div>
+                  <div className="relative bg-gradient-to-br from-[#2F6A9E] to-[#1a4a6e] rounded-full w-40 h-40 md:w-48 md:h-48 flex flex-col items-center justify-center shadow-2xl">
+                    <div className="text-5xl md:text-6xl font-bold text-white mb-2">{averageRating}</div>
+                    <div className="flex gap-1">
+                      {renderStars(Math.round(averageRating))}
+                    </div>
                   </div>
-                  <div className="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
-                    <div 
-                      className="bg-yellow-400 h-full rounded-full transition-all duration-500"
-                      style={{ width: `${percentage}%` }}
-                    ></div>
-                  </div>
-                  <div className="w-12 text-sm text-gray-600 text-right">{count}</div>
                 </div>
-              ))}
+                <p className="text-gray-600 mt-6 text-lg font-medium">Based on {reviews.length} reviews</p>
+              </div>
+
+              {/* Rating Distribution */}
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-gray-900 mb-6">Rating Distribution</h3>
+                {ratingDistribution.map(({ star, count, percentage }) => (
+                  <div key={star} className="flex items-center gap-4">
+                    <div className="flex items-center gap-1 w-20">
+                      <span className="text-sm font-medium text-gray-700">{star}</span>
+                      <svg className="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 bg-gray-200 rounded-full h-4 overflow-hidden shadow-inner">
+                      <div 
+                        className="bg-gradient-to-r from-yellow-400 to-yellow-500 h-full rounded-full transition-all duration-500 shadow-sm"
+                        style={{ width: `${percentage}%` }}
+                      ></div>
+                    </div>
+                    <div className="w-12 text-sm text-gray-600 text-right font-medium">{count}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
