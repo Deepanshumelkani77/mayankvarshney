@@ -197,14 +197,9 @@ const Review = () => {
       </div>
 
       {/* Reviews Section */}
-      <div className="py-12">
+      <div className="py-12 pt-6">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-              {selectedFilter === 'All' ? 'All Reviews' : `${selectedFilter} Reviews`}
-            </h2>
-            <span className="text-sm text-gray-500">{filteredReviews.length} reviews</span>
-          </div>
+         
 
           {filteredReviews.length === 0 ? (
             <div className="text-center py-12 bg-white rounded-lg shadow-sm">
