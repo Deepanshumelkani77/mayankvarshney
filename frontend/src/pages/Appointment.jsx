@@ -248,7 +248,7 @@ const Appointment = () => {
               
               <div className="space-y-4">
                 {/* Selected Services */}
-                <div className="border-b border-gray-100 pb-4">
+                <div className="border-b border-gray-100 pb-3">
                   <p className="text-xs text-gray-500 mb-2">Selected Services</p>
                   {selectedItems.length > 0 ? (
                     <div className="space-y-2">
@@ -276,7 +276,7 @@ const Appointment = () => {
                 </div>
 
                 {/* Date & Time */}
-                <div className="border-b border-gray-100 pb-4">
+                <div className="border-b border-gray-100 pb-3">
                   <p className="text-xs text-gray-500 mb-2">Date & Time</p>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
@@ -299,7 +299,7 @@ const Appointment = () => {
                 </div>
 
                 {/* Contact Information */}
-                <div className="border-b border-gray-100 pb-4">
+                <div className="border-b border-gray-100 pb-3">
                   <p className="text-xs text-gray-500 mb-2">Contact Information</p>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
