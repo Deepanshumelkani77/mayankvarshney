@@ -4,6 +4,7 @@ const Review = () => {
   const [selectedFilter, setSelectedFilter] = useState('All')
   const [showReviewForm, setShowReviewForm] = useState(false)
   const [selectedRating, setSelectedRating] = useState(0)
+  const [reason, setReason] = useState('')
 
   // Placeholder review data - this will be replaced with dynamic data from database
   const reviews = [
@@ -280,8 +281,8 @@ const Review = () => {
             <div className="bg-gradient-to-r from-[#053131] to-[#0a4a4a] text-white px-6 py-4 rounded-t-xl">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold">Write a Review</h2>
-                <button 
-                  onClick={() => {setShowReviewForm(false); setSelectedRating(0)}}
+                <button
+                  onClick={() => {setShowReviewForm(false); setSelectedRating(0); setReason('')}}
                   className="text-white hover:text-gray-200 transition-colors"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -290,7 +291,7 @@ const Review = () => {
                 </button>
               </div>
             </div>
-            <form className="p-6 space-y-4">
+            <form className="p-3 space-y-2">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Your Name *</label>
                 <input
@@ -334,21 +335,41 @@ const Review = () => {
                     </button>
                   ))}
                 </div>
-                
               </div>
+
+              {/* Conditional Reason Form for ratings <= 3 */}
+              {selectedRating > 0 && selectedRating <= 3 && (
+                <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+                  <label className="block text-sm font-medium text-red-800 mb-2">
+                    Please tell us the reason for your rating *
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={reason}
+                    onChange={(e) => setReason(e.target.value)}
+                    placeholder="We value your feedback. Please let us know what we can do to improve..."
+                    className="w-full px-4 py-3 border border-red-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent resize-none text-sm"
+                    required
+                  />
+                </div>
+              )}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Review Title *</label>
-                <input
-                  type="text"
-                  placeholder="Summarize your experience"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent"
-                  required
-                />
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent" required>
+                  <option value="">Select a title</option>
+                  <option value="Excellent Service">Excellent Service</option>
+                  <option value="Professional and Reliable">Professional and Reliable</option>
+                  <option value="Outstanding Experience">Outstanding Experience</option>
+                  <option value="Highly Recommended">Highly Recommended</option>
+                  <option value="Great Support">Great Support</option>
+                  <option value="Satisfactory Service">Satisfactory Service</option>
+                 
+                </select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Your Review *</label>
                 <textarea
-                  rows={2}
+                  rows={1}
                   placeholder="Tell us about your experience..."
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent resize-none"
                   required
@@ -363,7 +384,7 @@ const Review = () => {
                 </button>
                 <button
                   type="button"
-                  onClick={() => {setShowReviewForm(false); setSelectedRating(0)}}
+                  onClick={() => {setShowReviewForm(false); setSelectedRating(0); setReason('')}}
                   className="flex-1 bg-gray-200 text-gray-800 px-6 py-3 rounded-xl font-medium hover:bg-gray-300 transition-colors"
                 >
                   Cancel
