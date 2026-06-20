@@ -493,8 +493,8 @@ const Navbar = () => {
                         </div>
 
                         {/* Column 4 - Empty for future content */}
-                        <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-                          <p className="text-xs text-gray-400 text-center mt-4">Content to be added</p>
+                        <div className="bg-white rounded-lg p-3 border border-gray-200">
+                        
                         </div>
                       </div>
                     </div>
