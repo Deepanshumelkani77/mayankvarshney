@@ -260,6 +260,15 @@ const Appointment = () => {
                           <p className="text-sm text-gray-800">{item}</p>
                         </div>
                       ))}
+                      <button
+                        onClick={() => setMenuOpen(true)}
+                        className="mt-2 text-sm text-[#2F6A9E] font-medium hover:underline flex items-center gap-1"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        Add more services
+                      </button>
                     </div>
                   ) : (
                     <p className="text-sm text-gray-400 italic">No services selected</p>
