@@ -526,7 +526,7 @@ const Appointment = () => {
 
                     {/* Custom Time Request */}
                     <div>
-                      <label className="flex items-center gap-2 cursor-pointer h-12">
+                      <label className="flex items-center gap-2 cursor-pointer ">
                         <input
                           type="checkbox"
                           checked={requestCustomTime}
@@ -542,7 +542,7 @@ const Appointment = () => {
                           value={customTimeRequest}
                           onChange={(e) => setCustomTimeRequest(e.target.value)}
                           placeholder="Preferred time"
-                          className="w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-sm bg-gray-50 focus:bg-white"
+                          className="w-full h-10 mt-2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-sm bg-gray-50 focus:bg-white"
                         />
                       )}
                     </div>
