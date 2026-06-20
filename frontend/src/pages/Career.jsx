@@ -8,6 +8,9 @@ const Career = () => {
     email: '',
     phone: '',
     experience: '',
+    education: '',
+    location: '',
+    familyBackground: '',
     coverLetter: '',
     resume: null
   })
@@ -84,6 +87,9 @@ const Career = () => {
       email: '',
       phone: '',
       experience: '',
+      education: '',
+      location: '',
+      familyBackground: '',
       coverLetter: '',
       resume: null
     })
@@ -128,7 +134,7 @@ const Career = () => {
                 </button>
               </div>
             </div>
-            <form onSubmit={handleFormSubmit} className="p-6 space-y-4">
+            <form onSubmit={handleFormSubmit} className="p-6 space-y-2">
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
@@ -180,6 +186,43 @@ const Career = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent text-sm"
                   />
                 </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Education *</label>
+                  <input
+                    type="text"
+                    name="education"
+                    required
+                    value={formData.education}
+                    onChange={handleInputChange}
+                    placeholder="B.Com, M.Com, CA, etc."
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
+                  <input
+                    type="text"
+                    name="location"
+                    required
+                    value={formData.location}
+                    onChange={handleInputChange}
+                    placeholder="City, State"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent text-sm"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Family Background</label>
+                <textarea
+                  name="familyBackground"
+                  rows={2}
+                  value={formData.familyBackground}
+                  onChange={handleInputChange}
+                  placeholder="Brief information about your family background..."
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent text-sm resize-none"
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Cover Letter</label>
