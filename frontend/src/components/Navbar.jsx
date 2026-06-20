@@ -370,56 +370,58 @@ const Navbar = () => {
 
         {/* Dropdown panel (single shared panel, content changes per openDropdown) */}
         <div className="hidden md:flex absolute left-0 right-0 top-16 z-40 mt-0 justify-center">
-          <div onMouseEnter={() => setOpenDropdown(openDropdown)} onMouseLeave={() => setOpenDropdown(null)} className="w-[90vw] max-w-7xl bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100' : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'}">
+          <div onMouseEnter={() => setOpenDropdown(openDropdown)} onMouseLeave={() => setOpenDropdown(null)} className="w-[90vw] bg-white text-black rounded-lg shadow-2xl overflow-hidden transform transition-all duration-300 ease-out ${openDropdown ? 'opacity-100 translate-y-2 scale-100' : 'opacity-0 -translate-y-4 scale-95 pointer-events-none'}">
             {openDropdown ? (
               (() => {
                 const info = mainItems.find(i => i.id === openDropdown)
                 // If groups provided, render each group as a column with its own heading
                 if (info.groups && info.groups.length) {
-                  // generic groups layout for all items
+                  // 4-column layout with fixed size
                   return (
-                    <div ref={dropdownRef} className="relative p-3">
-                      <div className="flex items-start gap-3 h-[500px]">
-                        {/* Left column - all headings */}
-                        <div className="w-[400px] bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]" style={{scrollbarWidth: 'thin', scrollbarColor: '#2F6A9E #f3f4f6'}}>
-                          {info.groups.map((g) => (
-                            <div key={g.title} className="mb-1">
-                              {g.subgroups ? (
-                                g.subgroups.map((sg, sgi) => (
+                    <div ref={dropdownRef} className="relative p-4">
+                      <div className="grid grid-cols-4 gap-3" style={{height: '600px'}}>
+                        {/* Column 1 - All headings */}
+                        <div className="bg-gray-50 rounded-lg p-3 border border-gray-200 overflow-hidden">
+                           <div className="space-y-1 h-full overflow-y-auto">
+                            {info.groups.map((g) => (
+                              <div key={g.title} className="mb-2">
+                                {g.subgroups ? (
+                                  g.subgroups.map((sg, sgi) => (
+                                    <button
+                                      key={sgi}
+                                      onMouseEnter={() => {
+                                        setHoveredGroup(sg.title)
+                                        setHoveredSubItem(null)
+                                      }}
+                                      className={`w-full text-left px-3 py-2 rounded-md transition-colors text-sm flex items-center justify-between ${hoveredGroup === sg.title ? 'bg-[#2F6A9E] text-white' : 'hover:bg-gray-200'}`}
+                                    >
+                                      <span className="truncate">{sg.title}</span>
+                                      <svg className="w-3 h-3 flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                      </svg>
+                                    </button>
+                                  ))
+                                ) : (
                                   <button
-                                    key={sgi}
                                     onMouseEnter={() => {
-                                      setHoveredGroup(sg.title)
+                                      setHoveredGroup(g.title)
                                       setHoveredSubItem(null)
                                     }}
-                                    className={`w-full text-left px-4 py-2.5 rounded-md transition-colors text-base flex items-center justify-between ${hoveredGroup === sg.title ? 'bg-emerald-50 text-emerald-700' : 'hover:bg-gray-50'}`}
+                                    className={`w-full text-left px-3 py-2 rounded-md transition-colors text-sm flex items-center justify-between ${hoveredGroup === g.title ? 'bg-[#2F6A9E] text-white' : 'hover:bg-gray-200'}`}
                                   >
-                                    <span>{sg.title}</span>
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <span className="truncate">{g.title}</span>
+                                    <svg className="w-3 h-3 flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                     </svg>
                                   </button>
-                                ))
-                              ) : (
-                                <button
-                                  onMouseEnter={() => {
-                                    setHoveredGroup(g.title)
-                                    setHoveredSubItem(null)
-                                  }}
-                                  className={`w-full text-left px-4 py-2.5 rounded-md transition-colors text-base flex items-center justify-between ${hoveredGroup === g.title ? 'bg-emerald-50 text-emerald-700' : 'hover:bg-gray-50'}`}
-                                >
-                                  <span>{g.title}</span>
-                                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                  </svg>
-                                </button>
-                              )}
-                            </div>
-                          ))}
+                                )}
+                              </div>
+                            ))}
+                          </div>
                         </div>
 
-                        {/* Middle panel - items when hovering a heading */}
-                        <div className="relative w-[400px]">
+                        {/* Column 2 - Items */}
+                        <div className="bg-white rounded-lg p-3 border border-gray-200 overflow-hidden">
                           {hoveredGroup && (() => {
                             // Find the group or subgroup that matches the hovered heading
                             let grp = info.groups.find(g => g.title === hoveredGroup)
@@ -441,17 +443,16 @@ const Navbar = () => {
                             }
 
                             return (
-                              <div className="w-[400px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto" style={{scrollbarWidth: 'thin', scrollbarColor: '#2F6A9E #f3f4f6'}}>
-                                <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{title}</h4>
-                               
-                                <ul className="space-y-2">
+                              <div className="h-full overflow-y-auto">
+                                <h5 className="font-medium text-[#2F6A9E] mb-2 text-sm">{title}</h5>
+                                <ul className="space-y-1">
                                   {items?.map((it, idx) => {
                                     const isObject = typeof it === 'object' && it !== null
                                     const itemText = isObject ? it.subtittle : it
                                     const hasSubItems = isObject && it.subitem && it.subitem.length > 0
                                     const key = isObject ? it.subtittle : it
                                     return (
-                                      <li key={key} className="px-2 py-1.5 rounded hover:bg-gray-50 text-base cursor-pointer flex items-center justify-between"
+                                      <li key={key} className="px-2 py-1.5 rounded hover:bg-gray-100 text-sm cursor-pointer flex items-center justify-between"
                                         onMouseEnter={() => {
                                           if (hasSubItems) {
                                             setHoveredSubItem(it)
@@ -460,9 +461,9 @@ const Navbar = () => {
                                           }
                                         }}
                                       >
-                                        <span>{itemText}</span>
+                                        <span className="truncate">{itemText}</span>
                                         {hasSubItems && (
-                                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <svg className="w-3 h-3 flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                           </svg>
                                         )}
@@ -475,62 +476,53 @@ const Navbar = () => {
                           })()}
                         </div>
 
-                        {/* Right panel - sub-items when hovering an item with sub-items */}
-                        <div className="relative w-[400px]">
+                        {/* Column 3 - Sub-items */}
+                        <div className="bg-white rounded-lg p-3 border border-gray-200 overflow-hidden">
                           {hoveredSubItem && (() => {
                             return (
-                              <div className="w-[400px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto" style={{scrollbarWidth: 'thin', scrollbarColor: '#2F6A9E #f3f4f6'}}>
-                                <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{hoveredSubItem.subtittle}</h4>
-                                <ul className="space-y-2">
+                              <div className="h-full overflow-y-auto">
+                                <h5 className="font-medium text-[#2F6A9E] mb-2 text-sm">{hoveredSubItem.subtittle}</h5>
+                                <ul className="space-y-1">
                                   {hoveredSubItem.subitem?.map((sub, idx) => (
-                                    <li key={sub} className="px-2 py-1.5 rounded hover:bg-gray-50 text-base">{sub}</li>
+                                    <li key={sub} className="px-2 py-1.5 rounded hover:bg-gray-100 text-sm truncate">{sub}</li>
                                   ))}
                                 </ul>
                               </div>
                             )
                           })()}
                         </div>
+
+                        {/* Column 4 - Empty for future content */}
+                        <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                          <p className="text-xs text-gray-400 text-center mt-4">Content to be added</p>
+                        </div>
                       </div>
                     </div>
                   )
                 }
-                // fallback: split options into 3 columns - use same structure as groups
-                const per = Math.ceil((info.options || []).length / 3) || 1
-                const cols = [0,1,2].map(i => (info.options || []).slice(i*per, (i+1)*per))
+                // fallback: split options into 4 columns
+                const per = Math.ceil((info.options || []).length / 4) || 1
+                const cols = [0,1,2,3].map(i => (info.options || []).slice(i*per, (i+1)*per))
                 return (
-                  <div ref={dropdownRef} className="relative p-3">
-                    <div className="flex items-start gap-3 h-[500px]">
-                      {/* Left column - all options as headings */}
-                      <div className="w-[400px] bg-white p-1 rounded-md border border-gray-200 overflow-y-auto h-[500px]" style={{scrollbarWidth: 'thin', scrollbarColor: '#2F6A9E #f3f4f6'}}>
-                        {cols.map((col, ci) => (
-                          <div key={ci} className="mb-1">
-                            {col.map((opt, oi) => (
-                              <button
-                                key={oi}
-                                onMouseEnter={() => setHoveredGroup(opt)}
-                                className={`w-full text-left px-4 py-2.5 rounded-md transition-colors text-base flex items-center justify-between ${hoveredGroup === opt ? 'bg-emerald-50 text-emerald-700' : 'hover:bg-gray-50'}`}
-                              >
-                                <span>{opt}</span>
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                              </button>
-                            ))}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Right panel - details when hovering an option */}
-                      <div className="relative w-[500px]">
-                        {hoveredGroup && (() => {
-                          return (
-                            <div className="w-[500px] bg-white rounded-md p-2 border border-gray-200 h-[500px] overflow-y-auto" style={{scrollbarWidth: 'thin', scrollbarColor: '#2F6A9E #f3f4f6'}}>
-                              <h4 className="font-semibold px-2 text-[#2F6A9E] mb-2 text-lg">{hoveredGroup}</h4>
-                              <p className="text-base px-2 text-gray-600 mb-3">{info.desc}</p>
+                  <div ref={dropdownRef} className="relative p-4">
+                    <div className="grid grid-cols-4 gap-3" style={{height: '400px'}}>
+                      {cols.map((col, ci) => (
+                        <div key={ci} className="bg-white rounded-lg p-3 border border-gray-200 overflow-hidden">
+                          <div className="h-full overflow-y-auto">
+                            <div className="space-y-1">
+                              {col.map((opt, oi) => (
+                                <button
+                                  key={oi}
+                                  onMouseEnter={() => setHoveredGroup(opt)}
+                                  className={`w-full text-left px-3 py-2 rounded-md transition-colors text-sm truncate ${hoveredGroup === opt ? 'bg-[#2F6A9E] text-white' : 'hover:bg-gray-200'}`}
+                                >
+                                  {opt}
+                                </button>
+                              ))}
                             </div>
-                          )
-                        })()}
-                      </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )
