@@ -19,27 +19,27 @@ const About = () => {
           <div className="space-y-6 p-4 overflow-auto">
             <div>
           
-              <p className="text-gray-600 mb-4 leading-relaxed">
+              <p className="text-gray-600 mb-4 leading-relaxed text-justify">
                 Founded with a vision to simplify complex financial and legal processes, Mayank Varshney & Co. has grown into a trusted name in the industry. Our journey began with a simple mission: to provide professional, reliable, and affordable services to businesses of all sizes.
               </p>
-              <p className="text-gray-600 mb-4 leading-relaxed">
+              <p className="text-gray-600 mb-4 leading-relaxed text-justify">
                 Over the years, we have helped hundreds of clients navigate the complexities of taxation, compliance, and business regulations. Our team of experienced professionals brings together expertise from various domains to offer comprehensive solutions under one roof.
               </p>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-600 leading-relaxed text-justify">
                 Today, we continue to uphold our commitment to excellence, integrity, and client satisfaction. We believe in building long-term relationships with our clients by delivering consistent quality and personalized service.
               </p>
             </div>
 
             <div className="bg-white rounded-xl shadow-lg p-4">
               <h3 className="font-semibold text-gray-800 mb-3">Our Mission</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <p className="text-gray-600 text-sm leading-relaxed text-justify">
 To make financial and legal expertise accessible to everyone, enabling individuals, startups, and businesses to make smarter decisions, stay compliant, and achieve long-term success and growth.
               </p>
             </div>
 
             <div className="bg-white rounded-xl shadow-lg p-4">
               <h3 className="font-semibold text-gray-800 mb-3">Our Vision</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <p className="text-gray-600 text-sm leading-relaxed text-justify">
                 To be the most trusted and preferred financial and legal services provider in India, known for our expertise, integrity, and commitment to client success.
               </p>
             </div>
