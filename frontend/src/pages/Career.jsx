@@ -25,6 +25,7 @@ const Career = () => {
       type: 'Full-time',
       experience: '3-5 years',
       salary: '₹6,00,000 - ₹9,00,000 per annum',
+      benefits: 'Health Insurance, PF, ESIC, Performance Bonus, Paid Leave',
       description: 'We are looking for an experienced Senior Accountant to join our team. The ideal candidate will have strong knowledge of accounting principles, tax regulations, and financial reporting.',
       responsibilities: [
         'Prepare financial statements and reports',
@@ -49,6 +50,7 @@ const Career = () => {
       type: 'Full-time',
       experience: '2-4 years',
       salary: '₹5,00,000 - ₹8,00,000 per annum',
+      benefits: 'Health Insurance, PF, ESIC, Performance Bonus, Paid Leave',
       description: 'Join our taxation team as a Tax Consultant. You will be responsible for providing tax advisory services, preparing tax returns, and ensuring compliance with tax laws.',
       responsibilities: [
         'Prepare and file income tax returns',
@@ -317,14 +319,9 @@ const Career = () => {
                         </span>
                       </div>
                       <p className="text-gray-700 mb-4">{job.description}</p>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        <span className="px-3 py-1 bg-[#2F6A9E]/10 text-[#2F6A9E] rounded-full text-sm font-medium">
-                          {job.salary}
-                        </span>
-                        <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
-                          Posted: {new Date(job.postedDate).toLocaleDateString()}
-                        </span>
-                      </div>
+                      <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                        Posted: {new Date(job.postedDate).toLocaleDateString()}
+                      </span>
                     </div>
                     <button
                       onClick={() => handleApply(job)}
@@ -336,7 +333,7 @@ const Career = () => {
                   
                   {/* Job Details */}
                   <div className="mt-6 pt-6 border-t border-gray-200">
-                    <div className="grid md:grid-cols-2 gap-6">
+                    <div className="grid md:grid-cols-3 gap-6">
                       <div>
                         <h4 className="font-semibold text-gray-900 mb-2">Key Responsibilities:</h4>
                         <ul className="list-disc list-inside text-gray-600 space-y-1">
@@ -352,6 +349,10 @@ const Career = () => {
                             <li key={idx}>{req}</li>
                           ))}
                         </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-2">Benefits:</h4>
+                        <p className="text-gray-600">{job.benefits}</p>
                       </div>
                     </div>
                   </div>
