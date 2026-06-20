@@ -354,8 +354,8 @@ const Review = () => {
                 </div>
               )}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Review Title *</label>
-                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent" required>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Review Title {selectedRating > 3 ? '*' : ''}</label>
+                <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent" required={selectedRating > 3}>
                   <option value="">Select a title</option>
                   <option value="Excellent Service">Excellent Service</option>
                   <option value="Professional and Reliable">Professional and Reliable</option>
@@ -363,16 +363,16 @@ const Review = () => {
                   <option value="Highly Recommended">Highly Recommended</option>
                   <option value="Great Support">Great Support</option>
                   <option value="Satisfactory Service">Satisfactory Service</option>
-                 
+
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Your Review *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Your Review {selectedRating > 3 ? '*' : ''}</label>
                 <textarea
                   rows={1}
                   placeholder="Tell us about your experience..."
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent resize-none"
-                  required
+                  required={selectedRating > 3}
                 />
               </div>
               <div className="flex gap-3 pt-2">
