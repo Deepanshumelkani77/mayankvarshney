@@ -177,19 +177,19 @@ const Signup = () => {
 					) : (
 						<form onSubmit={submitSignup} className="space-y-4">
 							<div>
-								<label className="block text-sm text-gray-600 mb-1">Full name</label>
+								
 								<input name="fullName" value={signupData.fullName} onChange={handleSignupChange} placeholder="Full name" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
 							</div>
 							<div>
-								<label className="block text-sm text-gray-600 mb-1">Email</label>
+							
 								<input name="email" type="email" value={signupData.email} onChange={handleSignupChange} placeholder="Email address" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
 							</div>
 							<div>
-								<label className="block text-sm text-gray-600 mb-1">Phone</label>
+								
 								<input name="phone" value={signupData.phone} onChange={handleSignupChange} placeholder="Phone number (optional)" className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
 							</div>
 							<div>
-								<label className="block text-sm text-gray-600 mb-1">Password</label>
+								
 								<input name="password" type={showPassword ? 'text' : 'password'} value={signupData.password} onChange={handleSignupChange} placeholder="Create a password" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
 							</div>
                             
