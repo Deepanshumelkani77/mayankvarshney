@@ -97,11 +97,11 @@ const Signup = () => {
 					  {signupMode === 'login' ? (
 						<form onSubmit={submitLogin} className="space-y-4">
 							<div>
-								<label className="block text-sm text-gray-600 mb-1">Email or phone</label>
+								
 								<input name="email" value={loginData.email} onChange={handleLoginChange} placeholder="Email address or phone number" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
 							</div>
 							<div>
-								<label className="block text-sm text-gray-600 mb-1">Password</label>
+								
 								<div className="relative">
 									<input name="password" type={showPassword ? 'text' : 'password'} value={loginData.password} onChange={handleLoginChange} placeholder="Password" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
 									<button type="button" onClick={() => setShowPassword(s => !s)} aria-label={showPassword ? 'Hide password' : 'Show password'} className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500">
@@ -119,9 +119,10 @@ const Signup = () => {
 										)}
 									</button>
 								</div>
+								
 							</div>
 							<div>
-								<label className="block text-sm text-gray-600 mb-1">CAPTCHA</label>
+							
 								<div className="flex gap-2">
 									<input type="text" value={userCaptcha} onChange={(e) => setUserCaptcha(e.target.value)} placeholder="Enter CAPTCHA code" required className="flex-1 px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
 									<div className="bg-gray-100 px-4 py-2 rounded-md font-mono text-lg tracking-wider select-none border border-gray-300">
@@ -136,7 +137,10 @@ const Signup = () => {
 							</div>
 							{error && <div className="text-sm text-red-600">{error}</div>}
 							<button type="submit" className="w-full py-2 rounded-md bg-[#2F6A9E] text-white font-semibold">Login</button>
-							  <div className="text-center text-sm text-gray-600">Don't have an account? <button type="button" onClick={() => setSignupMode('signup')} className="text-[#2F6A9E] font-semibold">Sign up</button></div>
+							  <div className="flex justify-between items-center text-sm text-gray-600">
+								<span>Don't have an account? <button type="button" onClick={() => setSignupMode('signup')} className="text-[#2F6A9E] font-semibold">Sign up</button></span>
+								<button type="button" className="text-[#2F6A9E] hover:underline">Forgot password?</button>
+							  </div>
 
 							{/* Social buttons placed at the bottom as requested */}
 							<div className="mt-3">
