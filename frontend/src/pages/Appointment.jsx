@@ -285,7 +285,7 @@ const Appointment = () => {
                 {/* Selected Services */}
                 <div className="border-b border-gray-100 pb-3">
                   <p className="text-xs text-gray-500 mb-2">Selected Services</p>
-                  {selectedItems.length > 0 ? (
+                  {selectedItems.length > 0 || notSureAboutService ? (
                     <div className="space-y-2">
                       {selectedItems.map((item, index) => (
                         <div key={index} className="flex items-start gap-2">
@@ -295,6 +295,14 @@ const Appointment = () => {
                           <p className="text-sm text-gray-800">{item}</p>
                         </div>
                       ))}
+                      {notSureAboutService && (
+                        <div className="flex items-start gap-2">
+                          <svg className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          <p className="text-sm text-gray-800">I am not sure about the Service</p>
+                        </div>
+                      )}
                       <button
                         onClick={() => setMenuOpen(true)}
                         className="mt-2 text-sm text-[#2F6A9E] font-medium hover:underline flex items-center gap-1"
@@ -523,9 +531,9 @@ const Appointment = () => {
                         value={selectedDate}
                         onChange={(e) => setSelectedDate(e.target.value)}
                         min={new Date().toISOString().split('T')[0]}
-                        disabled={selectedItems.length === 0}
+                        disabled={selectedItems.length === 0 && !notSureAboutService}
                         className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
-                          selectedItems.length === 0 ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
+                          selectedItems.length === 0 && !notSureAboutService ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
                         }`}
                       />
                     </div>
