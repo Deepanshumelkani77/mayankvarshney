@@ -53,7 +53,7 @@ const Appointment = () => {
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTimes, setSelectedTimes] = useState([])
   const [requestCustomTime, setRequestCustomTime] = useState(false)
-  const [customTimeRequest, setCustomTimeRequest] = useState('')
+  const [customTimeRequests, setCustomTimeRequests] = useState(['', '', ''])
   const [notSureAboutService, setNotSureAboutService] = useState(false)
   const [hoveredCategory, setHoveredCategory] = useState(null)
   const [hoveredSubHeading, setHoveredSubHeading] = useState(null)
@@ -143,7 +143,7 @@ const Appointment = () => {
       date: selectedDate,
       times: selectedTimes,
       requestCustomTime,
-      customTimeRequest,
+      customTimeRequests,
       notSureAboutService,
       countryCode,
       ...formData
@@ -439,7 +439,7 @@ const Appointment = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       <p className="text-sm text-gray-800">
-                        {requestCustomTime && customTimeRequest ? customTimeRequest : selectedTimes.length > 0 ? selectedTimes.join(', ') : 'Not selected'}
+                        {requestCustomTime && customTimeRequests.some(t => t) ? customTimeRequests.filter(t => t).join(', ') : selectedTimes.length > 0 ? selectedTimes.join(', ') : 'Not selected'}
                       </p>
                     </div>
                   </div>
@@ -718,13 +718,22 @@ const Appointment = () => {
                         <span className={`text-sm ${selectedDate === '' ? 'text-gray-400' : 'text-gray-700'}`}>Request custom time</span>
                       </label>
                       {requestCustomTime && (
-                        <input
-                          type="text"
-                          value={customTimeRequest}
-                          onChange={(e) => setCustomTimeRequest(e.target.value)}
-                          placeholder="Preferred time"
-                          className="w-full h-10 mt-2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-sm bg-gray-50 focus:bg-white"
-                        />
+                        <div className="space-y-2 mt-2">
+                          {[0, 1, 2].map((index) => (
+                            <input
+                              key={index}
+                              type="text"
+                              value={customTimeRequests[index]}
+                              onChange={(e) => {
+                                const newRequests = [...customTimeRequests]
+                                newRequests[index] = e.target.value
+                                setCustomTimeRequests(newRequests)
+                              }}
+                              placeholder={`Preferred time slot ${index + 1} (e.g., 2:00 PM - 3:00 PM)`}
+                              className="w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-sm bg-gray-50 focus:bg-white"
+                            />
+                          ))}
+                        </div>
                       )}
                     </div>
                   </div>
