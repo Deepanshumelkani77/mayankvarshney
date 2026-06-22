@@ -123,6 +123,7 @@ const Signup = () => {
 							<div>
 								<label className="block text-sm text-gray-600 mb-1">CAPTCHA</label>
 								<div className="flex gap-2">
+									<input type="text" value={userCaptcha} onChange={(e) => setUserCaptcha(e.target.value)} placeholder="Enter CAPTCHA code" required className="flex-1 px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
 									<div className="bg-gray-100 px-4 py-2 rounded-md font-mono text-lg tracking-wider select-none border border-gray-300">
 										{captcha}
 									</div>
@@ -132,7 +133,6 @@ const Signup = () => {
 										</svg>
 									</button>
 								</div>
-								<input type="text" value={userCaptcha} onChange={(e) => setUserCaptcha(e.target.value)} placeholder="Enter CAPTCHA code" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400 mt-2" />
 							</div>
 							{error && <div className="text-sm text-red-600">{error}</div>}
 							<button type="submit" className="w-full py-2 rounded-md bg-[#2F6A9E] text-white font-semibold">Login</button>
