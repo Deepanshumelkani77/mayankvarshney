@@ -10,6 +10,10 @@ const Signup = () => {
   const [error, setError] = useState('')
   const [captcha, setCaptcha] = useState('')
   const [userCaptcha, setUserCaptcha] = useState('')
+  const [showForgotPassword, setShowForgotPassword] = useState(false)
+  const [forgotEmail, setForgotEmail] = useState('')
+  const [forgotError, setForgotError] = useState('')
+  const [forgotSuccess, setForgotSuccess] = useState(false)
 
   useEffect(() => {
     if (!showSignup) return
@@ -88,13 +92,31 @@ const Signup = () => {
     console.log('signup', signupData)
   }
 
-	return (
-		<div className="fixed inset-0 z-50 flex items-center justify-center">
-			{/* Backdrop with blur */}
-			<div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={close}></div>
+  const handleForgotPassword = (e) => {
+    e.preventDefault()
+    setForgotError('')
 
-			{/* Modal */}
-			<div className="relative w-full max-w-4xl mx-4 bg-white rounded-2xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(forgotEmail)) {
+      setForgotError('Please enter a valid email address')
+      return
+    }
+
+    // TODO: call API to send password reset email
+    console.log('Forgot password for:', forgotEmail)
+    setForgotSuccess(true)
+    setForgotEmail('')
+  }
+
+	return (
+		<>
+			<div className="fixed inset-0 z-50 flex items-center justify-center">
+				{/* Backdrop with blur */}
+				<div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={close}></div>
+
+				{/* Modal */}
+				<div className="relative w-full max-w-4xl mx-4 bg-white rounded-2xl shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
 				{/* Left - marketing / toggle */}
 				<div className="hidden md:flex flex-col bg-gradient-to-br from-[#2F6A9E] to-[#1a4a75] text-white p-8 gap-6">
 					<div className="flex-1">
@@ -163,7 +185,7 @@ const Signup = () => {
 							<button type="submit" className="w-full py-2 rounded-md bg-[#2F6A9E] text-white font-semibold">Login</button>
 							  <div className="flex justify-between items-center text-sm text-gray-600">
 								<span>Don't have an account? <button type="button" onClick={() => setSignupMode('signup')} className="text-[#2F6A9E] font-semibold">Sign up</button></span>
-								<button type="button" className="text-[#2F6A9E] hover:underline">Forgot password?</button>
+								<button type="button" onClick={() => setShowForgotPassword(true)} className="text-[#2F6A9E] hover:underline">Forgot password?</button>
 							  </div>
 
 							{/* Social buttons placed at the bottom as requested */}
@@ -264,6 +286,63 @@ const Signup = () => {
 				</div>
 			</div>
 		</div>
+
+		{/* Forgot Password Modal */}
+		{showForgotPassword && (
+			<div className="fixed inset-0 z-[60] flex items-center justify-center">
+				<div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setShowForgotPassword(false)}></div>
+				<div className="relative w-full max-w-md mx-4 bg-white rounded-2xl shadow-xl p-8">
+					<button onClick={() => setShowForgotPassword(false)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">✕</button>
+
+					<div className="text-center mb-6">
+						<div className="w-16 h-16 bg-[#2F6A9E]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+							<svg className="w-8 h-8 text-[#2F6A9E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11.536 21H7a2 2 0 01-2-2V9a2 2 0 012-2h5.536a6 6 0 017.743 5.743z" />
+							</svg>
+						</div>
+						<h2 className="text-2xl font-semibold text-gray-800 mb-2">Forgot Password?</h2>
+						<p className="text-sm text-gray-500">Enter your email address and we'll send you a link to reset your password.</p>
+					</div>
+
+					{!forgotSuccess ? (
+						<form onSubmit={handleForgotPassword} className="space-y-4">
+							<div>
+								<label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+								<input
+									type="email"
+									value={forgotEmail}
+									onChange={(e) => setForgotEmail(e.target.value)}
+									placeholder="Enter your email"
+									required
+									className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition"
+								/>
+							</div>
+							{forgotError && <div className="text-sm text-red-600">{forgotError}</div>}
+							<button type="submit" className="w-full py-3 rounded-lg bg-[#2F6A9E] text-white font-semibold hover:bg-[#1a4a75] transition">
+								Send Reset Link
+							</button>
+							<button type="button" onClick={() => setShowForgotPassword(false)} className="w-full py-2 text-sm text-gray-600 hover:text-gray-800 transition">
+								Back to Login
+							</button>
+						</form>
+					) : (
+						<div className="text-center space-y-4">
+							<div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+								<svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+								</svg>
+							</div>
+							<h3 className="text-lg font-semibold text-gray-800">Check Your Email</h3>
+							<p className="text-sm text-gray-500">We've sent a password reset link to your email address. Please check your inbox and follow the instructions.</p>
+							<button onClick={() => { setShowForgotPassword(false); setForgotSuccess(false) }} className="w-full py-3 rounded-lg bg-[#2F6A9E] text-white font-semibold hover:bg-[#1a4a75] transition">
+								Back to Login
+							</button>
+						</div>
+					)}
+				</div>
+			</div>
+		)}
+		</>
 	)
 }
 
