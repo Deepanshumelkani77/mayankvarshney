@@ -8,13 +8,26 @@ const Signup = () => {
 	const [signupData, setSignupData] = useState({ fullName: '', email: '', phone: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
+  const [captcha, setCaptcha] = useState('')
+  const [userCaptcha, setUserCaptcha] = useState('')
 
   useEffect(() => {
     if (!showSignup) return
     const original = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+    generateCaptcha()
     return () => { document.body.style.overflow = original }
   }, [showSignup])
+
+  const generateCaptcha = () => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789'
+    let result = ''
+    for (let i = 0; i < 6; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length))
+    }
+    setCaptcha(result)
+    setUserCaptcha('')
+  }
 
   if (!showSignup) return null
 
@@ -26,6 +39,13 @@ const Signup = () => {
   const submitLogin = (e) => {
     e.preventDefault()
     setError('')
+
+    if (userCaptcha !== captcha) {
+      setError('Please enter the correct CAPTCHA code')
+      generateCaptcha()
+      return
+    }
+
     // TODO: call API
     console.log('login', loginData)
   }
@@ -99,6 +119,20 @@ const Signup = () => {
 										)}
 									</button>
 								</div>
+							</div>
+							<div>
+								<label className="block text-sm text-gray-600 mb-1">CAPTCHA</label>
+								<div className="flex gap-2">
+									<div className="bg-gray-100 px-4 py-2 rounded-md font-mono text-lg tracking-wider select-none border border-gray-300">
+										{captcha}
+									</div>
+									<button type="button" onClick={generateCaptcha} className="text-gray-500 hover:text-gray-700" aria-label="Refresh CAPTCHA">
+										<svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+										</svg>
+									</button>
+								</div>
+								<input type="text" value={userCaptcha} onChange={(e) => setUserCaptcha(e.target.value)} placeholder="Enter CAPTCHA code" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400 mt-2" />
 							</div>
 							{error && <div className="text-sm text-red-600">{error}</div>}
 							<button type="submit" className="w-full py-2 rounded-md bg-[#2F6A9E] text-white font-semibold">Login</button>
