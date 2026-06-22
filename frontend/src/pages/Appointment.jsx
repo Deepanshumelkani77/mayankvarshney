@@ -58,6 +58,7 @@ const Appointment = () => {
   const [hoveredSubHeading, setHoveredSubHeading] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [timeMenuOpen, setTimeMenuOpen] = useState(false)
+  const [countryCode, setCountryCode] = useState('+91')
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -70,6 +71,19 @@ const Appointment = () => {
     '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
     '12:00 PM', '12:30 PM', '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM',
     '04:00 PM', '04:30 PM', '05:00 PM', '05:30 PM'
+  ]
+
+  const countryCodes = [
+    { code: '+91', country: 'India' },
+    { code: '+1', country: 'USA' },
+    { code: '+44', country: 'UK' },
+    { code: '+61', country: 'Australia' },
+    { code: '+971', country: 'UAE' },
+    { code: '+65', country: 'Singapore' },
+    { code: '+81', country: 'Japan' },
+    { code: '+86', country: 'China' },
+    { code: '+49', country: 'Germany' },
+    { code: '+33', country: 'France' }
   ]
 
   const getAvailableTimeSlots = () => {
@@ -694,17 +708,38 @@ const Appointment = () => {
                         </svg>
                         Phone *
                       </label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleFormChange}
-                        disabled={(selectedTimes.length === 0 && !requestCustomTime)}
-                        className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
-                          (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
-                        }`}
-                        placeholder="Phone"
-                      />
+                      <div className="relative">
+                        <select
+                          value={countryCode}
+                          onChange={(e) => setCountryCode(e.target.value)}
+                          disabled={(selectedTimes.length === 0 && !requestCustomTime)}
+                          className={`absolute left-0 top-0 h-10 px-3  border border-gray-300 bg-gray-50 focus:bg-white rounded-l-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base z-10 appearance-none cursor-pointer ${
+                            (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
+                          }`}
+                          style={{ width: '70px' }}
+                        >
+                          {countryCodes.map((country) => (
+                            <option key={country.code} value={country.code}>
+                              {country.code}
+                            </option>
+                          ))}
+                        </select>
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={(e) => {
+                            const value = e.target.value.replace(/[^0-9]/g, '')
+                            setFormData({ ...formData, phone: value })
+                          }}
+                          disabled={(selectedTimes.length === 0 && !requestCustomTime)}
+                          className={`w-full h-10 pl-30 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
+                            (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
+                          }`}
+                          placeholder="Phone number"
+                          maxLength={15}
+                        />
+                      </div>
                     </div>
                   </div>
 
