@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { AppContext } from '../context/AppContext'
 
 const mainItems = [
   { id: 'Accounting', label: 'Accounting', desc: 'Bookkeeping, financial statements, payroll and reconciliations.', groups: [
@@ -67,6 +68,14 @@ const Appointment = () => {
     notes: ''
   })
 
+  const { openSignup } = useContext(AppContext)
+
+  const checkAuth = () => {
+    const token = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
+    return !!(token && user)
+  }
+
   const timeSlots = [
     '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
     '12:00 PM', '12:30 PM', '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM',
@@ -74,16 +83,16 @@ const Appointment = () => {
   ]
 
   const countryCodes = [
-    { code: '+91', country: 'India' },
-    { code: '+1', country: 'USA' },
-    { code: '+44', country: 'UK' },
-    { code: '+61', country: 'Australia' },
-    { code: '+971', country: 'UAE' },
-    { code: '+65', country: 'Singapore' },
-    { code: '+81', country: 'Japan' },
-    { code: '+86', country: 'China' },
-    { code: '+49', country: 'Germany' },
-    { code: '+33', country: 'France' }
+    { code: '+91', country: 'India', flag: '🇮🇳' },
+    { code: '+1', country: 'USA', flag: '🇺🇸' },
+    { code: '+44', country: 'UK', flag: '🇬🇧' },
+    { code: '+61', country: 'Australia', flag: '🇦🇺' },
+    { code: '+971', country: 'UAE', flag: '🇦🇪' },
+    { code: '+65', country: 'Singapore', flag: '🇸🇬' },
+    { code: '+81', country: 'Japan', flag: '🇯🇵' },
+    { code: '+86', country: 'China', flag: '🇨🇳' },
+    { code: '+49', country: 'Germany', flag: '🇩🇪' },
+    { code: '+33', country: 'France', flag: '🇫🇷' }
   ]
 
   const getAvailableTimeSlots = () => {
@@ -120,6 +129,13 @@ const Appointment = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
+    
+    // Check if user is authenticated
+    if (!checkAuth()) {
+      openSignup('login')
+      return
+    }
+
     console.log('Proceeding to payment for appointment:', {
       category: selectedCategory,
       subHeading: selectedSubHeading,
@@ -482,7 +498,7 @@ const Appointment = () => {
                         <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                         </svg>
-                        Services 
+                        Services *
                       </label>
 
                       <div className="relative">
@@ -783,21 +799,22 @@ const Appointment = () => {
                         Phone *
                       </label>
                       <div className="relative">
-                        <select
-                          value={countryCode}
-                          onChange={(e) => setCountryCode(e.target.value)}
-                          disabled={(selectedTimes.length === 0 && !requestCustomTime)}
-                          className={`absolute left-0 top-0 h-10 px-3  border border-gray-300 bg-gray-50 focus:bg-white rounded-l-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base z-10 appearance-none cursor-pointer ${
-                            (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
-                          }`}
-                          style={{ width: '70px' }}
-                        >
-                          {countryCodes.map((country) => (
-                            <option key={country.code} value={country.code}>
-                              {country.code}
-                            </option>
-                          ))}
-                        </select>
+                        <div className="absolute left-0 top-0 h-10 flex items-center px-3 border border-gray-300 bg-gray-50 rounded-l-lg z-10" style={{ width: '85px' }}>
+                          <span className="text-lg">{countryCodes.find(c => c.code === countryCode)?.flag}</span>
+                          <select
+                            value={countryCode}
+                            onChange={(e) => setCountryCode(e.target.value)}
+                            disabled={(selectedTimes.length === 0 && !requestCustomTime)}
+                            className="ml-2 bg-transparent border-none outline-none cursor-pointer text-sm text-gray-700"
+                            style={{ width: '45px' }}
+                          >
+                            {countryCodes.map((country) => (
+                              <option key={country.code} value={country.code}>
+                                {country.code}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                         <input
                           type="tel"
                           name="phone"
@@ -807,7 +824,7 @@ const Appointment = () => {
                             setFormData({ ...formData, phone: value })
                           }}
                           disabled={(selectedTimes.length === 0 && !requestCustomTime)}
-                          className={`w-full h-10 pl-30 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
+                          className={`w-full h-10 pl-28 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
                             (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
                           }`}
                           placeholder="Phone number"
@@ -848,8 +865,15 @@ const Appointment = () => {
                     </button>
                     <button
                       type="button"
-                     
-                      className="flex-1 px-6 py-4 bg-[#009966] border-2 border-[#009966] text-white rounded-xl font-semibold hover:bg-gray-50 transition-all shadow-md text-base flex items-center justify-center gap-2"
+                      onClick={() => {
+                        if (!checkAuth()) {
+                          openSignup('login')
+                          return
+                        }
+                        console.log('Save appointment details')
+                        alert('Appointment details saved. Please complete payment to confirm.')
+                      }}
+                      className="flex-1 px-6 py-4 bg-[#009966] border-2 border-[#009966] text-white rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-md text-base flex items-center justify-center gap-2"
                     >
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
