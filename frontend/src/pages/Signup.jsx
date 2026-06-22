@@ -186,7 +186,7 @@ const Signup = () => {
 							</div>
 							<div>
 								
-								<input name="phone" value={signupData.phone} onChange={handleSignupChange} placeholder="Phone number (optional)" className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
+								<input name="phone" value={signupData.phone} onChange={handleSignupChange} placeholder="Phone number " className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
 							</div>
 							<div>
 								

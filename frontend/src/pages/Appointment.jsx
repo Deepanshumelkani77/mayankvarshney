@@ -53,6 +53,7 @@ const Appointment = () => {
   const [selectedTimes, setSelectedTimes] = useState([])
   const [requestCustomTime, setRequestCustomTime] = useState(false)
   const [customTimeRequest, setCustomTimeRequest] = useState('')
+  const [notSureAboutService, setNotSureAboutService] = useState(false)
   const [hoveredCategory, setHoveredCategory] = useState(null)
   const [hoveredSubHeading, setHoveredSubHeading] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -70,6 +71,38 @@ const Appointment = () => {
     '12:00 PM', '12:30 PM', '02:00 PM', '02:30 PM', '03:00 PM', '03:30 PM',
     '04:00 PM', '04:30 PM', '05:00 PM', '05:30 PM'
   ]
+
+  const getAvailableTimeSlots = () => {
+    if (!selectedDate) return timeSlots
+
+    const now = new Date()
+    const selectedDateObj = new Date(selectedDate)
+
+    // If selected date is in the future, show all time slots
+    if (selectedDateObj > now) {
+      return timeSlots
+    }
+
+    // If selected date is today, filter out past time slots
+    const availableSlots = timeSlots.filter(time => {
+      const [timeStr, period] = time.split(' ')
+      const [hours, minutes] = timeStr.split(':').map(Number)
+
+      let hours24 = hours
+      if (period === 'PM' && hours !== 12) {
+        hours24 += 12
+      } else if (period === 'AM' && hours === 12) {
+        hours24 = 0
+      }
+
+      const slotTime = new Date()
+      slotTime.setHours(hours24, minutes, 0, 0)
+
+      return slotTime > now
+    })
+
+    return availableSlots
+  }
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
@@ -165,7 +198,7 @@ const Appointment = () => {
       if (!selectedCategory.includes(category)) {
         setSelectedCategory([...selectedCategory, category])
       }
-      if (!selectedSubHeading.includes(subHeading)) {
+      if (subHeading && !selectedSubHeading.includes(subHeading)) {
         setSelectedSubHeading([...selectedSubHeading, subHeading])
       }
     } else {
@@ -175,25 +208,27 @@ const Appointment = () => {
       const remainingItems = selectedItems.filter(i => i !== item)
       const categoryItems = mainItems.find(c => c.id === category)
       if (categoryItems) {
-        const hasItemsFromCategory = categoryItems.groups.some(g =>
+        const hasItemsFromCategory = categoryItems.groups?.some(g =>
           g.items?.some(i => remainingItems.includes(i)) ||
           g.subgroups?.some(s => s.items?.some(i => remainingItems.includes(i)))
-        )
+        ) || categoryItems.options?.some(i => remainingItems.includes(i))
         if (!hasItemsFromCategory) {
           setSelectedCategory(selectedCategory.filter(c => c !== category))
         }
       }
       // Remove subheading if no items from this subheading remain
-      const hasItemsFromSubheading = mainItems.some(c =>
-        c.groups?.some(g =>
-          (g.title === subHeading && g.items?.some(i => remainingItems.includes(i))) ||
-          g.subgroups?.some(s =>
-            (s.title === subHeading && s.items?.some(i => remainingItems.includes(i)))
+      if (subHeading) {
+        const hasItemsFromSubheading = mainItems.some(c =>
+          c.groups?.some(g =>
+            (g.title === subHeading && g.items?.some(i => remainingItems.includes(i))) ||
+            g.subgroups?.some(s =>
+              (s.title === subHeading && s.items?.some(i => remainingItems.includes(i)))
+            )
           )
         )
-      )
-      if (!hasItemsFromSubheading) {
-        setSelectedSubHeading(selectedSubHeading.filter(s => s !== subHeading))
+        if (!hasItemsFromSubheading) {
+          setSelectedSubHeading(selectedSubHeading.filter(s => s !== subHeading))
+        }
       }
     }
     setMenuOpen(false)
@@ -351,7 +386,7 @@ const Appointment = () => {
                         <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                         </svg>
-                        Services *
+                        Services
                       </label>
 
                       <div className="relative">
@@ -395,18 +430,41 @@ const Appointment = () => {
                               {hoveredCategory && (
                                 <div className="w-1/3 border-r border-gray-200">
                                   <div className="p-2">
-                                    {getSubHeadings(hoveredCategory).map((subHeading, index) => (
-                                      <div
-                                        key={index}
-                                        onMouseEnter={() => setHoveredSubHeading(subHeading)}
-                                        onClick={() => setHoveredSubHeading(subHeading)}
-                                        className={`px-4 py-3 rounded-lg cursor-pointer transition-colors ${
-                                          hoveredSubHeading === subHeading ? 'bg-[#2F6A9E] text-white' : 'hover:bg-gray-100 text-gray-800'
-                                        }`}
-                                      >
-                                        <p className="font-medium text-sm">{subHeading}</p>
-                                      </div>
-                                    ))}
+                                    {getCategoryInfo(hoveredCategory).options ? (
+                                      // Show options directly if category has options
+                                      getCategoryInfo(hoveredCategory).options.map((option, index) => (
+                                        <div
+                                          key={index}
+                                          onClick={() => handleSelectItem(option, null, hoveredCategory)}
+                                          className={`px-4 py-3 rounded-lg cursor-pointer transition-colors flex items-center justify-between ${
+                                            selectedItems.includes(option)
+                                              ? 'bg-[#2F6A9E] text-white'
+                                              : 'hover:bg-[#2F6A9E] hover:text-white text-gray-800'
+                                          }`}
+                                        >
+                                          <p className="font-medium text-sm">{option}</p>
+                                          {selectedItems.includes(option) && (
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                            </svg>
+                                          )}
+                                        </div>
+                                      ))
+                                    ) : (
+                                      // Show sub-headings if category has groups
+                                      getSubHeadings(hoveredCategory).map((subHeading, index) => (
+                                        <div
+                                          key={index}
+                                          onMouseEnter={() => setHoveredSubHeading(subHeading)}
+                                          onClick={() => setHoveredSubHeading(subHeading)}
+                                          className={`px-4 py-3 rounded-lg cursor-pointer transition-colors ${
+                                            hoveredSubHeading === subHeading ? 'bg-[#2F6A9E] text-white' : 'hover:bg-gray-100 text-gray-800'
+                                          }`}
+                                        >
+                                          <p className="font-medium text-sm">{subHeading}</p>
+                                        </div>
+                                      ))
+                                    )}
                                   </div>
                                 </div>
                               )}
@@ -438,6 +496,17 @@ const Appointment = () => {
                             </div>
                           </div>
                         )}
+                      </div>
+                      <div className="mt-2">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={notSureAboutService}
+                            onChange={(e) => setNotSureAboutService(e.target.checked)}
+                            className="w-4 h-4 text-[#2F6A9E] rounded focus:ring-2 focus:ring-[#2F6A9E] focus:ring-offset-0"
+                          />
+                          <span className="text-sm text-gray-600">I am not sure about the Service</span>
+                        </label>
                       </div>
                     </div>
 
@@ -489,7 +558,7 @@ const Appointment = () => {
                           <div className="absolute z-50 mt-2 w-full bg-white rounded-xl shadow-2xl border border-gray-200 p-3">
                             <p className="text-xs text-gray-500 mb-2">Click to toggle, Shift+Click for range selection</p>
                             <div className="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto">
-                              {timeSlots.map((time) => (
+                              {getAvailableTimeSlots().map((time) => (
                                 <button
                                   key={time}
                                   type="button"
