@@ -5,7 +5,7 @@ import { AppContext } from '../context/AppContext'
 const Signup = () => {
   const { showSignup, signupMode, closeSignup, setSignupMode } = useContext(AppContext)
   const [loginData, setLoginData] = useState({ email: '', password: '' })
-	const [signupData, setSignupData] = useState({ fullName: '', email: '', phone: '', password: '' })
+	const [signupData, setSignupData] = useState({ firstName: '', middleName: '', lastName: '', email: '', phone: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [captcha, setCaptcha] = useState('')
@@ -46,6 +46,15 @@ const Signup = () => {
       return
     }
 
+    // Email or phone validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const phoneRegex = /^\+?[0-9]+$/
+
+    if (!emailRegex.test(loginData.email) && !phoneRegex.test(loginData.email)) {
+      setError('Please enter a valid email address or phone number')
+      return
+    }
+
     // TODO: call API
     console.log('login', loginData)
   }
@@ -60,6 +69,21 @@ const Signup = () => {
   const submitSignup = (e) => {
     e.preventDefault()
     setError('')
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(signupData.email)) {
+      setError('Please enter a valid email address with @ and domain')
+      return
+    }
+
+    // Phone validation - numeric and + sign only
+    const phoneRegex = /^\+?[0-9]+$/
+    if (!phoneRegex.test(signupData.phone)) {
+      setError('Please enter a valid phone number (numeric and + sign only)')
+      return
+    }
+
     // TODO: call API
     console.log('signup', signupData)
   }
@@ -176,17 +200,24 @@ const Signup = () => {
 						</form>
 					) : (
 						<form onSubmit={submitSignup} className="space-y-4">
-							<div>
-								
-								<input name="fullName" value={signupData.fullName} onChange={handleSignupChange} placeholder="Full name" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
+							<div className="grid grid-cols-3 gap-2">
+								<div>
+									<input name="firstName" value={signupData.firstName} onChange={handleSignupChange} placeholder="First name *" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400 text-sm" />
+								</div>
+								<div>
+									<input name="middleName" value={signupData.middleName} onChange={handleSignupChange} placeholder="Middle name" className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400 text-sm" />
+								</div>
+								<div>
+									<input name="lastName" value={signupData.lastName} onChange={handleSignupChange} placeholder="Last name *" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400 text-sm" />
+								</div>
 							</div>
 							<div>
-							
-								<input name="email" type="email" value={signupData.email} onChange={handleSignupChange} placeholder="Email address" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
+
+								<input name="email" type="email" value={signupData.email} onChange={handleSignupChange} placeholder="Email address *" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
 							</div>
 							<div>
-								
-								<input name="phone" value={signupData.phone} onChange={handleSignupChange} placeholder="Phone number " className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
+
+								<input name="phone" value={signupData.phone} onChange={handleSignupChange} placeholder="Phone number *" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
 							</div>
 							<div>
 								

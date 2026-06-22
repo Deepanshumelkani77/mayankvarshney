@@ -62,6 +62,7 @@ const Appointment = () => {
   const [countryCode, setCountryCode] = useState('+91')
   const [formData, setFormData] = useState({
     firstName: '',
+    middleName: '',
     lastName: '',
     email: '',
     phone: '',
@@ -738,8 +739,8 @@ const Appointment = () => {
                     </div>
                   </div>
 
-                  {/* Row 2: First Name, Last Name, Email, Phone */}
-                  <div className="grid md:grid-cols-4 gap-4">
+                  {/* Row 2: First Name, Middle Name, Last Name, Email, Phone */}
+                  <div className="grid md:grid-cols-5 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
                         <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -757,6 +758,26 @@ const Appointment = () => {
                           (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
                         }`}
                         placeholder="First name"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        Middle Name
+                      </label>
+                      <input
+                        type="text"
+                        name="middleName"
+                        value={formData.middleName}
+                        onChange={handleFormChange}
+                        disabled={(selectedTimes.length === 0 && !requestCustomTime)}
+                        className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
+                          (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
+                        }`}
+                        placeholder="Middle name"
                       />
                     </div>
 
