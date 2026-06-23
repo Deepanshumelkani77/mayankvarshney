@@ -14,6 +14,13 @@ const Signup = () => {
   const [forgotEmail, setForgotEmail] = useState('')
   const [forgotError, setForgotError] = useState('')
   const [forgotSuccess, setForgotSuccess] = useState(false)
+  const [emailOtpSent, setEmailOtpSent] = useState(false)
+  const [emailOtp, setEmailOtp] = useState('')
+  const [emailOtpVerified, setEmailOtpVerified] = useState(false)
+  const [mobileOtpSent, setMobileOtpSent] = useState(false)
+  const [mobileOtp, setMobileOtp] = useState('')
+  const [mobileOtpVerified, setMobileOtpVerified] = useState(false)
+  const [otpError, setOtpError] = useState('')
 
   useEffect(() => {
     if (!showSignup) return
@@ -107,6 +114,52 @@ const Signup = () => {
     console.log('Forgot password for:', forgotEmail)
     setForgotSuccess(true)
     setForgotEmail('')
+  }
+
+  const sendEmailOtp = () => {
+    setOtpError('')
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(signupData.email)) {
+      setOtpError('Please enter a valid email address first')
+      return
+    }
+    // TODO: call API to send OTP to email
+    console.log('Sending OTP to email:', signupData.email)
+    setEmailOtpSent(true)
+  }
+
+  const verifyEmailOtp = () => {
+    setOtpError('')
+    if (emailOtp.length !== 6) {
+      setOtpError('Please enter a valid 6-digit OTP')
+      return
+    }
+    // TODO: call API to verify OTP
+    console.log('Verifying email OTP:', emailOtp)
+    setEmailOtpVerified(true)
+  }
+
+  const sendMobileOtp = () => {
+    setOtpError('')
+    const phoneRegex = /^\+?[0-9]+$/
+    if (!phoneRegex.test(signupData.phone)) {
+      setOtpError('Please enter a valid phone number first')
+      return
+    }
+    // TODO: call API to send OTP to mobile
+    console.log('Sending OTP to mobile:', signupData.phone)
+    setMobileOtpSent(true)
+  }
+
+  const verifyMobileOtp = () => {
+    setOtpError('')
+    if (mobileOtp.length !== 6) {
+      setOtpError('Please enter a valid 6-digit OTP')
+      return
+    }
+    // TODO: call API to verify OTP
+    console.log('Verifying mobile OTP:', mobileOtp)
+    setMobileOtpVerified(true)
   }
 
 	return (
@@ -234,12 +287,56 @@ const Signup = () => {
 								</div>
 							</div>
 							<div>
-
-								<input name="email" type="email" value={signupData.email} onChange={handleSignupChange} placeholder="Email address *" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
+								<div className="flex gap-2">
+									<input name="email" type="email" value={signupData.email} onChange={handleSignupChange} placeholder="Email address *" required className="flex-1 px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
+									{!emailOtpVerified && (
+										<button type="button" onClick={sendEmailOtp} disabled={emailOtpSent} className="px-3 py-2 bg-[#2F6A9E] text-white text-sm rounded-md hover:bg-[#1a4a75] disabled:bg-gray-400 disabled:cursor-not-allowed whitespace-nowrap">
+											{emailOtpSent ? 'OTP Sent' : 'Send OTP'}
+										</button>
+									)}
+									{emailOtpVerified && (
+										<div className="px-3 py-2 bg-green-100 text-green-700 text-sm rounded-md flex items-center gap-1 whitespace-nowrap">
+											<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+											</svg>
+											Verified
+										</div>
+									)}
+								</div>
+								{emailOtpSent && !emailOtpVerified && (
+									<div className="mt-2 flex gap-2">
+										<input type="text" value={emailOtp} onChange={(e) => setEmailOtp(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))} placeholder="Enter 6-digit OTP" maxLength={6} className="flex-1 px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400 text-sm" />
+										<button type="button" onClick={verifyEmailOtp} className="px-3 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 whitespace-nowrap">
+											Verify
+										</button>
+									</div>
+								)}
 							</div>
 							<div>
-
-								<input name="phone" value={signupData.phone} onChange={handleSignupChange} placeholder="Phone number *" required className="w-full px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
+								<div className="flex gap-2">
+									<input name="phone" value={signupData.phone} onChange={handleSignupChange} placeholder="Phone number *" required className="flex-1 px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400" />
+									{!mobileOtpVerified && (
+										<button type="button" onClick={sendMobileOtp} disabled={mobileOtpSent} className="px-3 py-2 bg-[#2F6A9E] text-white text-sm rounded-md hover:bg-[#1a4a75] disabled:bg-gray-400 disabled:cursor-not-allowed whitespace-nowrap">
+											{mobileOtpSent ? 'OTP Sent' : 'Send OTP'}
+										</button>
+									)}
+									{mobileOtpVerified && (
+										<div className="px-3 py-2 bg-green-100 text-green-700 text-sm rounded-md flex items-center gap-1 whitespace-nowrap">
+											<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+											</svg>
+											Verified
+										</div>
+									)}
+								</div>
+								{mobileOtpSent && !mobileOtpVerified && (
+									<div className="mt-2 flex gap-2">
+										<input type="text" value={mobileOtp} onChange={(e) => setMobileOtp(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))} placeholder="Enter 6-digit OTP" maxLength={6} className="flex-1 px-3 py-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-[#2F6A9E] outline-none placeholder-gray-400 text-sm" />
+										<button type="button" onClick={verifyMobileOtp} className="px-3 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 whitespace-nowrap">
+											Verify
+										</button>
+									</div>
+								)}
 							</div>
 							<div>
 								

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { AppContext } from '../context/AppContext'
 import { assets } from "../assets/assets";
+import { useTranslation } from 'react-i18next';
+import '../i18n';
 
 const mainItems = [
   { id: 'Business Registration', label: 'Business Registration', desc: 'Bookkeeping, financial statements, payroll and reconciliations.', groups: [
@@ -23,9 +25,13 @@ const mainItems = [
 
   
   { id: 'IT/TDS', label: 'IT/TDS', desc: 'GST registration, returns, and compliance.', groups:[
-    {title:'Income Tax',items:['Income Tax Return Filing','Income Tax Return Revision','Drafting of Reply to Notices by IT Deptt.','Client Representation Services','Advance Tax Computation and Challan payment','Self Assessment Tax Computation and Challan payment','New PAN Application','PAN Reissue Application','Tax Planning']},
-    {title:'Income Tax Assessments',items:['Assessment U/S 143','Assessment U/S 143']},
-    {title:'TDS ',items:['TDS on Salary return Filing (24Q)','Correction/Revision in Salary TDS Return  filings (24Q)','TDS other than Salary return Filing (26Q)','Correction/Revision in other than Salary TDS filings (26Q)','TDS on Sale of Property by Resident (26QB)','Correction/Revision on Sale of Property TDS filings by Resident (26QB)','TDS on Rent of Property (26QC)','Correction/Revision on TDS on rent of Property (26QC)','Obtaining Lower rate of TDS on Sale of Property by Non Resident ','Correction/Revision on TDS on Sale of Property by Non Resident ','TAN Application']}
+    {title:'Income Tax Return FIling',items:['ITR 1 ','ITR 2','ITR 3','ITR 4' ,'ITR 5','ITR 6','ITR 7','Tax Planning in advance','Tax Planning during ITR Filing','Self Assessment Tax Computation and Challan payment']},
+    {title:'Income Tax Return Revision/Rectification',items:['Revision/Rectification of ITR 1 ','Revision/Rectification of ITR 2 ','Revision/Rectification of ITR 3 ','Revision/Rectification of ITR 4 ','Revision/Rectification of ITR 5 ','Revision/Rectification of ITR 6 ','Revision/Rectification of ITR 7 '],},
+    {title:'Income Tax Assessments',items:['Online Assessment U/S 143','Offline Assessment U/S 143','Online Assessment U/S 147','Offline Assessment U/S 147','Drafting of Reply to Notices by IT Deptt.','Client Representation Services']},
+    
+    {title:'TDS ',items:['TDS on Salary return Filing (24Q)','Correction/Revision in Salary TDS Return  filings (24Q)','TDS other than Salary return Filing (26Q)','Correction/Revision in other than Salary TDS filings (26Q)','TDS on Sale of Property by Resident (26QB)','Correction/Revision on Sale of Property TDS filings by Resident (26QB)','TDS on Rent of Property (26QC)','Correction/Revision on TDS on rent of Property (26QC)','Obtaining Lower rate of TDS on Sale of Property by Non Resident ','Correction/Revision on TDS on Sale of Property by Non Resident ','TAN Application']},
+    {title:'Appeal Filing',items:['']},
+    {title:'PAN Services',items:['New PAN Application','PAN Reissue Application','PAN Correction Application','Linking of Pan with Aadhaar','PAN Surrender Application']},
   ] },
   { id: 'Compliance', label: 'Compliance', desc: 'Company filings, annual returns and compliance.', groups:[
     {title:'Accounting',items:[{subtittle:'Onsite Accounting',subitem:['Day to Day Onsite Accounting','Weekly Onsite Accounting','Monthly Onsite Accounting','Quarterly Onsite Accounting','Yearly Onsite Accounting','Payroll Services']},{subtittle:"Offsite Accounting",subitem:['Day to Day Offsite Accounting','Weekly Offsite Accounting','Monthly Offsite Accounting','Quarterly Offsite Accounting','Yearly Offsite Accounting','Payroll Services']},{subtittle:'Asset Management',subitem:['Fixed Assets Tagging','Fixed Asset Valuation','Inventory Tagging','Inventory Valuation']},]},
@@ -75,8 +81,10 @@ const mainItems = [
 ]
 
 const Navbar = () => {
+  const { t, i18n } = useTranslation();
   const [showTopBar, setShowTopBar] = useState(true);
   const { openSignup } = useContext(AppContext)
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -232,6 +240,37 @@ const Navbar = () => {
 
           {/* Right Side - Menu Button */}
           <div className="flex items-center gap-3">
+            {/* Language Selector */}
+            <div className="relative">
+              <button
+                onClick={() => setLangDropdownOpen(!langDropdownOpen)}
+                className="flex items-center gap-2 px-3 py-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+                title="Language"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                </svg>
+                <span className="text-sm font-medium">{i18n.language === 'en' ? 'EN' : 'ZH'}</span>
+              </button>
+
+              {langDropdownOpen && (
+                <div className="absolute right-0 top-full mt-2 w-32 bg-white rounded-lg shadow-xl py-2 z-[9999]">
+                  <button
+                    onClick={() => { i18n.changeLanguage('en'); setLangDropdownOpen(false) }}
+                    className={`w-full px-4 py-2 text-left text-sm transition-colors ${i18n.language === 'en' ? 'bg-[#2F6A9E] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                  >
+                    English
+                  </button>
+                  <button
+                    onClick={() => { i18n.changeLanguage('zh'); setLangDropdownOpen(false) }}
+                    className={`w-full px-4 py-2 text-left text-sm transition-colors ${i18n.language === 'zh' ? 'bg-[#2F6A9E] text-white' : 'text-gray-700 hover:bg-gray-100'}`}
+                  >
+                    中文
+                  </button>
+                </div>
+              )}
+            </div>
+
             {/* Profile Icon */}
             <button
               onClick={() => openSignup('login')}

@@ -10,6 +10,7 @@ import Appointment from './pages/Appointment'
 import Career from './pages/Career.jsx'
 import Blog from './pages/Blog.jsx'
 import Review from './pages/Review.jsx'
+import './i18n'
 
 
 const App = () => {

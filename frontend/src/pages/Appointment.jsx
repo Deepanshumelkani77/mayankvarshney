@@ -742,12 +742,7 @@ const Appointment = () => {
                   {/* Row 2: First Name, Middle Name, Last Name, Email, Phone */}
                   <div className="grid md:grid-cols-5 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        First Name *
-                      </label>
+                      
                       <input
                         type="text"
                         name="firstName"
@@ -757,17 +752,12 @@ const Appointment = () => {
                         className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
                           (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
                         }`}
-                        placeholder="First name"
+                        placeholder="First name *"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        Middle Name
-                      </label>
+                     
                       <input
                         type="text"
                         name="middleName"
@@ -777,17 +767,12 @@ const Appointment = () => {
                         className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
                           (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
                         }`}
-                        placeholder="Middle name"
+                        placeholder="Middle name *"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        Last Name *
-                      </label>
+                     
                       <input
                         type="text"
                         name="lastName"
@@ -797,17 +782,12 @@ const Appointment = () => {
                         className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
                           (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
                         }`}
-                        placeholder="Last name"
+                        placeholder="Last name *"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        Email *
-                      </label>
+                      
                       <input
                         type="email"
                         name="email"
@@ -817,17 +797,12 @@ const Appointment = () => {
                         className={`w-full h-10 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
                           (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
                         }`}
-                        placeholder="Email"
+                        placeholder="Email *"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                        </svg>
-                        Phone *
-                      </label>
+                      
                       <div className="relative">
                         <div className="absolute left-0 top-0 h-10 flex items-center px-3 border border-gray-300 bg-gray-50 rounded-l-lg z-10" style={{ width: '85px' }}>
                           <span className="text-lg">{countryCodes.find(c => c.code === countryCode)?.flag}</span>
@@ -836,7 +811,7 @@ const Appointment = () => {
                             onChange={(e) => setCountryCode(e.target.value)}
                             disabled={(selectedTimes.length === 0 && !requestCustomTime)}
                             className="ml-2 bg-transparent border-none outline-none cursor-pointer text-sm text-gray-700"
-                            style={{ width: '45px' }}
+                            style={{ width: '40px' }}
                           >
                             {countryCodes.map((country) => (
                               <option key={country.code} value={country.code}>
@@ -854,10 +829,10 @@ const Appointment = () => {
                             setFormData({ ...formData, phone: value })
                           }}
                           disabled={(selectedTimes.length === 0 && !requestCustomTime)}
-                          className={`w-full h-10 pl-28 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
+                          className={`w-full h-10 pl-21 pr-0 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#2F6A9E] focus:border-transparent outline-none transition text-base ${
                             (selectedTimes.length === 0 && !requestCustomTime) ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-50 focus:bg-white'
                           }`}
-                          placeholder="Phone number"
+                          placeholder="Phone number *"
                           maxLength={15}
                         />
                       </div>

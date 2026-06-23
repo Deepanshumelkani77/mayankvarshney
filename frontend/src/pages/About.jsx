@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { assets } from '../assets/assets'
+import { useTranslation } from 'react-i18next'
 
 const About = () => {
+  const { t } = useTranslation()
   const [mainImageLoaded, setMainImageLoaded] = useState(false)
   const [badgeImageLoaded, setBadgeImageLoaded] = useState(false)
   return (
@@ -9,7 +11,7 @@ const About = () => {
       {/* Hero Section */}
       <div className="bg-[#053131] text-white py-4">
         <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xl text-blue-100 text-center">Learn more about Mayank Varshney & Co.</p>
+          <p className="text-xl text-blue-100 text-center">{t('aboutHero')}</p>
         </div>
       </div>
 
@@ -20,27 +22,27 @@ const About = () => {
             <div>
           
               <p className="text-gray-600 mb-4 leading-relaxed text-justify">
-                Founded with a vision to simplify complex financial and legal processes, Mayank Varshney & Co. has grown into a trusted name in the industry. Our journey began with a simple mission: to provide professional, reliable, and affordable services to businesses of all sizes.
+                {t('aboutPara1')}
               </p>
               <p className="text-gray-600 mb-4 leading-relaxed text-justify">
-                Over the years, we have helped hundreds of clients navigate the complexities of taxation, compliance, and business regulations. Our team of experienced professionals brings together expertise from various domains to offer comprehensive solutions under one roof.
+                {t('aboutPara2')}
               </p>
               <p className="text-gray-600 leading-relaxed text-justify">
-                Today, we continue to uphold our commitment to excellence, integrity, and client satisfaction. We believe in building long-term relationships with our clients by delivering consistent quality and personalized service.
+                {t('aboutPara3')}
               </p>
             </div>
 
             <div className="bg-white rounded-xl shadow-lg p-4">
-              <h3 className="font-semibold text-gray-800 mb-3">Our Mission</h3>
+              <h3 className="font-semibold text-gray-800 mb-3">{t('ourMission')}</h3>
               <p className="text-gray-600 text-sm leading-relaxed text-justify">
-To make financial and legal expertise accessible to everyone, enabling individuals, startups, and businesses to make smarter decisions, stay compliant, and achieve long-term success and growth.
+                {t('missionText')}
               </p>
             </div>
 
             <div className="bg-white rounded-xl shadow-lg p-4">
-              <h3 className="font-semibold text-gray-800 mb-3">Our Vision</h3>
+              <h3 className="font-semibold text-gray-800 mb-3">{t('ourVision')}</h3>
               <p className="text-gray-600 text-sm leading-relaxed text-justify">
-                To be the most trusted and preferred financial and legal services provider in India, known for our expertise, integrity, and commitment to client success.
+                {t('visionText')}
               </p>
             </div>
 
@@ -77,8 +79,8 @@ To make financial and legal expertise accessible to everyone, enabling individua
                     </svg>
                   </div>
                   <div>
-                    <div className="text-xs font-semibold text-gray-800">Trusted</div>
-                    <div className="text-xs text-gray-500">500+ Clients</div>
+                    <div className="text-xs font-semibold text-gray-800">{t('trusted')}</div>
+                    <div className="text-xs text-gray-500">{t('clients')}</div>
                   </div>
                 </div>
               </div>
@@ -101,8 +103,8 @@ To make financial and legal expertise accessible to everyone, enabling individua
                     />
                   </div>
                   <div>
-                    <div className="text-xs font-semibold text-gray-800">Fast</div>
-                    <div className="text-xs text-gray-500">Quick Service</div>
+                    <div className="text-xs font-semibold text-gray-800">{t('fast')}</div>
+                    <div className="text-xs text-gray-500">{t('quickService')}</div>
                   </div>
                 </div>
               </div>
