@@ -1,6 +1,8 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 const Footer = () => {
+  const { t } = useTranslation()
   return (
     <footer className="bg-[#053131] text-white">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -9,7 +11,7 @@ const Footer = () => {
           <div>
             <h3 className="text-2xl lg:text-3xl font-bold mb-4">Mayank Varshney & Co.</h3>
             <p className="text-base text-blue-100 mb-6 leading-relaxed text-justify">
-        Your trusted partner for professional financial, taxation, and legal services worldwide. We help businesses and individuals navigate compliance with confidence and ease.
+        {t('footer.description')}
             </p>
             <div className="flex space-x-4">
               <a href="https://www.facebook.com/mayankvarshneyco" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#2F6A9E] transition-colors" aria-label="Facebook">
@@ -42,31 +44,31 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="">
-            <h4 className="text-xl font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-xl font-semibold mb-4">{t('footer.quickLinks')}</h4>
             <ul className="space-y-3">
-              <li><a href="/" className="text-base text-blue-100 hover:text-white transition-colors">Home</a></li>
-              <li><a href="/about" className="text-base text-blue-100 hover:text-white transition-colors">About Us</a></li>
-              <li><a href="/contact" className="text-base text-blue-100 hover:text-white transition-colors">Contact</a></li>
-              <li><a href="/services" className="text-base text-blue-100 hover:text-white transition-colors">Services</a></li>
-              <li><a href="/blog" className="text-base text-blue-100 hover:text-white transition-colors">Blog</a></li>
+              <li><a href="/" className="text-base text-blue-100 hover:text-white transition-colors">{t('footer.home')}</a></li>
+              <li><a href="/about" className="text-base text-blue-100 hover:text-white transition-colors">{t('footer.aboutUs')}</a></li>
+              <li><a href="/contact" className="text-base text-blue-100 hover:text-white transition-colors">{t('footer.contact')}</a></li>
+              <li><a href="/services" className="text-base text-blue-100 hover:text-white transition-colors">{t('footer.services')}</a></li>
+              <li><a href="/blog" className="text-base text-blue-100 hover:text-white transition-colors">{t('footer.blog')}</a></li>
             </ul>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="text-xl font-semibold mb-4">Our Services</h4>
+            <h4 className="text-xl font-semibold mb-4">{t('footer.ourServices')}</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-base text-blue-100 hover:text-white transition-colors">Accounting</a></li>
-              <li><a href="#" className="text-base text-blue-100 hover:text-white transition-colors">GST Services</a></li>
-              <li><a href="#" className="text-base text-blue-100 hover:text-white transition-colors">Income Tax</a></li>
-              <li><a href="#" className="text-base text-blue-100 hover:text-white transition-colors">MCA Compliance</a></li>
-              <li><a href="#" className="text-base text-blue-100 hover:text-white transition-colors">Legal Drafting</a></li>
+              <li><a href="#" className="text-base text-blue-100 hover:text-white transition-colors">{t('footer.accounting')}</a></li>
+              <li><a href="#" className="text-base text-blue-100 hover:text-white transition-colors">{t('footer.gstServices')}</a></li>
+              <li><a href="#" className="text-base text-blue-100 hover:text-white transition-colors">{t('footer.incomeTax')}</a></li>
+              <li><a href="#" className="text-base text-blue-100 hover:text-white transition-colors">{t('footer.mcaCompliance')}</a></li>
+              <li><a href="#" className="text-base text-blue-100 hover:text-white transition-colors">{t('footer.legalDrafting')}</a></li>
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-xl font-semibold mb-4">Contact Us</h4>
+            <h4 className="text-xl font-semibold mb-4">{t('footer.contactUs')}</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <svg className="w-5 h-5 text-[#2F6A9E] mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,12 +108,12 @@ Uttar Pradesh - 201306
         <div className="border-t border-white/10 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-base text-blue-200">
-              © {new Date().getFullYear()} Mayank Varshney & Co. All rights reserved.
+              © {new Date().getFullYear()} Mayank Varshney & Co. {t('footer.allRightsReserved')}
             </p>
             <div className="flex gap-6 text-base">
-              <a href="#" className="text-blue-200 hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="text-blue-200 hover:text-white transition-colors">Terms of Service</a>
-              <a href="#" className="text-blue-200 hover:text-white transition-colors">Refund Policy</a>
+              <a href="#" className="text-blue-200 hover:text-white transition-colors">{t('footer.privacyPolicy')}</a>
+              <a href="#" className="text-blue-200 hover:text-white transition-colors">{t('footer.termsOfService')}</a>
+              <a href="#" className="text-blue-200 hover:text-white transition-colors">{t('footer.refundPolicy')}</a>
             </div>
           </div>
         </div>

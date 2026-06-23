@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const sampleDueDates = {
   GST: [
@@ -34,6 +35,7 @@ const services = [
 ]
 
 const Header = () => {
+  const { t } = useTranslation()
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState('GST')
   const scrollContainerRef = useRef(null)
@@ -57,21 +59,21 @@ const Header = () => {
   return (
     <header className="relative w-full bg-[#053131] text-white py-8">
       <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-center text-2xl sm:text-5xl lg:text-3xl font-bold mb-8">Mayank Varshney & Co. — Financial & Legal Services </h1>
+        <h1 className="text-center text-2xl sm:text-5xl lg:text-3xl font-bold mb-8">{t('header.title')}</h1>
 
         {/* Search bar centered */}
         <div className="flex justify-center mb-8">
           <div className="w-full max-w-3xl">
-            <label className="sr-only">Search services</label>
+            <label className="sr-only">{t('header.searchLabel')}</label>
             <div className="flex items-center bg-white rounded-xl shadow-sm overflow-hidden">
               <input
                 value={query}
                 onChange={e => setQuery(e.target.value)}
                 className="flex-1 px-8 py-4 text-xl text-gray-800 focus:outline-none"
-                placeholder="Search services, e.g., GST, Accounting..."
+                placeholder={t('header.searchPlaceholder')}
                 aria-label="Search services"
               />
-              <button className="bg-emerald-600 text-white px-8 py-4 text-xl font-semibold hover:bg-emerald-700">Search</button>
+              <button className="bg-emerald-600 text-white px-8 py-4 text-xl font-semibold hover:bg-emerald-700">{t('header.searchButton')}</button>
             </div>
           </div>
         </div>
@@ -124,12 +126,12 @@ const Header = () => {
           {/* Due dates content */}
           <div className="px-6 py-3" >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-2xl font-semibold text-[#053131]">Upcoming Due Dates — {selected}</h3>
-              <div className="text-lg text-gray-500">{dueDates.length} items</div>
+              <h3 className="text-2xl font-semibold text-[#053131]">{t('header.upcomingDueDates')} — {selected}</h3>
+              <div className="text-lg text-gray-500">{t('header.items', { count: dueDates.length })}</div>
             </div>
 
             {dueDates.length === 0 ? (
-              <div className="text-lg text-gray-600">No upcoming due dates for {selected}.</div>
+              <div className="text-lg text-gray-600">{t('header.noDueDates', { service: selected })}</div>
             ) : (
               <>
                 <style>{`
@@ -152,7 +154,7 @@ const Header = () => {
                       <div key={idx} className="marquee-item flex items-center gap-4">
                         <div>
                           <div className="text-lg font-medium text-gray-800">{d.title}</div>
-                          <div className="text-base text-gray-500">Details available on selection</div>
+                          <div className="text-base text-gray-500">{t('header.detailsAvailable')}</div>
                         </div>
                         <div className="text-lg font-medium text-emerald-600">{d.date}</div>
                       </div>

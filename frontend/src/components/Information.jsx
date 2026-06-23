@@ -1,25 +1,27 @@
 import React, { useState } from 'react'
 import { assets } from '../assets/assets'
+import { useTranslation } from 'react-i18next'
  
 const Information = () => {
+  const { t } = useTranslation()
   const [activeImage, setActiveImage] = useState(0)
   const [imageLoaded, setImageLoaded] = useState(false)
  
   const images = [
     {
       id: 1,
-      title: 'Professional Team',
-      desc: 'Expert professionals dedicated to your success'
+      title: t('information.image1Title'),
+      desc: t('information.image1Desc')
     },
     {
       id: 2,
-      title: 'Modern Office',
-      desc: 'State-of-the-art facilities for better service'
+      title: t('information.image2Title'),
+      desc: t('information.image2Desc')
     },
     {
       id: 3,
-      title: 'Client Meeting',
-      desc: 'Personalized consultations for your needs'
+      title: t('information.image3Title'),
+      desc: t('information.image3Desc')
     }
   ]
  
@@ -60,7 +62,7 @@ const Information = () => {
                     <svg className="w-12 h-12 mx-auto text-white/80 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
-                    <p className="text-white/80 text-xs">Team</p>
+                    <p className="text-white/80 text-xs">{t('information.team')}</p>
                   </div>
                 </div>
               </div>
@@ -74,7 +76,7 @@ const Information = () => {
                     <svg className="w-10 h-10 mx-auto text-[#2F6A9E] mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <p className="text-gray-600 text-xs">Quality</p>
+                    <p className="text-gray-600 text-xs">{t('information.quality')}</p>
                   </div>
                 </div>
               </div>
@@ -87,12 +89,12 @@ const Information = () => {
           {/* Right Side - Information */}
           <div className="space-y-8">
             <div>
-              <span className="text-[#2F6A9E] font-semibold text-sm uppercase tracking-wider">About Us</span>
+              <span className="text-[#2F6A9E] font-semibold text-sm uppercase tracking-wider">{t('information.aboutUs')}</span>
               <h2 className="text-4xl font-bold text-gray-800 mt-2 mb-4">
-                Your Trusted Partner for Professional Services
+                {t('information.title')}
               </h2>
               <p className="text-gray-600 leading-relaxed">
-                Mayank Varshney & Co. is dedicated to providing comprehensive accounting, taxation, and legal solutions to businesses and individuals across India. With years of experience and a team of expert professionals, we ensure compliance while helping you achieve your financial goals.
+                {t('information.description')}
               </p>
             </div>
  
@@ -105,8 +107,8 @@ const Information = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-800 mb-1">Expert Guidance</h3>
-                  <p className="text-gray-600 text-sm">Professional support from certified financial and legal experts</p>
+                  <h3 className="font-semibold text-gray-800 mb-1">{t('information.feature1Title')}</h3>
+                  <p className="text-gray-600 text-sm">{t('information.feature1Desc')}</p>
                 </div>
               </div>
  
@@ -117,8 +119,8 @@ const Information = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-800 mb-1">Secure Platform</h3>
-                  <p className="text-gray-600 text-sm">Bank-level security to protect your sensitive data</p>
+                  <h3 className="font-semibold text-gray-800 mb-1">{t('information.feature2Title')}</h3>
+                  <p className="text-gray-600 text-sm">{t('information.feature2Desc')}</p>
                 </div>
               </div>
  
@@ -129,8 +131,8 @@ const Information = () => {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-800 mb-1">Quick Setup</h3>
-                  <p className="text-gray-600 text-sm">Get started in minutes with our streamlined onboarding</p>
+                  <h3 className="font-semibold text-gray-800 mb-1">{t('information.feature3Title')}</h3>
+                  <p className="text-gray-600 text-sm">{t('information.feature3Desc')}</p>
                 </div>
               </div>
             </div>
@@ -138,10 +140,10 @@ const Information = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button className="bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white px-8 py-3 rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all shadow-lg hover:shadow-xl">
-                Learn More
+                {t('information.learnMore')}
               </button>
               <button className="border-2 border-[#2F6A9E] text-[#2F6A9E] px-8 py-3 rounded-xl font-semibold hover:bg-[#2F6A9E] hover:text-white transition-all">
-                Our Services
+                {t('information.ourServices')}
               </button>
             </div>
           </div>
