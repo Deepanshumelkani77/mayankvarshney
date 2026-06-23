@@ -515,26 +515,75 @@ const Navbar = () => {
                           })()}
                         </div>
 
-                        {/* Column 3 - Sub-items */}
-                        <div className="bg-white rounded-lg p-3 border border-gray-200 overflow-hidden">
-                          {hoveredSubItem && (() => {
-                            return (
-                              <div className="h-full overflow-y-auto">
-                                <h5 className="font-medium text-[#2F6A9E] mb-2 text-sm">{hoveredSubItem.subtittle}</h5>
-                                <ul className="space-y-1">
-                                  {hoveredSubItem.subitem?.map((sub, idx) => (
-                                    <li key={sub} className="px-2 py-1.5 rounded hover:bg-gray-100 text-sm truncate">{sub}</li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )
-                          })()}
-                        </div>
+                        {/* Column 3 - Sub-items (hidden for Business Registration and IT/TDS) */}
+                        {(() => {
+                          const hideSubItemsColumn = ['Business Registration', 'IT/TDS'].includes(info.id)
+                          if (hideSubItemsColumn) return null
+                          
+                          return (
+                            <div className="bg-white rounded-lg p-3 border border-gray-200 overflow-hidden">
+                              {hoveredSubItem && (() => {
+                                return (
+                                  <div className="h-full overflow-y-auto">
+                                    <h5 className="font-medium text-[#2F6A9E] mb-2 text-sm">{hoveredSubItem.subtittle}</h5>
+                                    <ul className="space-y-1">
+                                      {hoveredSubItem.subitem?.map((sub, idx) => (
+                                        <li key={sub} className="px-2 py-1.5 rounded hover:bg-gray-100 text-sm truncate">{sub}</li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )
+                              })()}
+                            </div>
+                          )
+                        })()}
 
-                        {/* Column 4 - Empty for future content */}
-                        <div className="bg-white rounded-lg p-3 border border-gray-200">
-                        
-                        </div>
+                        {/* Column 4 - Ads and Additional Sections (dynamic column span) */}
+                        {(() => {
+                          // Check if dropdown is Compliance, Legal Services, or Legal Drafting
+                          const isSingleColumnDropdown = ['Compliance', 'Legal Services', 'Legal Drafting'].includes(info.id)
+                          
+                          const colSpan = isSingleColumnDropdown ? 'col-span-1' : 'col-span-2'
+                          
+                          return (
+                            <div className={`${colSpan} bg-white rounded-lg p-3 border border-gray-200 overflow-hidden`}>
+                              <div className="h-full flex flex-col">
+                            {/* Entity Selection */}
+                            <div className="mb-3 p-2 bg-gradient-to-r from-[#2F6A9E] to-[#1a4a6e] rounded-lg">
+                              <h6 className="text-white font-semibold text-sm mb-1">Entity Selection</h6>
+                              <p className="text-blue-100 text-xs">Choose your business entity type</p>
+                            </div>
+
+                            {/* Ads Section */}
+                            <div className="flex-1">
+                              <div className="space-y-2">
+                                <div className="bg-gray-100 rounded-lg p-2 border border-gray-200">
+                                  <div className="aspect-video bg-gradient-to-br from-blue-100 to-blue-200 rounded flex items-center justify-center mb-1">
+                                    <span className="text-blue-600 text-xs font-medium">Ad Space 1</span>
+                                  </div>
+                                  <p className="text-xs text-gray-600 text-center">Promotional Content</p>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Need Help Section */}
+                            <div className="mt-3 p-2 bg-yellow-50 rounded-lg border border-yellow-200">
+                              <h6 className="text-yellow-800 font-semibold text-sm mb-1">Need Help?</h6>
+                              <p className="text-yellow-700 text-xs">Contact our support team</p>
+                            </div>
+
+                            {/* Contact Us Section */}
+                            <div className="mt-2 p-2 bg-emerald-50 rounded-lg border border-emerald-200">
+                              <h6 className="text-emerald-800 font-semibold text-sm mb-1">Contact Us</h6>
+                              <div className="text-xs text-emerald-700 space-y-1">
+                                <p>📞 +91 9999117576</p>
+                                <p>📧 info@mayankvarshney.com</p>
+                              </div>
+                            </div>
+                              </div>
+                            </div>
+                          )
+                        })()}
                       </div>
                     </div>
                   )
