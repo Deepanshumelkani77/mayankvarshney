@@ -269,8 +269,8 @@ const ServiceLanding = () => {
 
                   {/* Card header */}
                   <div
-                    className="relative px-6 pt-5 pb-5 overflow-hidden"
-                    style={{ background: 'linear-gradient(135deg, #053131 0%, #245988 100%)' }}
+                    className="relative px-6 pt-5 pb-5 overflow-hidden bg-[#2F6A9E]"
+                    
                   >
                     {/* dot texture */}
                     <div
@@ -392,9 +392,9 @@ const ServiceLanding = () => {
                         {/* Submit button */}
                         <button
                           type="submit"
-                          className="shimmer-btn group w-full text-white px-6 py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all relative overflow-hidden"
+                          className="shimmer-btn bg-[#2F6A9E] group w-full text-white px-6 py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all relative overflow-hidden"
                           style={{
-                            background: 'linear-gradient(135deg, #053131 0%, #245988 100%)',
+                           
                             boxShadow: '0 4px 18px rgba(36,89,136,0.4)'
                           }}
                           onMouseEnter={e => e.currentTarget.style.boxShadow = '0 7px 24px rgba(36,89,136,0.55)'}
