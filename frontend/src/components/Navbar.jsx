@@ -330,12 +330,17 @@ const Navbar = () => {
             <ul className="flex  font-medium flex-wrap px-2 text-base">
               {mainItems.map(item => (
                 <li key={item.id} onMouseEnter={() => setOpenDropdown(item.id)} className="relative">
-                  <button data-item={item.id} onClick={() => toggleDropdown(item.id)} className="px-6 py-2 hover:text-emerald-600 flex items-center gap-2 text-base">
+                  <Link 
+                    to={`/service/${item.id.toLowerCase().replace(/\s+/g, '-')}`}
+                    data-item={item.id} 
+                    onClick={() => toggleDropdown(item.id)} 
+                    className="px-6 py-2 hover:text-emerald-600 flex items-center gap-2 text-base"
+                  >
                     <span>{item.label}</span>
                     <svg className={`h-4 w-4 transition-transform duration-200 ${openDropdown === item.id ? 'rotate-180' : 'rotate-0'}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -360,12 +365,16 @@ const Navbar = () => {
             <ul className="space-y-2">
               {mainItems.map(item => (
                 <li key={item.id} className="border-b last:border-b-0">
-                  <button onClick={() => toggleDropdown(item.id)} className="w-full text-left px-3 py-2 flex justify-between items-center">
+                  <Link 
+                    to={`/service/${item.id.toLowerCase().replace(/\s+/g, '-')}`}
+                    onClick={() => toggleDropdown(item.id)} 
+                    className="w-full text-left px-3 py-2 flex justify-between items-center"
+                  >
                     <span className="text-base font-medium">{item.label}</span>
                     <svg className={`h-4 w-4 transition-transform duration-200 ${openDropdown === item.id ? 'rotate-180' : 'rotate-0'}`} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                  </button>
+                  </Link>
                   {openDropdown === item.id && item.groups && item.groups.length > 0 ? (
                     <ul className="pl-4 pb-2 pt-1 space-y-1 max-h-60 overflow-y-auto">
                       {item.groups.map((group, gi) => (

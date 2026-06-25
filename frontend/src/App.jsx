@@ -10,6 +10,7 @@ import Appointment from './pages/Appointment'
 import Career from './pages/Career.jsx'
 import Blog from './pages/Blog.jsx'
 import Review from './pages/Review.jsx'
+import ServiceLanding from './pages/ServiceLanding.jsx'
 import './i18n'
 
 
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/career" element={<Career/>} />
           <Route path="/blog" element={<Blog/>} />
           <Route path="/review" element={<Review/>} />
+          <Route path="/service/:serviceId" element={<ServiceLanding/>} />
         </Routes>
       </main>
       <Footer />
