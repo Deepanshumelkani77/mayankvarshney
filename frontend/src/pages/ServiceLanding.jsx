@@ -236,7 +236,7 @@ const ServiceLanding = () => {
 
                 {/* Backing cards for depth */}
                 <div className="absolute top-4 -left-3 right-3 bottom-[-14px] rounded-3xl rotate-[3deg] z-0 opacity-60" style={{ backgroundColor: '#E5F0E5' }} />
-                <div className="absolute top-2 -left-1.5 right-1.5 bottom-[-7px] rounded-3xl rotate-[1.2deg] z-[1]" style={{ backgroundColor: '#009966', opacity: 0.15 }} />
+                <div className="absolute top-2 -left-1.5 right-1.5 bottom-[-7px] rounded-3xl rotate-[1.2deg] z-[1]" style={{ backgroundColor: '#26557E', opacity: 0.15 }} />
 
                 {/* Floating chip — top right */}
                 <div className="chip-float-1 absolute -top-4 -right-3 z-20 flex items-center gap-2 bg-white rounded-2xl border border-gray-100 shadow-xl px-3 py-2">
