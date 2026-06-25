@@ -476,7 +476,7 @@ const ServiceLanding = () => {
       </div>
 
       {/* ── STICKY NAV ── */}
-      <div className="sticky top-0 z-50 shadow-lg border-b" style={{ backgroundColor: '#053131', borderColor: 'rgba(229,240,229,0.1)' }}>
+      <div className="sticky h-[10vh] top-0 z-50 shadow-lg border-b" style={{ backgroundColor: '#053131', borderColor: 'rgba(229,240,229,0.1)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center justify-between gap-1 py-3 overflow-x-auto scrollbar-hide">
             {sections.map((section, index) => (
@@ -757,15 +757,15 @@ const ServiceLanding = () => {
     
 
       {/* ── CTA BANNER ── */}
-      <div className="py-16 text-white" style={{ background: 'linear-gradient(135deg, #053131 0%, #009966 100%)' }}>
+      <div className="py-16 text-white bg-[#2F6A9E]" >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto" style={{ color: 'rgba(229,240,229,0.8)' }}>
             Contact our expert team today for professional {service.title.toLowerCase()} services
           </p>
           <button
-            className="px-8 py-4 rounded-xl font-bold text-lg transition-colors shadow-lg"
-            style={{ backgroundColor: '#245988', color: '#fff' }}
+            className="px-8 py-4 rounded-xl  text-lg transition-colors shadow-lg bg-white text-black"
+          
             onMouseEnter={e => e.currentTarget.style.backgroundColor = '#053131'}
             onMouseLeave={e => e.currentTarget.style.backgroundColor = '#245988'}
           >
