@@ -171,61 +171,7 @@ const ITR = () => {
         </div>
       </div>
 
-      {/* Progress Steps */}
-      <div className="bg-white shadow-lg border-b border-gray-100 sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center py-6">
-            {[1, 2, 3, 4].map((step) => (
-              <React.Fragment key={step}>
-                <div className="flex items-center">
-                  <div
-                    className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold text-lg transition-all duration-300 ${
-                      currentStep >= step
-                        ? 'bg-gradient-to-br from-[#2F6A9E] to-[#1a4a75] text-white shadow-lg shadow-[#2F6A9E]/30'
-                        : 'bg-gray-100 text-gray-400'
-                    }`}
-                  >
-                    {currentStep > step ? (
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                      </svg>
-                    ) : (
-                      step
-                    )}
-                  </div>
-                  <div className="ml-3">
-                    <span
-                      className={`block text-sm font-semibold ${
-                        currentStep >= step ? 'text-[#2F6A9E]' : 'text-gray-400'
-                      }`}
-                    >
-                      {step === 1 ? 'Personal Details' : step === 2 ? 'Assessment Year' : step === 3 ? 'Status' : 'ITR Form'}
-                    </span>
-                    <span
-                      className={`text-xs ${
-                        currentStep >= step ? 'text-blue-600' : 'text-gray-400'
-                      }`}
-                    >
-                      {currentStep > step ? 'Completed' : currentStep === step ? 'In Progress' : 'Pending'}
-                    </span>
-                  </div>
-                </div>
-                {step < 4 && (
-                  <div className="w-32 h-2 mx-4 bg-gray-100 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full rounded-full transition-all duration-500 ${
-                        currentStep > step ? 'bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75]' : 'bg-gray-100'
-                      }`}
-                      style={{ width: currentStep > step ? '100%' : '0%' }}
-                    />
-                  </div>
-                )}
-              </React.Fragment>
-            ))}
-          </div>
-        </div>
-      </div>
-
+  
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-4xl mx-auto">
