@@ -230,7 +230,7 @@ const ITR = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {/* Step 1: Personal Details */}
           {currentStep === 1 && (
             <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
@@ -280,9 +280,8 @@ const ITR = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div>
-                 
                     <input
                       type="text"
                       value={personalDetails.panNumber}
@@ -293,7 +292,6 @@ const ITR = () => {
                     />
                   </div>
                   <div>
-                   
                     <input
                       type="text"
                       value={personalDetails.aadhaarNumber}
@@ -303,24 +301,16 @@ const ITR = () => {
                       maxLength={12}
                     />
                   </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                 
-
- <div>
-                 
-                  <input
-                    type="email"
-                    value={personalDetails.email}
-                    onChange={(e) => setPersonalDetails({ ...personalDetails, email: e.target.value })}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#2F6A9E] focus:ring-2 focus:ring-[#2F6A9E]/20 outline-none transition-all"
-                    placeholder="Email Address*"
-                  />
-                </div>
-                  
                   <div>
-                  
+                    <input
+                      type="email"
+                      value={personalDetails.email}
+                      onChange={(e) => setPersonalDetails({ ...personalDetails, email: e.target.value })}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#2F6A9E] focus:ring-2 focus:ring-[#2F6A9E]/20 outline-none transition-all"
+                      placeholder="Email Address*"
+                    />
+                  </div>
+                  <div>
                     <input
                       type="tel"
                       value={personalDetails.mobileNumber}
@@ -332,15 +322,15 @@ const ITR = () => {
                   </div>
                 </div>
 
-              <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Date of Birth*</label>
-                    <input
-                      type="date"
-                      value={personalDetails.dateOfBirth}
-                      onChange={(e) => setPersonalDetails({ ...personalDetails, dateOfBirth: e.target.value })}
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#2F6A9E] focus:ring-2 focus:ring-[#2F6A9E]/20 outline-none transition-all"
-                    />
-                  </div>
+                <div>
+                  <input
+                    type="date"
+                    value={personalDetails.dateOfBirth}
+                    onChange={(e) => setPersonalDetails({ ...personalDetails, dateOfBirth: e.target.value })}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#2F6A9E] focus:ring-2 focus:ring-[#2F6A9E]/20 outline-none transition-all"
+                    placeholder="Date of Birth*"
+                  />
+                </div>
               </div>
 
               <div className="mt-8 flex justify-end">
