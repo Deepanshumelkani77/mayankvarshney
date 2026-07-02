@@ -39,6 +39,7 @@ const ITR = () => {
   })
 
   const assessmentYears = [
+    { value: '2025-26', label: 'AY 2025-26 (FY 2024-25)' },
     { value: '2024-25', label: 'AY 2024-25 (FY 2023-24)' },
     { value: '2023-24', label: 'AY 2023-24 (FY 2022-23)' },
     { value: '2022-23', label: 'AY 2022-23 (FY 2021-22)' },
