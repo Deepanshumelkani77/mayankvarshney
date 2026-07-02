@@ -11,6 +11,7 @@ import Career from './pages/Career.jsx'
 import Blog from './pages/Blog.jsx'
 import Review from './pages/Review.jsx'
 import ServiceLanding from './pages/ServiceLanding.jsx'
+import ITR from './pages/ITR.jsx'
 import './i18n'
 
 
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/blog" element={<Blog/>} />
           <Route path="/review" element={<Review/>} />
           <Route path="/service/:serviceId" element={<ServiceLanding/>} />
+          <Route path="/itr" element={<ITR/>} />
         </Routes>
       </main>
       <Footer />

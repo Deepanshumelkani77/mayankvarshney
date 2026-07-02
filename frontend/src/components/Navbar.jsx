@@ -347,7 +347,9 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-3">
-           
+
+            <Link to="/itr" className="hidden md:inline bg-[#2F6A9E] text-white px-5 py-2.5 rounded-md text-base font-medium">File Now</Link>
+
             <Link to="/appointment" className="hidden md:inline bg-emerald-600 text-white px-5 py-2.5 rounded-md text-base font-medium">Book Appointment</Link>
 
             <button onClick={() => setMobileOpen(prev => !prev)} className="md:hidden p-2 rounded-md bg-white/10">
@@ -408,7 +410,10 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
-            <div className="mt-4 pt-4 border-t">
+            <div className="mt-4 pt-4 border-t space-y-3">
+              <Link to="/itr" onClick={() => setMobileOpen(false)} className="block w-full bg-[#2F6A9E] text-white px-5 py-3 rounded-md text-base font-medium text-center hover:bg-[#1a4a75] transition-colors">
+                File Now
+              </Link>
               <Link to="/appointment" onClick={() => setMobileOpen(false)} className="block w-full bg-emerald-600 text-white px-5 py-3 rounded-md text-base font-medium text-center hover:bg-emerald-700 transition-colors">
                 Book Appointment
               </Link>
