@@ -322,25 +322,26 @@ const ITR = () => {
                   </div>
                 </div>
 
-                <div>
-                  <input
-                    type="date"
-                    value={personalDetails.dateOfBirth}
-                    onChange={(e) => setPersonalDetails({ ...personalDetails, dateOfBirth: e.target.value })}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#2F6A9E] focus:ring-2 focus:ring-[#2F6A9E]/20 outline-none transition-all"
-                    placeholder="Date of Birth*"
-                  />
+                <div className="flex items-end gap-4">
+                  <div className="flex-1">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Date of Birth*</label>
+                    <input
+                      type="date"
+                      value={personalDetails.dateOfBirth}
+                      onChange={(e) => setPersonalDetails({ ...personalDetails, dateOfBirth: e.target.value })}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#2F6A9E] focus:ring-2 focus:ring-[#2F6A9E]/20 outline-none transition-all"
+                    />
+                  </div>
+                  <div>
+                    <button
+                      onClick={handleNext}
+                      disabled={!personalDetails.firstName || !personalDetails.lastName || !personalDetails.panNumber || !personalDetails.aadhaarNumber || !personalDetails.dateOfBirth || !personalDetails.mobileNumber || !personalDetails.email}
+                      className="bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white px-10 py-4 rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all duration-300 shadow-lg shadow-[#2F6A9E]/30 hover:shadow-xl hover:shadow-[#2F6A9E]/40 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:shadow-none"
+                    >
+                      Continue
+                    </button>
+                  </div>
                 </div>
-              </div>
-
-              <div className="mt-8 flex justify-end">
-                <button
-                  onClick={handleNext}
-                  disabled={!personalDetails.firstName || !personalDetails.lastName || !personalDetails.panNumber || !personalDetails.aadhaarNumber || !personalDetails.dateOfBirth || !personalDetails.mobileNumber || !personalDetails.email}
-                  className="bg-gradient-to-r from-[#2F6A9E] to-[#1a4a75] text-white px-10 py-4 rounded-xl font-semibold hover:from-[#1a4a75] hover:to-[#2F6A9E] transition-all duration-300 shadow-lg shadow-[#2F6A9E]/30 hover:shadow-xl hover:shadow-[#2F6A9E]/40 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:shadow-none"
-                >
-                  Continue
-                </button>
               </div>
             </div>
           )}
