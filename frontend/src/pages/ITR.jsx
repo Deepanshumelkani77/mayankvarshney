@@ -159,7 +159,7 @@ const ITR = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-100">
       {/* Header */}
-      <div className="relative bg-gradient-to-r from-[#2F6A9E] via-[#1a4a75] to-[#0d3a5c] text-white overflow-hidden">
+      <div className="relative bg-[#053131] text-white overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
