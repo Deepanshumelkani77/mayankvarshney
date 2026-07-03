@@ -40,7 +40,17 @@ const ITR = () => {
     hasSalaryIncome: '',
     hasHouseProperty: '',
     hasCapitalGains: '',
-    hasOtherSources: ''
+    hasOtherSources: '',
+    partnershipFirm: '',
+    businessActivities: '',
+    grossReceiptsTurnover: '',
+    presumptiveTaxationBusiness: '',
+    professionalServiceIncome: '',
+    grossReceiptsProfessional: '',
+    presumptiveTaxationProfessional: '',
+    goodsCarriagesBusiness: '',
+    goodsCarriagesOwned: '',
+    presumptiveTaxationCarriages: ''
   })
 
   const assessmentYears = [
@@ -125,7 +135,7 @@ const ITR = () => {
   }
 
   const handleHelpNext = () => {
-    if (helpStep < 5) {
+    if (helpStep < 6) {
       setHelpStep(helpStep + 1)
     }
   }
@@ -134,6 +144,8 @@ const ITR = () => {
     if (helpStep > 1) {
       if (helpStep === 1.1 || helpStep === 1.2 || helpStep === 1.3 || helpStep === 1.4 || helpStep === 1.5 || helpStep === 1.6 || helpStep === 1.7 || helpStep === 1.8 || helpStep === 1.9) {
         setHelpStep(1)
+      } else if (helpStep >= 3.1 && helpStep <= 3.9) {
+        setHelpStep(3)
       } else {
         setHelpStep(helpStep - 1)
       }
@@ -602,7 +614,17 @@ const ITR = () => {
                       hasSalaryIncome: '',
                       hasHouseProperty: '',
                       hasCapitalGains: '',
-                      hasOtherSources: ''
+                      hasOtherSources: '',
+                      partnershipFirm: '',
+                      businessActivities: '',
+                      grossReceiptsTurnover: '',
+                      presumptiveTaxationBusiness: '',
+                      professionalServiceIncome: '',
+                      grossReceiptsProfessional: '',
+                      presumptiveTaxationProfessional: '',
+                      goodsCarriagesBusiness: '',
+                      goodsCarriagesOwned: '',
+                      presumptiveTaxationCarriages: ''
                     })
                   }}
                   className="text-gray-400 hover:text-gray-600"
@@ -1209,23 +1231,23 @@ const ITR = () => {
                     <p className="text-gray-600 mb-4">Please provide information about your business income</p>
 
                     <div className="bg-gray-50 rounded-lg p-4">
-                      <p className="text-sm text-gray-700 mb-3">Do you have income from business or profession?</p>
+                      <p className="text-sm text-gray-700 mb-3">Were you a partner in a partnership firm during the period from 01 April 2025 to 31 March 2026?</p>
                       <div className="flex gap-4">
                         {['yes', 'no'].map((option) => (
                           <label
                             key={option}
                             className={`flex items-center px-4 py-2 border-2 rounded-lg cursor-pointer transition-all ${
-                              helpAnswers.hasBusinessIncome === option
+                              helpAnswers.partnershipFirm === option
                                 ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
                                 : 'border-gray-200 hover:border-gray-300'
                             }`}
                           >
                             <input
                               type="radio"
-                              name="hasBusinessIncome"
+                              name="partnershipFirm"
                               value={option}
-                              checked={helpAnswers.hasBusinessIncome === option}
-                              onChange={(e) => handleHelpAnswer('hasBusinessIncome', e.target.value)}
+                              checked={helpAnswers.partnershipFirm === option}
+                              onChange={(e) => handleHelpAnswer('partnershipFirm', e.target.value)}
                               className="w-4 h-4 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
                             />
                             <span className="ml-2 font-medium text-gray-800 capitalize">{option}</span>
@@ -1243,10 +1265,536 @@ const ITR = () => {
                       Back
                     </button>
                     <button
-                      onClick={handleHelpNext}
-                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors"
+                      onClick={() => {
+                        if (helpAnswers.partnershipFirm === 'yes') {
+                          setHelpStep(4)
+                        } else if (helpAnswers.partnershipFirm === 'no') {
+                          setHelpStep(3.1)
+                        }
+                      }}
+                      disabled={!helpAnswers.partnershipFirm}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
                     >
                       Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3.1: Business Activities */}
+              {helpStep === 3.1 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Business Activities</h4>
+                    <p className="text-gray-600 mb-4">Did you undertake business activities during the period from 01 April 2025 to 31 March 2026?</p>
+
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex gap-4">
+                        {['yes', 'no'].map((option) => (
+                          <label
+                            key={option}
+                            className={`flex items-center px-4 py-2 border-2 rounded-lg cursor-pointer transition-all ${
+                              helpAnswers.businessActivities === option
+                                ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                                : 'border-gray-200 hover:border-gray-300'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name="businessActivities"
+                              value={option}
+                              checked={helpAnswers.businessActivities === option}
+                              onChange={(e) => handleHelpAnswer('businessActivities', e.target.value)}
+                              className="w-4 h-4 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                            />
+                            <span className="ml-2 font-medium text-gray-800 capitalize">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(3)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (helpAnswers.businessActivities === 'yes') {
+                          setHelpStep(3.2)
+                        } else {
+                          setHelpStep(4)
+                        }
+                      }}
+                      disabled={!helpAnswers.businessActivities}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3.2: Gross Receipts/Turnover */}
+              {helpStep === 3.2 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Gross Receipts/Turnover</h4>
+                    <p className="text-gray-600 mb-4">What was the Gross Receipts/Total Turnover from such business?</p>
+
+                    <div className="space-y-3">
+                      {[
+                        { value: 'upto2cr', label: 'Up to Rs 2 crore' },
+                        { value: '2crto3cr', label: 'Rs 2 cr to 3 cr' },
+                        { value: 'morethan2cr', label: 'More than Rs 2 cr or Rs 3 cr' },
+                        { value: '2crto10cr', label: '2 cr to 10 cr' },
+                        { value: 'morethan10cr', label: 'More than 10 cr' }
+                      ].map((option) => (
+                        <label
+                          key={option.value}
+                          className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                            helpAnswers.grossReceiptsTurnover === option.value
+                              ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="grossReceiptsTurnover"
+                            value={option.value}
+                            checked={helpAnswers.grossReceiptsTurnover === option.value}
+                            onChange={(e) => handleHelpAnswer('grossReceiptsTurnover', e.target.value)}
+                            className="w-5 h-5 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                          />
+                          <span className="ml-3 font-medium text-gray-800">{option.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(3.1)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (helpAnswers.grossReceiptsTurnover === 'upto2cr' || helpAnswers.grossReceiptsTurnover === '2crto3cr') {
+                          setHelpStep(3.3)
+                        } else {
+                          setHelpStep(4)
+                        }
+                      }}
+                      disabled={!helpAnswers.grossReceiptsTurnover}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3.3: Presumptive Taxation for Business */}
+              {helpStep === 3.3 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Presumptive Taxation</h4>
+                    <p className="text-gray-600 mb-4">Do you want to claim benefit of presumptive taxation for such business?</p>
+
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex gap-4">
+                        {['yes', 'no'].map((option) => (
+                          <label
+                            key={option}
+                            className={`flex items-center px-4 py-2 border-2 rounded-lg cursor-pointer transition-all ${
+                              helpAnswers.presumptiveTaxationBusiness === option
+                                ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                                : 'border-gray-200 hover:border-gray-300'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name="presumptiveTaxationBusiness"
+                              value={option}
+                              checked={helpAnswers.presumptiveTaxationBusiness === option}
+                              onChange={(e) => handleHelpAnswer('presumptiveTaxationBusiness', e.target.value)}
+                              className="w-4 h-4 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                            />
+                            <span className="ml-2 font-medium text-gray-800 capitalize">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(3.2)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (helpAnswers.presumptiveTaxationBusiness === 'yes') {
+                          setHelpStep(3.4)
+                        } else {
+                          setHelpStep(4)
+                        }
+                      }}
+                      disabled={!helpAnswers.presumptiveTaxationBusiness}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3.4: Professional Service Income */}
+              {helpStep === 3.4 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Professional Service</h4>
+                    <p className="text-gray-600 mb-4">Did you have income from professional service during the period from 01 April 2025 to 31 March 2026?</p>
+
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex gap-4">
+                        {['yes', 'no'].map((option) => (
+                          <label
+                            key={option}
+                            className={`flex items-center px-4 py-2 border-2 rounded-lg cursor-pointer transition-all ${
+                              helpAnswers.professionalServiceIncome === option
+                                ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                                : 'border-gray-200 hover:border-gray-300'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name="professionalServiceIncome"
+                              value={option}
+                              checked={helpAnswers.professionalServiceIncome === option}
+                              onChange={(e) => handleHelpAnswer('professionalServiceIncome', e.target.value)}
+                              className="w-4 h-4 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                            />
+                            <span className="ml-2 font-medium text-gray-800 capitalize">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(3.3)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (helpAnswers.professionalServiceIncome === 'yes') {
+                          setHelpStep(3.5)
+                        } else {
+                          setHelpStep(3.7)
+                        }
+                      }}
+                      disabled={!helpAnswers.professionalServiceIncome}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3.5: Gross Receipts from Professional Services */}
+              {helpStep === 3.5 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Professional Gross Receipts</h4>
+                    <p className="text-gray-600 mb-4">What was the Gross Receipts from such professional services?</p>
+
+                    <div className="space-y-3">
+                      {[
+                        { value: 'upto50lakh', label: 'Up to Rs 50 lakh or 75 lakh' },
+                        { value: 'morethan50lakh', label: 'More than Rs 50 lakh' }
+                      ].map((option) => (
+                        <label
+                          key={option.value}
+                          className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                            helpAnswers.grossReceiptsProfessional === option.value
+                              ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="grossReceiptsProfessional"
+                            value={option.value}
+                            checked={helpAnswers.grossReceiptsProfessional === option.value}
+                            onChange={(e) => handleHelpAnswer('grossReceiptsProfessional', e.target.value)}
+                            className="w-5 h-5 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                          />
+                          <span className="ml-3 font-medium text-gray-800">{option.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(3.4)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (helpAnswers.grossReceiptsProfessional === 'upto50lakh') {
+                          setHelpStep(3.6)
+                        } else {
+                          setHelpStep(4)
+                        }
+                      }}
+                      disabled={!helpAnswers.grossReceiptsProfessional}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3.6: Presumptive Taxation for Professional */}
+              {helpStep === 3.6 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Presumptive Taxation for Professional</h4>
+                    <p className="text-gray-600 mb-4">Do you want to claim benefit of presumptive taxation for such professional income?</p>
+
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex gap-4">
+                        {['yes', 'no'].map((option) => (
+                          <label
+                            key={option}
+                            className={`flex items-center px-4 py-2 border-2 rounded-lg cursor-pointer transition-all ${
+                              helpAnswers.presumptiveTaxationProfessional === option
+                                ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                                : 'border-gray-200 hover:border-gray-300'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name="presumptiveTaxationProfessional"
+                              value={option}
+                              checked={helpAnswers.presumptiveTaxationProfessional === option}
+                              onChange={(e) => handleHelpAnswer('presumptiveTaxationProfessional', e.target.value)}
+                              className="w-4 h-4 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                            />
+                            <span className="ml-2 font-medium text-gray-800 capitalize">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(3.5)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (helpAnswers.presumptiveTaxationProfessional === 'yes') {
+                          setHelpStep(3.7)
+                        } else {
+                          setHelpStep(4)
+                        }
+                      }}
+                      disabled={!helpAnswers.presumptiveTaxationProfessional}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3.7: Goods Carriages Business */}
+              {helpStep === 3.7 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Goods Carriages</h4>
+                    <p className="text-gray-600 mb-4">Are you in the business of plying, hiring or leasing of goods carriages?</p>
+
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex gap-4">
+                        {['yes', 'no'].map((option) => (
+                          <label
+                            key={option}
+                            className={`flex items-center px-4 py-2 border-2 rounded-lg cursor-pointer transition-all ${
+                              helpAnswers.goodsCarriagesBusiness === option
+                                ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                                : 'border-gray-200 hover:border-gray-300'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name="goodsCarriagesBusiness"
+                              value={option}
+                              checked={helpAnswers.goodsCarriagesBusiness === option}
+                              onChange={(e) => handleHelpAnswer('goodsCarriagesBusiness', e.target.value)}
+                              className="w-4 h-4 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                            />
+                            <span className="ml-2 font-medium text-gray-800 capitalize">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => {
+                        if (helpAnswers.professionalServiceIncome === 'yes') {
+                          setHelpStep(3.6)
+                        } else {
+                          setHelpStep(3.3)
+                        }
+                      }}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (helpAnswers.goodsCarriagesBusiness === 'yes') {
+                          setHelpStep(3.8)
+                        } else {
+                          setHelpStep(4)
+                        }
+                      }}
+                      disabled={!helpAnswers.goodsCarriagesBusiness}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3.8: Goods Carriages Owned */}
+              {helpStep === 3.8 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Number of Goods Carriages</h4>
+                    <p className="text-gray-600 mb-4">How many goods carriages did you own at any point during the period from 01 April 2025 to 31 March 2026?</p>
+
+                    <div className="space-y-3">
+                      {[
+                        { value: 'upto10', label: 'Up to 10' },
+                        { value: 'morethan10', label: 'More than 10' }
+                      ].map((option) => (
+                        <label
+                          key={option.value}
+                          className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                            helpAnswers.goodsCarriagesOwned === option.value
+                              ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="goodsCarriagesOwned"
+                            value={option.value}
+                            checked={helpAnswers.goodsCarriagesOwned === option.value}
+                            onChange={(e) => handleHelpAnswer('goodsCarriagesOwned', e.target.value)}
+                            className="w-5 h-5 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                          />
+                          <span className="ml-3 font-medium text-gray-800">{option.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(3.7)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (helpAnswers.goodsCarriagesOwned === 'upto10') {
+                          setHelpStep(3.9)
+                        } else {
+                          setHelpStep(4)
+                        }
+                      }}
+                      disabled={!helpAnswers.goodsCarriagesOwned}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 3.9: Presumptive Taxation for Carriages */}
+              {helpStep === 3.9 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Presumptive Taxation for Carriages</h4>
+                    <p className="text-gray-600 mb-4">Do you want to claim benefit of presumptive taxation for such goods carriages business?</p>
+
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex gap-4">
+                        {['yes', 'no'].map((option) => (
+                          <label
+                            key={option}
+                            className={`flex items-center px-4 py-2 border-2 rounded-lg cursor-pointer transition-all ${
+                              helpAnswers.presumptiveTaxationCarriages === option
+                                ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                                : 'border-gray-200 hover:border-gray-300'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name="presumptiveTaxationCarriages"
+                              value={option}
+                              checked={helpAnswers.presumptiveTaxationCarriages === option}
+                              onChange={(e) => handleHelpAnswer('presumptiveTaxationCarriages', e.target.value)}
+                              className="w-4 h-4 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                            />
+                            <span className="ml-2 font-medium text-gray-800 capitalize">{option}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(3.8)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => setHelpStep(4)}
+                      disabled={!helpAnswers.presumptiveTaxationCarriages}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Continue
                     </button>
                   </div>
                 </div>
