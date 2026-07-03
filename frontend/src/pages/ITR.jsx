@@ -25,6 +25,11 @@ const ITR = () => {
     controlManagementOutside: '',
     hufManagerStayDays: '',
     hufManagerResidentYears: '',
+    stayDaysInIndia: '',
+    citizenshipStatus: '',
+    leftIndiaReason: '',
+    foreignIncomeExceeds15Lakh: '',
+    liableToTaxOtherCountry: '',
     isDirector: '',
     holdsUnlistedShares: '',
     portugueseCivilCode: '',
@@ -127,7 +132,7 @@ const ITR = () => {
 
   const handleHelpBack = () => {
     if (helpStep > 1) {
-      if (helpStep === 1.1 || helpStep === 1.2 || helpStep === 1.3 || helpStep === 1.4 || helpStep === 1.5 || helpStep === 1.6) {
+      if (helpStep === 1.1 || helpStep === 1.2 || helpStep === 1.3 || helpStep === 1.4 || helpStep === 1.5 || helpStep === 1.6 || helpStep === 1.7 || helpStep === 1.8 || helpStep === 1.9) {
         setHelpStep(1)
       } else {
         setHelpStep(helpStep - 1)
@@ -582,6 +587,11 @@ const ITR = () => {
                       controlManagementOutside: '',
                       hufManagerStayDays: '',
                       hufManagerResidentYears: '',
+                      stayDaysInIndia: '',
+                      citizenshipStatus: '',
+                      leftIndiaReason: '',
+                      foreignIncomeExceeds15Lakh: '',
+                      liableToTaxOtherCountry: '',
                       isDirector: '',
                       holdsUnlistedShares: '',
                       portugueseCivilCode: '',
@@ -695,6 +705,356 @@ const ITR = () => {
                 </div>
               )}
 
+              {/* Step 1.3: Stay Days Question for Don't Know */}
+              {helpStep === 1.3 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Stay in India</h4>
+                    <p className="text-gray-600 mb-4">How many days have you stayed in India during the period 01 April 2025 to 31 March 2026?</p>
+
+                    <div className="space-y-3">
+                      {[
+                        { value: '60', label: '60 days' },
+                        { value: '60-181', label: '60 to 181 days' },
+                        { value: '181+', label: '181 days or more' }
+                      ].map((option) => (
+                        <label
+                          key={option.value}
+                          className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                            helpAnswers.stayDaysInIndia === option.value
+                              ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="stayDaysInIndia"
+                            value={option.value}
+                            checked={helpAnswers.stayDaysInIndia === option.value}
+                            onChange={(e) => handleHelpAnswer('stayDaysInIndia', e.target.value)}
+                            className="w-5 h-5 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                          />
+                          <span className="ml-3 font-medium text-gray-800">{option.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(1)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (helpAnswers.stayDaysInIndia === '60') {
+                          setHelpStep(1.4)
+                        } else {
+                          setHelpStep(1.5)
+                        }
+                      }}
+                      disabled={!helpAnswers.stayDaysInIndia}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 1.4: NR Status Display (60 days) */}
+              {helpStep === 1.4 && (
+                <div className="space-y-6">
+                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <h4 className="text-xl font-bold text-blue-800">Residential Status Determined</h4>
+                    </div>
+                    <p className="text-lg text-blue-700 mb-2">Based on the responses, you are</p>
+                    <p className="text-2xl font-bold text-blue-900 mb-4">
+                      Non Resident
+                    </p>
+                    <p className="text-sm text-blue-600">in India during the period 1 April 2025 to 31 March 2026</p>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(1.3)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => setHelpStep(2)}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors"
+                    >
+                      Continue
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 1.5: Citizenship Status */}
+              {helpStep === 1.5 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Citizenship Status</h4>
+                    <p className="text-gray-600 mb-4">Your citizenship status?</p>
+
+                    <div className="space-y-3">
+                      {[
+                        { value: 'indian', label: 'Indian Citizen' },
+                        { value: 'other', label: 'Other' }
+                      ].map((option) => (
+                        <label
+                          key={option.value}
+                          className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                            helpAnswers.citizenshipStatus === option.value
+                              ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="citizenshipStatus"
+                            value={option.value}
+                            checked={helpAnswers.citizenshipStatus === option.value}
+                            onChange={(e) => handleHelpAnswer('citizenshipStatus', e.target.value)}
+                            className="w-5 h-5 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                          />
+                          <span className="ml-3 font-medium text-gray-800">{option.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(1.3)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (helpAnswers.citizenshipStatus === 'indian') {
+                          setHelpStep(1.6)
+                        } else {
+                          setHelpStep(1.4)
+                        }
+                      }}
+                      disabled={!helpAnswers.citizenshipStatus}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 1.6: Left India Reason */}
+              {helpStep === 1.6 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Leave India</h4>
+                    <p className="text-gray-600 mb-4">Did you leave India during the period 01 April 2025 to 31 March 2026?</p>
+
+                    <div className="space-y-3">
+                      {[
+                        { value: 'crew', label: 'Yes as a member of crew of Indian ship' },
+                        { value: 'employment', label: 'Yes for employment outside India' }
+                      ].map((option) => (
+                        <label
+                          key={option.value}
+                          className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                            helpAnswers.leftIndiaReason === option.value
+                              ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="leftIndiaReason"
+                            value={option.value}
+                            checked={helpAnswers.leftIndiaReason === option.value}
+                            onChange={(e) => handleHelpAnswer('leftIndiaReason', e.target.value)}
+                            className="w-5 h-5 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                          />
+                          <span className="ml-3 font-medium text-gray-800">{option.label}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(1.5)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => setHelpStep(1.7)}
+                      disabled={!helpAnswers.leftIndiaReason}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 1.7: Foreign Income Question */}
+              {helpStep === 1.7 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Foreign Income</h4>
+                    <p className="text-gray-600 mb-4">Do you have total income, other than the income from foreign sources exceeding Rs. 15 Lakh for the period 1st April 2025 to 31st March 2026?</p>
+
+                    <div className="flex gap-4">
+                      {['yes', 'no'].map((option) => (
+                        <label
+                          key={option}
+                          className={`flex items-center px-6 py-3 border-2 rounded-xl cursor-pointer transition-all ${
+                            helpAnswers.foreignIncomeExceeds15Lakh === option
+                              ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="foreignIncomeExceeds15Lakh"
+                            value={option}
+                            checked={helpAnswers.foreignIncomeExceeds15Lakh === option}
+                            onChange={(e) => handleHelpAnswer('foreignIncomeExceeds15Lakh', e.target.value)}
+                            className="w-4 h-4 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                          />
+                          <span className="ml-2 font-medium text-gray-800 capitalize">{option}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(1.6)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (helpAnswers.foreignIncomeExceeds15Lakh === 'yes') {
+                          setHelpStep(1.8)
+                        } else {
+                          setHelpStep(1.4)
+                        }
+                      }}
+                      disabled={!helpAnswers.foreignIncomeExceeds15Lakh}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 1.8: Liable to Tax in Other Country */}
+              {helpStep === 1.8 && (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Tax Liability in Other Country</h4>
+                    <p className="text-gray-600 mb-4">Are you liable to tax in any other country or territory by reason of your domicile or residence or any other criteria of similar nature?</p>
+
+                    <div className="flex gap-4">
+                      {['yes', 'no'].map((option) => (
+                        <label
+                          key={option}
+                          className={`flex items-center px-6 py-3 border-2 rounded-xl cursor-pointer transition-all ${
+                            helpAnswers.liableToTaxOtherCountry === option
+                              ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="liableToTaxOtherCountry"
+                            value={option}
+                            checked={helpAnswers.liableToTaxOtherCountry === option}
+                            onChange={(e) => handleHelpAnswer('liableToTaxOtherCountry', e.target.value)}
+                            className="w-4 h-4 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
+                          />
+                          <span className="ml-2 font-medium text-gray-800 capitalize">{option}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(1.7)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => setHelpStep(1.9)}
+                      disabled={!helpAnswers.liableToTaxOtherCountry}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 1.9: NR/NOR Status Display */}
+              {helpStep === 1.9 && (
+                <div className="space-y-6">
+                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <h4 className="text-xl font-bold text-blue-800">Residential Status Determined</h4>
+                    </div>
+                    <p className="text-lg text-blue-700 mb-2">Based on the responses, you are</p>
+                    <p className="text-2xl font-bold text-blue-900 mb-2">
+                      Non Resident
+                    </p>
+                    <p className="text-sm text-blue-600 mb-4">in India during the period 1 April 2025 to 31 March 2026</p>
+                    <p className="text-lg text-blue-700 mb-2">Based on the responses, you are</p>
+                    <p className="text-2xl font-bold text-blue-900 mb-4">
+                      Not Ordinarily Resident
+                    </p>
+                    <p className="text-sm text-blue-600">in India during the period 1 April 2025 to 31 March 2026</p>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => setHelpStep(1.8)}
+                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={() => setHelpStep(2)}
+                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors"
+                    >
+                      Continue
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* Step 1.1: LTCG Question for ROR */}
               {helpStep === 1.1 && (
                 <div className="space-y-6">
@@ -774,201 +1134,6 @@ const ITR = () => {
                       className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors"
                     >
                       Continue
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 1.3: Control and Management Question for Don't Know */}
-              {helpStep === 1.3 && (
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-800 mb-2">Control and Management</h4>
-                    <p className="text-gray-600 mb-4">Whether the control and management of affairs was situated wholly outside India during the period 01 April 2025 to 31 March 2026?</p>
-
-                    <div className="flex gap-4">
-                      {['yes', 'no'].map((option) => (
-                        <label
-                          key={option}
-                          className={`flex items-center px-6 py-3 border-2 rounded-xl cursor-pointer transition-all ${
-                            helpAnswers.controlManagementOutside === option
-                              ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
-                              : 'border-gray-200 hover:border-gray-300'
-                          }`}
-                        >
-                          <input
-                            type="radio"
-                            name="controlManagementOutside"
-                            value={option}
-                            checked={helpAnswers.controlManagementOutside === option}
-                            onChange={(e) => handleHelpAnswer('controlManagementOutside', e.target.value)}
-                            className="w-4 h-4 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
-                          />
-                          <span className="ml-2 font-medium text-gray-800 capitalize">{option}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between">
-                    <button
-                      onClick={() => setHelpStep(1)}
-                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
-                    >
-                      Back
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (helpAnswers.controlManagementOutside === 'yes') {
-                          setHelpStep(1.4)
-                        } else {
-                          setHelpStep(1.5)
-                        }
-                      }}
-                      disabled={!helpAnswers.controlManagementOutside}
-                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
-                    >
-                      Next
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 1.4: NR Status Display (Control Outside = Yes) */}
-              {helpStep === 1.4 && (
-                <div className="space-y-6">
-                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <h4 className="text-xl font-bold text-blue-800">Residential Status Determined</h4>
-                    </div>
-                    <p className="text-lg text-blue-700 mb-2">Based on the responses, you are</p>
-                    <p className="text-2xl font-bold text-blue-900 mb-4">Non Resident</p>
-                    <p className="text-sm text-blue-600">in India during the period 1 April 2025 to 31 March 2026</p>
-                  </div>
-
-                  <div className="flex justify-between">
-                    <button
-                      onClick={() => setHelpStep(1.3)}
-                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
-                    >
-                      Back
-                    </button>
-                    <button
-                      onClick={() => setHelpStep(2)}
-                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors"
-                    >
-                      Continue
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 1.5: HUF Manager Stay Days Question */}
-              {helpStep === 1.5 && (
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-800 mb-2">HUF Manager Stay Days</h4>
-                    <p className="text-gray-600 mb-4">How many days the Manager of HUF has stayed in India during the period 01 April 2018 to 31 March 2025?</p>
-
-                    <div className="space-y-3">
-                      {[
-                        { value: 'less730', label: 'Less than 730 days' },
-                        { value: 'more730', label: '730 days or more' }
-                      ].map((option) => (
-                        <label
-                          key={option.value}
-                          className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                            helpAnswers.hufManagerStayDays === option.value
-                              ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
-                              : 'border-gray-200 hover:border-gray-300'
-                          }`}
-                        >
-                          <input
-                            type="radio"
-                            name="hufManagerStayDays"
-                            value={option.value}
-                            checked={helpAnswers.hufManagerStayDays === option.value}
-                            onChange={(e) => handleHelpAnswer('hufManagerStayDays', e.target.value)}
-                            className="w-5 h-5 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
-                          />
-                          <span className="ml-3 font-medium text-gray-800">{option.label}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between">
-                    <button
-                      onClick={() => setHelpStep(1.3)}
-                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
-                    >
-                      Back
-                    </button>
-                    <button
-                      onClick={() => {
-                        if (helpAnswers.hufManagerStayDays === 'more730') {
-                          setHelpStep(1.6)
-                        } else {
-                          setHelpStep(2)
-                        }
-                      }}
-                      disabled={!helpAnswers.hufManagerStayDays}
-                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
-                    >
-                      Next
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Step 1.6: HUF Manager Resident Years Question */}
-              {helpStep === 1.6 && (
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-800 mb-2">HUF Manager Resident Years</h4>
-                    <p className="text-gray-600 mb-4">Whether the Manager of HUF was a 'Resident' in India for any 2 financial years out of the last 10 financial years starting from Financial Year 2015-16 to Financial Year 2024-25?</p>
-
-                    <div className="flex gap-4">
-                      {['yes', 'no'].map((option) => (
-                        <label
-                          key={option}
-                          className={`flex items-center px-6 py-3 border-2 rounded-xl cursor-pointer transition-all ${
-                            helpAnswers.hufManagerResidentYears === option
-                              ? 'border-[#2F6A9E] bg-[#2F6A9E]/5'
-                              : 'border-gray-200 hover:border-gray-300'
-                          }`}
-                        >
-                          <input
-                            type="radio"
-                            name="hufManagerResidentYears"
-                            value={option}
-                            checked={helpAnswers.hufManagerResidentYears === option}
-                            onChange={(e) => handleHelpAnswer('hufManagerResidentYears', e.target.value)}
-                            className="w-4 h-4 text-[#2F6A9E] border-gray-300 focus:ring-[#2F6A9E]"
-                          />
-                          <span className="ml-2 font-medium text-gray-800 capitalize">{option}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between">
-                    <button
-                      onClick={() => setHelpStep(1.5)}
-                      className="border-2 border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
-                    >
-                      Back
-                    </button>
-                    <button
-                      onClick={() => setHelpStep(2)}
-                      className="bg-[#2F6A9E] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#1a4a75] transition-colors"
-                    >
-                      Next
                     </button>
                   </div>
                 </div>
